@@ -1,0 +1,21 @@
+# Envs
+
+.env
+
+# Docker Containers
+
+mongo/
+postgres/
+
+# Node
+
+node_modules/
+
+# Build
+
+dist/
+build/
+
+# Testing
+
+coverage/
