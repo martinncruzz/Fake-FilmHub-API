@@ -1,7 +1,6 @@
 import {
   CreateProductDto,
-  DeleteProductDto,
-  GetProductDto,
+  ProductIdDto,
   UpdateProductDto,
   CustomError,
 } from "../../domain";
@@ -15,8 +14,8 @@ export class ProductService {
     return products;
   }
 
-  async getProductById(getProductDto: GetProductDto) {
-    const { product_id } = getProductDto;
+  async getProductById(productIdDto: ProductIdDto) {
+    const { product_id } = productIdDto;
 
     const productFound = await prisma.products.findFirst({
       where: {
@@ -81,8 +80,8 @@ export class ProductService {
     }
   }
 
-  async deleteProduct(deleteProductDto: DeleteProductDto) {
-    const { product_id } = deleteProductDto;
+  async deleteProduct(productIdDto: ProductIdDto) {
+    const { product_id } = productIdDto;
 
     const productExists = await prisma.products.findFirst({
       where: {

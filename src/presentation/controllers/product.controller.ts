@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
 import {
   CreateProductDto,
-  DeleteProductDto,
-  GetProductDto,
   UpdateProductDto,
+  ProductIdDto,
   CustomError,
 } from "../../domain";
 import { ProductService } from "../services";
@@ -29,12 +28,12 @@ export class ProductController {
   getProductById = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const [error, getProductDto] = GetProductDto.get({ product_id: +id });
+    const [error, productIdDto] = ProductIdDto.get({ product_id: +id });
 
     if (error) return res.status(400).json({ error });
 
     this.productService
-      .getProductById(getProductDto!)
+      .getProductById(productIdDto!)
       .then((productFound) => res.status(200).json(productFound))
       .catch((error) => this.handleError(error, res));
   };
@@ -69,12 +68,12 @@ export class ProductController {
   deleteProduct = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const [error, deleteProductDto] = DeleteProductDto.delete({
+    const [error, productIdDto] = ProductIdDto.get({
       product_id: +id,
     });
 
     this.productService
-      .deleteProduct(deleteProductDto!)
+      .deleteProduct(productIdDto!)
       .then((deletedProduct) => res.status(200).json(deletedProduct))
       .catch((error) => this.handleError(error, res));
   };

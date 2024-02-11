@@ -12,6 +12,10 @@ export class UpdateProductDto {
 
     if (!product_id) return ["Missing product id"];
 
+    if (isNaN(product_id) || product_id <= 0) {
+      return ["Invalid ID"];
+    }
+
     return [
       undefined,
       new UpdateProductDto(
