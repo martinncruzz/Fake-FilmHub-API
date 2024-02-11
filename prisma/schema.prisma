@@ -78,6 +78,7 @@ model users {
   fullname      String          @db.VarChar
   email         String          @unique @db.VarChar
   password      String          @db.VarChar
+  avatar        String          @db.VarChar
   orders        orders[]
   reviews       reviews[]
   shopping_cart shopping_cart[]
