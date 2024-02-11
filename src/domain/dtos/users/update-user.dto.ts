@@ -1,10 +1,10 @@
 export class UpdateUserDto {
   private constructor(
     public readonly user_id: number,
-    public readonly fullname: string,
-    public readonly email: string,
-    public readonly password: string,
-    public readonly avatar: string
+    public readonly fullname?: string,
+    public readonly email?: string,
+    public readonly password?: string,
+    public readonly avatar?: string
   ) {}
 
   static update(props: { [key: string]: any }): [string?, UpdateUserDto?] {

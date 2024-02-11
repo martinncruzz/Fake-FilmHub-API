@@ -1,7 +1,7 @@
 export class UpdateCategoryDto {
   private constructor(
     public readonly category_id: number,
-    public readonly name: string
+    public readonly name?: string
   ) {}
 
   static update(props: { [key: string]: any }): [string?, UpdateCategoryDto?] {

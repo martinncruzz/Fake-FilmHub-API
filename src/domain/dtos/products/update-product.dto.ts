@@ -1,10 +1,10 @@
 export class UpdateProductDto {
   private constructor(
     public readonly product_id: number,
-    public readonly name: string,
-    public readonly description: string,
-    public readonly price: number,
-    public readonly stock_quantity: number
+    public readonly name?: string,
+    public readonly description?: string,
+    public readonly price?: number,
+    public readonly stock_quantity?: number
   ) {}
 
   static update(props: { [key: string]: any }): [string?, UpdateProductDto?] {
