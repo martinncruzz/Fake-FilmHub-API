@@ -9,6 +9,10 @@ export * from "./dtos/users/create-user.dto";
 export * from "./dtos/users/update-user.dto";
 export * from "./dtos/users/user-id.dto";
 
+export * from "./dtos/categories/create-category.dto";
+export * from "./dtos/categories/update-category.dto";
+export * from "./dtos/categories/category-id.dto";
+
 export * from "./dtos/shared/pagination.dto";
 
 /* Others */
