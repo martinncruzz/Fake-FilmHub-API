@@ -1,5 +1,5 @@
 /* Services */
 
-export * from "./product.service";
 export * from "./user.service";
-export * from "./category.service";
+export * from "./movie.service";
+export * from "./genre.service";

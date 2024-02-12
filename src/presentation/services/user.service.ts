@@ -1,3 +1,4 @@
+import { UserRole } from "@prisma/client";
 import { prisma } from "../../data/postgres";
 import {
   CreateUserDto,
@@ -10,16 +11,14 @@ export class UserService {
   constructor() {}
 
   async getUsers() {
-    const users = await prisma.users.findMany();
+    const users = await prisma.user.findMany();
     return users;
   }
 
   async getUserById(userIdDto: UserIdDto) {
-    const { user_id } = userIdDto;
-
-    const userFound = await prisma.users.findFirst({
+    const userFound = await prisma.user.findFirst({
       where: {
-        user_id: user_id,
+        user_id: userIdDto.user_id,
       },
     });
 
@@ -29,15 +28,11 @@ export class UserService {
   }
 
   async createUser(createUserDto: CreateUserDto) {
-    const { fullname, email, password, avatar } = createUserDto;
-
     try {
-      const newUser = await prisma.users.create({
+      const newUser = await prisma.user.create({
         data: {
-          fullname,
-          email,
-          password,
-          avatar,
+          role: UserRole.user,
+          ...createUserDto,
         },
       });
 
@@ -49,9 +44,9 @@ export class UserService {
   }
 
   async updateUser(updateUserDto: UpdateUserDto) {
-    const { user_id, fullname, email, password, avatar } = updateUserDto;
+    const { user_id, ...updateUserDtoData } = updateUserDto;
 
-    const userExists = await prisma.users.findFirst({
+    const userExists = await prisma.user.findFirst({
       where: {
         user_id: user_id,
       },
@@ -60,16 +55,11 @@ export class UserService {
     if (!userExists) throw CustomError.notFound("User not found");
 
     try {
-      const updatedUser = await prisma.users.update({
+      const updatedUser = await prisma.user.update({
         where: {
           user_id: user_id,
         },
-        data: {
-          fullname,
-          email,
-          password,
-          avatar,
-        },
+        data: updateUserDtoData,
       });
 
       return updatedUser;
@@ -80,19 +70,17 @@ export class UserService {
   }
 
   async deleteUser(userIdDto: UserIdDto) {
-    const { user_id } = userIdDto;
-
-    const userExists = await prisma.users.findFirst({
+    const userExists = await prisma.user.findFirst({
       where: {
-        user_id: user_id,
+        user_id: userIdDto.user_id,
       },
     });
 
     if (!userExists) throw CustomError.notFound("User not found");
 
     try {
-      await prisma.users.delete({
-        where: { user_id: user_id },
+      await prisma.user.delete({
+        where: { user_id: userIdDto.user_id },
       });
 
       return true;
