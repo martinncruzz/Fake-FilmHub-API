@@ -7,79 +7,44 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model categories {
-  category_id        Int                  @id @default(autoincrement())
-  name               String               @db.VarChar
-  product_categories product_categories[]
+enum UserRole {
+  admin
+  user
 }
 
-model order_details {
-  detail_id  Int      @id @default(autoincrement())
-  order_id   Int
-  product_id Int
-  quantity   Int
-  subtotal   Float
-  orders     orders   @relation(fields: [order_id], references: [order_id], onDelete: NoAction, onUpdate: NoAction)
-  products   products @relation(fields: [product_id], references: [product_id], onDelete: NoAction, onUpdate: NoAction)
+model User {
+  user_id  Int      @id @default(autoincrement())
+  fullname String   @db.VarChar(100)
+  email    String   @unique @db.VarChar(255)
+  password String   @db.VarChar(255)
+  avatar   String   @db.VarChar(255)
+  role     UserRole
 }
 
-model orders {
-  order_id      Int             @id @default(autoincrement())
-  user_id       Int
-  order_date    DateTime        @default(now()) @db.Timestamp(6)
-  total_amount  Float
-  order_details order_details[]
-  users         users           @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction)
+model Movie {
+  movie_id         Int          @id @default(autoincrement())
+  title            String       @db.VarChar(255)
+  description      String       @db.Text
+  release_year     Int
+  director         String       @db.VarChar(100)
+  duration_minutes Int
+  trailer_link     String       @db.VarChar(255)
+  poster_image_url String       @db.VarChar(255)
+  genres           MovieGenre[]
 }
 
-model product_categories {
-  product_category_id Int        @id @default(autoincrement())
-  product_id          Int
-  category_id         Int
-  categories          categories @relation(fields: [category_id], references: [category_id], onDelete: NoAction, onUpdate: NoAction)
-  products            products   @relation(fields: [product_id], references: [product_id], onDelete: NoAction, onUpdate: NoAction)
+model Genre {
+  genre_id Int          @id @default(autoincrement())
+  name     String       @unique @db.VarChar(50)
+  movies   MovieGenre[]
 }
 
-model products {
-  product_id         Int                  @id @default(autoincrement())
-  name               String               @db.VarChar
-  description        String               @db.VarChar
-  price              Float
-  stock_quantity     Int
-  order_details      order_details[]
-  product_categories product_categories[]
-  reviews            reviews[]
-  shopping_cart      shopping_cart[]
-}
+model MovieGenre {
+  movie_id Int
+  movie    Movie @relation(fields: [movie_id], references: [movie_id])
 
-model reviews {
-  review_id  Int      @id @default(autoincrement())
-  user_id    Int
-  product_id Int
-  rating     Int
-  comment    String   @db.VarChar
-  created_at DateTime @default(now()) @db.Timestamp(6)
-  products   products @relation(fields: [product_id], references: [product_id], onDelete: NoAction, onUpdate: NoAction)
-  users      users    @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction)
-}
+  genre_id Int
+  genre    Genre @relation(fields: [genre_id], references: [genre_id])
 
-model shopping_cart {
-  cart_id    Int      @id @default(autoincrement())
-  user_id    Int
-  product_id Int
-  quantity   Int
-  added_at   DateTime @default(now()) @db.Timestamp(6)
-  products   products @relation(fields: [product_id], references: [product_id], onDelete: NoAction, onUpdate: NoAction)
-  users      users    @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction)
-}
-
-model users {
-  user_id       Int             @id @default(autoincrement())
-  fullname      String          @db.VarChar
-  email         String          @unique @db.VarChar
-  password      String          @db.VarChar
-  avatar        String          @db.VarChar
-  orders        orders[]
-  reviews       reviews[]
-  shopping_cart shopping_cart[]
+  @@id([movie_id, genre_id])
 }
