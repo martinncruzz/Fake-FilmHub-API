@@ -4,11 +4,8 @@ export class MovieIdDto {
   static get(props: { [key: string]: any }): [string?, MovieIdDto?] {
     const { movie_id } = props;
 
-    if (!movie_id) return ["Missing movie id"];
-
-    if (isNaN(movie_id) || movie_id <= 0) {
-      return ["Invalid ID"];
-    }
+    if (!movie_id || !Number.isInteger(movie_id) || movie_id <= 0)
+      return ["Missing movie id or invalid movie id"];
 
     return [undefined, new MovieIdDto(movie_id)];
   }
