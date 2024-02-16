@@ -16,23 +16,18 @@ export class UserService {
   }
 
   async getUserById(userIdDto: UserIdDto) {
-    const userFound = await prisma.user.findFirst({
-      where: {
-        user_id: userIdDto.user_id,
-      },
-    });
-
-    if (!userFound) throw CustomError.notFound("User not found");
-
+    const userFound = await this.validateUserExistence(userIdDto.user_id);
     return userFound;
   }
 
   async createUser(createUserDto: CreateUserDto) {
+    await this.validateEmailExistence(createUserDto.email);
+
     try {
       const newUser = await prisma.user.create({
         data: {
-          role: UserRole.user,
           ...createUserDto,
+          role: UserRole.user,
         },
       });
 
@@ -46,13 +41,10 @@ export class UserService {
   async updateUser(updateUserDto: UpdateUserDto) {
     const { user_id, ...updateUserDtoData } = updateUserDto;
 
-    const userExists = await prisma.user.findFirst({
-      where: {
-        user_id: user_id,
-      },
-    });
+    await this.validateUserExistence(user_id);
 
-    if (!userExists) throw CustomError.notFound("User not found");
+    if (updateUserDto.email)
+      await this.validateEmailExistence(updateUserDto.email);
 
     try {
       const updatedUser = await prisma.user.update({
@@ -70,13 +62,7 @@ export class UserService {
   }
 
   async deleteUser(userIdDto: UserIdDto) {
-    const userExists = await prisma.user.findFirst({
-      where: {
-        user_id: userIdDto.user_id,
-      },
-    });
-
-    if (!userExists) throw CustomError.notFound("User not found");
+    await this.validateUserExistence(userIdDto.user_id);
 
     try {
       await prisma.user.delete({
@@ -88,5 +74,31 @@ export class UserService {
       console.log(error);
       throw CustomError.internalServer(`${error}`);
     }
+  }
+
+  private async validateUserExistence(user_id: number) {
+    const userExists = await prisma.user.findFirst({
+      where: {
+        user_id: user_id,
+      },
+    });
+
+    if (!userExists) throw CustomError.notFound("User not found");
+
+    return userExists;
+  }
+
+  private async validateEmailExistence(email: string) {
+    const userExists = await prisma.user.findFirst({
+      where: {
+        email: {
+          equals: email,
+          mode: "insensitive",
+        },
+      },
+    });
+
+    if (userExists)
+      throw CustomError.badRequest("This email is already registered");
   }
 }
