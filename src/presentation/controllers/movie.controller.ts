@@ -75,7 +75,7 @@ export class MovieController {
     if (error) return res.status(400).json({ error });
 
     this.movieService
-      .deletemovie(movieIdDto!)
+      .deleteMovie(movieIdDto!)
       .then((deletedMovie) => res.status(200).json(deletedMovie))
       .catch((error) => this.handleError(error, res));
   };
