@@ -4,11 +4,8 @@ export class GenreIdDto {
   static get(props: { [key: string]: any }): [string?, GenreIdDto?] {
     const { genre_id } = props;
 
-    if (!genre_id) return ["Missing genre id"];
-
-    if (isNaN(genre_id) || genre_id <= 0) {
-      return ["Invalid ID"];
-    }
+    if (!genre_id || !Number.isInteger(genre_id) || genre_id <= 0)
+      return ["Missing genre id or invalid genre id"];
 
     return [undefined, new GenreIdDto(genre_id)];
   }
