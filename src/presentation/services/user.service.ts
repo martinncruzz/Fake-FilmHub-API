@@ -88,11 +88,11 @@ export class UserService {
     return userExists;
   }
 
-  private async validateEmailExistence(email: string) {
+  private async validateEmailExistence(user_email: string) {
     const userExists = await prisma.user.findFirst({
       where: {
         email: {
-          equals: email,
+          equals: user_email,
           mode: "insensitive",
         },
       },
