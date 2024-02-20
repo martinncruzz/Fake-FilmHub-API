@@ -1,5 +1,8 @@
 export class CreateGenreDto {
-  private constructor(public readonly name: string) {}
+  private constructor(
+    public readonly name: string,
+    public readonly image: string
+  ) {}
 
   private static isStringValid(
     value: string,
@@ -15,11 +18,14 @@ export class CreateGenreDto {
   }
 
   static create(props: { [key: string]: any }): [string?, CreateGenreDto?] {
-    const { name } = props;
+    const { name, image } = props;
 
     if (!CreateGenreDto.isStringValid(name, 2, 50))
       return ["Missing name or invalid name"];
 
-    return [undefined, new CreateGenreDto(name)];
+    if (!CreateGenreDto.isStringValid(image, 5, 255))
+      return ["Missing image or invalid image"];
+
+    return [undefined, new CreateGenreDto(name, image)];
   }
 }
