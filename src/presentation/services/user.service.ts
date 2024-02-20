@@ -4,6 +4,7 @@ import {
   CreateUserDto,
   UpdateUserDto,
   UserIdDto,
+  CheckUserEmailDto,
   CustomError,
 } from "../../domain";
 
@@ -21,7 +22,10 @@ export class UserService {
   }
 
   async createUser(createUserDto: CreateUserDto) {
-    await this.validateEmailExistence(createUserDto.email);
+    const isAvailable = await this.validateEmailExistence(createUserDto.email);
+
+    if (!isAvailable)
+      throw CustomError.badRequest("This email is already registered");
 
     try {
       const newUser = await prisma.user.create({
@@ -38,13 +42,27 @@ export class UserService {
     }
   }
 
+  async validateEmail(checkUserEmailDto: CheckUserEmailDto) {
+    const isAvailable = await this.validateEmailExistence(
+      checkUserEmailDto.email
+    );
+
+    return { isAvailable };
+  }
+
   async updateUser(updateUserDto: UpdateUserDto) {
     const { user_id, ...updateUserDtoData } = updateUserDto;
 
     await this.validateUserExistence(user_id);
 
-    if (updateUserDto.email)
-      await this.validateEmailExistence(updateUserDto.email);
+    if (updateUserDto.email) {
+      const isAvailable = await this.validateEmailExistence(
+        updateUserDto.email
+      );
+
+      if (!isAvailable)
+        throw CustomError.badRequest("This email is already registered");
+    }
 
     try {
       const updatedUser = await prisma.user.update({
@@ -98,7 +116,8 @@ export class UserService {
       },
     });
 
-    if (userExists)
-      throw CustomError.badRequest("This email is already registered");
+    if (userExists) return false;
+
+    return true;
   }
 }

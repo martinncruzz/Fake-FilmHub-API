@@ -4,6 +4,7 @@ import {
   CreateUserDto,
   UpdateUserDto,
   UserIdDto,
+  CheckUserEmailDto,
   CustomError,
 } from "../../domain";
 
@@ -46,6 +47,17 @@ export class UserController {
     this.userService
       .createUser(createUserDto!)
       .then((newUser) => res.status(200).json(newUser))
+      .catch((error) => this.handleError(error, res));
+  };
+
+  checkEmail = async (req: Request, res: Response) => {
+    const [error, checkUserEmailDto] = CheckUserEmailDto.create(req.body);
+
+    if (error) return res.status(400).json({ error });
+
+    this.userService
+      .validateEmail(checkUserEmailDto!)
+      .then((isAvailable) => res.status(200).json(isAvailable))
       .catch((error) => this.handleError(error, res));
   };
 
