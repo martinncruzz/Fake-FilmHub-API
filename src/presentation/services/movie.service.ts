@@ -34,12 +34,12 @@ export class MovieService {
       const next =
         limit * page >= total
           ? null
-          : `${envs.WEBSERVICE_URL}/movies/get-movies?page=${page + 1}&limit=${limit}`;
+          : `${envs.WEBSERVICE_URL}/movies/?page=${page + 1}&limit=${limit}`;
 
       const prev =
         page - 1 === 0
           ? null
-          : `${envs.WEBSERVICE_URL}/movies/get-movies?page=${page - 1}&limit=${limit}`;
+          : `${envs.WEBSERVICE_URL}/movies/?page=${page - 1}&limit=${limit}`;
 
       return {
         prev: prev,

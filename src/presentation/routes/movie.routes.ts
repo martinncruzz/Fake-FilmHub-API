@@ -9,11 +9,11 @@ export class MovieRoutes {
     const movieService = new MovieService();
     const movieController = new MovieController(movieService);
 
-    router.get("/get-movies", movieController.getMovies);
-    router.get("/get-movie/:id", movieController.getMovieById);
-    router.post("/create-movie", movieController.createMovie);
-    router.put("/update-movie/:id", movieController.updateMovie);
-    router.delete("/delete-movie/:id", movieController.deleteMovie);
+    router.get("/", movieController.getMovies);
+    router.get("/:id", movieController.getMovieById);
+    router.post("/", movieController.createMovie);
+    router.put("/:id", movieController.updateMovie);
+    router.delete("/:id", movieController.deleteMovie);
 
     return router;
   }

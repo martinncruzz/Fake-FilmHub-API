@@ -9,12 +9,12 @@ export class GenreRoutes {
     const genreService = new GenreService();
     const genreController = new GenreController(genreService);
 
-    router.get("/get-genres", genreController.getGenres);
-    router.get("/get-movies-by-genre/:id", genreController.getMoviesByGenre);
-    router.get("/get-genre/:id", genreController.getGenreById);
-    router.post("/create-genre", genreController.createGenre);
-    router.put("/update-genre/:id", genreController.updateGenre);
-    router.delete("/delete-genre/:id", genreController.deleteGenre);
+    router.get("/", genreController.getGenres);
+    router.get("/:id/movies", genreController.getMoviesByGenre);
+    router.get("/:id", genreController.getGenreById);
+    router.post("/", genreController.createGenre);
+    router.put("/:id", genreController.updateGenre);
+    router.delete("/:id", genreController.deleteGenre);
 
     return router;
   }
