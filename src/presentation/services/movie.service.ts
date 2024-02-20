@@ -2,28 +2,57 @@ import {
   CreateMovieDto,
   MovieIdDto,
   UpdateMovieDto,
+  PaginationDto,
   CustomError,
 } from "../../domain";
 import { prisma } from "../../data/postgres";
+import { envs } from "../../config";
 
 export class MovieService {
   constructor() {}
 
-  async getMovies() {
-    const movies = await prisma.movie.findMany({
-      include: {
-        genres: {
-          include: {
-            genre: true,
-          },
-        },
-      },
-    });
+  async getMovies(paginationDto: PaginationDto) {
+    const { page, limit } = paginationDto;
 
-    return movies.map((movie) => ({
-      ...movie,
-      genres: movie.genres.map((genreData) => genreData.genre),
-    }));
+    try {
+      const [total, movies] = await Promise.all([
+        prisma.movie.count(),
+
+        prisma.movie.findMany({
+          include: {
+            genres: {
+              include: {
+                genre: true,
+              },
+            },
+          },
+          skip: (page - 1) * limit,
+          take: limit,
+        }),
+      ]);
+
+      const next =
+        limit * page >= total
+          ? null
+          : `${envs.WEBSERVICE_URL}/movies/get-movies?page=${page + 1}&limit=${limit}`;
+
+      const prev =
+        page - 1 === 0
+          ? null
+          : `${envs.WEBSERVICE_URL}/movies/get-movies?page=${page - 1}&limit=${limit}`;
+
+      return {
+        prev: prev,
+        next: next,
+        movies: movies.map((movie) => ({
+          ...movie,
+          genres: movie.genres.map((genreData) => genreData.genre),
+        })),
+      };
+    } catch (error) {
+      console.log(error);
+      throw CustomError.internalServer(`${error}`);
+    }
   }
 
   async getMovieById(movieIdDto: MovieIdDto) {
