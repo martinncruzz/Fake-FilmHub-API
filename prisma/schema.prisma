@@ -36,6 +36,7 @@ model Movie {
 model Genre {
   genre_id Int          @id @default(autoincrement())
   name     String       @unique @db.VarChar(50)
+  image    String       @db.VarChar(255)
   movies   MovieGenre[]
 }
 
