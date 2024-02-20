@@ -3,6 +3,7 @@
 export * from "./dtos/auth/login-user.dto";
 
 export * from "./dtos/users/create-user.dto";
+export * from "./dtos/users/check-user-email.dto";
 export * from "./dtos/users/update-user.dto";
 export * from "./dtos/users/user-id.dto";
 
