@@ -25,6 +25,19 @@ export class GenreController {
       .catch((error) => this.handleError(error, res));
   };
 
+  getMoviesByGenre = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    const [error, genreIdDto] = GenreIdDto.get({ genre_id: +id });
+
+    if (error) return res.status(400).json({ error });
+
+    this.genreService
+      .getMoviesByGenre(genreIdDto!)
+      .then((moviesFound) => res.status(200).json(moviesFound))
+      .catch((error) => this.handleError(error, res));
+  };
+
   getGenreById = async (req: Request, res: Response) => {
     const { id } = req.params;
 

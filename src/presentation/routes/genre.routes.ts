@@ -10,6 +10,7 @@ export class GenreRoutes {
     const genreController = new GenreController(genreService);
 
     router.get("/get-genres", genreController.getGenres);
+    router.get("/get-movies-by-genre/:id", genreController.getMoviesByGenre);
     router.get("/get-genre/:id", genreController.getGenreById);
     router.post("/create-genre", genreController.createGenre);
     router.put("/update-genre/:id", genreController.updateGenre);

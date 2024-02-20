@@ -10,7 +10,15 @@ export class GenreService {
   constructor() {}
 
   async getGenres() {
-    const genres = await prisma.genre.findMany({
+    const genres = await prisma.genre.findMany();
+    return genres;
+  }
+
+  async getMoviesByGenre(genreIdDto: GenreIdDto) {
+    const moviesInCurrentGenre = await prisma.genre.findFirst({
+      where: {
+        genre_id: genreIdDto.genre_id,
+      },
       include: {
         movies: {
           include: {
@@ -20,19 +28,15 @@ export class GenreService {
       },
     });
 
-    return genres.map((genre) => ({
-      ...genre,
-      movies: genre.movies.map((movieData) => movieData.movie),
-    }));
+    return {
+      ...moviesInCurrentGenre,
+      movies: moviesInCurrentGenre?.movies.map((movieData) => movieData.movie),
+    };
   }
 
   async getGenreById(genreIdDto: GenreIdDto) {
     const genreFound = await this.validateGenreExistence(genreIdDto.genre_id);
-
-    return {
-      ...genreFound,
-      movies: genreFound.movies.map((movieData) => movieData.movie),
-    };
+    return genreFound;
   }
 
   async createGenre(createGenreDto: CreateGenreDto) {
@@ -100,13 +104,6 @@ export class GenreService {
     const genreExists = await prisma.genre.findFirst({
       where: {
         genre_id: genre_id,
-      },
-      include: {
-        movies: {
-          include: {
-            movie: true,
-          },
-        },
       },
     });
 
