@@ -42,7 +42,7 @@ export class UserService {
     }
   }
 
-  async validateEmail(checkUserEmailDto: CheckUserEmailDto) {
+  async checkEmail(checkUserEmailDto: CheckUserEmailDto) {
     const isAvailable = await this.validateEmailExistence(
       checkUserEmailDto.email
     );

@@ -56,7 +56,7 @@ export class UserController {
     if (error) return res.status(400).json({ error });
 
     this.userService
-      .validateEmail(checkUserEmailDto!)
+      .checkEmail(checkUserEmailDto!)
       .then((isAvailable) => res.status(200).json(isAvailable))
       .catch((error) => this.handleError(error, res));
   };
