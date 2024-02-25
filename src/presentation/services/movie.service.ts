@@ -3,6 +3,7 @@ import {
   MovieIdDto,
   UpdateMovieDto,
   PaginationDto,
+  MovieFiltersDto,
   CustomError,
 } from "../../domain";
 import { prisma } from "../../data/postgres";
@@ -11,14 +12,34 @@ import { envs } from "../../config";
 export class MovieService {
   constructor() {}
 
-  async getMovies(paginationDto: PaginationDto) {
+  async getMovies(
+    paginationDto: PaginationDto,
+    movieFiltersDto: MovieFiltersDto
+  ) {
     const { page, limit } = paginationDto;
+    const {
+      title,
+      release_year,
+      min_release_year,
+      max_release_year,
+      genre_id,
+    } = movieFiltersDto;
 
     try {
-      const [total, movies] = await Promise.all([
+      const [total, movies] = await prisma.$transaction([
         prisma.movie.count(),
-
         prisma.movie.findMany({
+          where: {
+            title: { contains: title, mode: "insensitive" },
+            release_year: release_year
+              ? { equals: release_year }
+              : { gte: min_release_year, lte: max_release_year },
+            genres: {
+              some: {
+                genre_id: genre_id,
+              },
+            },
+          },
           include: {
             genres: {
               include: {

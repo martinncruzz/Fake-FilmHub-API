@@ -4,6 +4,7 @@ import {
   MovieIdDto,
   UpdateMovieDto,
   PaginationDto,
+  MovieFiltersDto,
   CustomError,
 } from "../../domain";
 import { MovieService } from "../services";
@@ -20,14 +21,35 @@ export class MovieController {
   };
 
   getMovies = async (req: Request, res: Response) => {
-    const { page = 1, limit = 10 } = req.query;
+    const {
+      page = 1,
+      limit = 10,
+      title,
+      release_year,
+      min_release_year,
+      max_release_year,
+      genre_id
+    } = req.query;
 
-    const [error, paginationDto] = PaginationDto.create(+page, +limit);
+    const [paginationError, paginationDto] = PaginationDto.create(
+      +page,
+      +limit
+    );
 
-    if (error) return res.status(400).json({ error });
-    
+    if (paginationError) return res.status(400).json({ paginationError });
+
+    const [movieFiltersError, movieFiltersDto] = MovieFiltersDto.create({
+      title,
+      release_year,
+      min_release_year,
+      max_release_year,
+      genre_id
+    });
+
+    if (movieFiltersError) return res.status(400).json({ movieFiltersError });
+
     this.movieService
-      .getMovies(paginationDto!)
+      .getMovies(paginationDto!, movieFiltersDto!)
       .then((movies) => res.status(200).json(movies))
       .catch((error) => this.handleError(error, res));
   };

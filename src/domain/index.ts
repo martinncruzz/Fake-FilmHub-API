@@ -10,6 +10,7 @@ export * from "./dtos/users/user-id.dto";
 export * from "./dtos/movies/create-movie.dto";
 export * from "./dtos/movies/update-movie.dto";
 export * from "./dtos/movies/movie-id.dto";
+export * from "./dtos/movies/movie-filters.dto"
 
 export * from "./dtos/genres/create-genre.dto";
 export * from "./dtos/genres/update-genre.dto";
