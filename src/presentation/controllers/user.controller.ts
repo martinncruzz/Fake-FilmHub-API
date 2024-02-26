@@ -76,17 +76,4 @@ export class UserController {
       .then((updatedUser) => res.status(200).json(updatedUser))
       .catch((error) => this.handleError(error, res));
   };
-
-  deleteUser = async (req: Request, res: Response) => {
-    const { id } = req.params;
-
-    const [error, userIdDto] = UserIdDto.get({ user_id: +id });
-
-    if (error) return res.status(400).json({ error });
-
-    this.userService
-      .deleteUser(userIdDto!)
-      .then((deletedUser) => res.status(200).json(deletedUser))
-      .catch((error) => this.handleError(error, res));
-  };
 }

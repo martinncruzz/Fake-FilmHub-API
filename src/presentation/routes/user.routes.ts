@@ -14,7 +14,6 @@ export class UserRoutes {
     router.post("/", userController.createUser);
     router.post("/is-available", userController.checkEmail);
     router.put("/:id", userController.updateUser);
-    router.delete("/:id", userController.deleteUser);
 
     return router;
   }

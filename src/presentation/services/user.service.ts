@@ -53,9 +53,9 @@ export class UserService {
   async updateUser(updateUserDto: UpdateUserDto) {
     const { user_id, ...updateUserDtoData } = updateUserDto;
 
-    await this.validateUserExistence(user_id);
+    const userExists = await this.validateUserExistence(user_id);
 
-    if (updateUserDto.email) {
+    if (updateUserDto.email && updateUserDto.email.toLowerCase() !== userExists.email.toLowerCase()) {
       const isAvailable = await this.validateEmailExistence(
         updateUserDto.email
       );
@@ -73,21 +73,6 @@ export class UserService {
       });
 
       return updatedUser;
-    } catch (error) {
-      console.log(error);
-      throw CustomError.internalServer(`${error}`);
-    }
-  }
-
-  async deleteUser(userIdDto: UserIdDto) {
-    await this.validateUserExistence(userIdDto.user_id);
-
-    try {
-      await prisma.user.delete({
-        where: { user_id: userIdDto.user_id },
-      });
-
-      return true;
     } catch (error) {
       console.log(error);
       throw CustomError.internalServer(`${error}`);
