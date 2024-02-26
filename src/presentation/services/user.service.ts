@@ -37,7 +37,6 @@ export class UserService {
 
       return newUser;
     } catch (error) {
-      console.log(error);
       throw CustomError.internalServer(`${error}`);
     }
   }
@@ -55,7 +54,10 @@ export class UserService {
 
     const userExists = await this.validateUserExistence(user_id);
 
-    if (updateUserDto.email && updateUserDto.email.toLowerCase() !== userExists.email.toLowerCase()) {
+    if (
+      updateUserDto.email &&
+      updateUserDto.email.toLowerCase() !== userExists.email.toLowerCase()
+    ) {
       const isAvailable = await this.validateEmailExistence(
         updateUserDto.email
       );
@@ -74,7 +76,6 @@ export class UserService {
 
       return updatedUser;
     } catch (error) {
-      console.log(error);
       throw CustomError.internalServer(`${error}`);
     }
   }

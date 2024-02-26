@@ -71,7 +71,6 @@ export class MovieService {
         })),
       };
     } catch (error) {
-      console.log(error);
       throw CustomError.internalServer(`${error}`);
     }
   }
@@ -114,7 +113,6 @@ export class MovieService {
         genres: newMovie.genres.map((genreData) => genreData.genre),
       };
     } catch (error) {
-      console.log(error);
       throw CustomError.internalServer(`${error}`);
     }
   }
@@ -145,7 +143,6 @@ export class MovieService {
           genres: updatedMovie.genres.map((genreData) => genreData.genre),
         };
       } catch (error) {
-        console.log(error);
         throw CustomError.internalServer(`${error}`);
       }
     }
@@ -194,7 +191,6 @@ export class MovieService {
         genres: updatedMovie.genres.map((genreData) => genreData.genre),
       };
     } catch (error) {
-      console.log(error);
       throw CustomError.internalServer(`${error}`);
     }
   }
@@ -216,7 +212,6 @@ export class MovieService {
 
       return true;
     } catch (error) {
-      console.log(error);
       throw CustomError.internalServer(`${error}`);
     }
   }

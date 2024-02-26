@@ -49,7 +49,6 @@ export class GenreService {
 
       return genre;
     } catch (error) {
-      console.log(error);
       throw CustomError.internalServer(`${error}`);
     }
   }
@@ -57,9 +56,13 @@ export class GenreService {
   async updateGenre(updateGenreDto: UpdateGenreDto) {
     const { genre_id, ...updatedGenreDtoData } = updateGenreDto;
 
-    await this.validateGenreExistence(genre_id);
+    const genreExists = await this.validateGenreExistence(genre_id);
 
-    if (updateGenreDto.name) await this.validateGenreName(updateGenreDto.name);
+    if (
+      updateGenreDto.name &&
+      updateGenreDto.name.toLowerCase() !== genreExists.name.toLowerCase()
+    )
+      await this.validateGenreName(updateGenreDto.name);
 
     try {
       const updatedGenre = await prisma.genre.update({
@@ -71,7 +74,6 @@ export class GenreService {
 
       return updatedGenre;
     } catch (error) {
-      console.log(error);
       throw CustomError.internalServer(`${error}`);
     }
   }
@@ -95,7 +97,6 @@ export class GenreService {
 
       return true;
     } catch (error) {
-      console.log(error);
       throw CustomError.internalServer(`${error}`);
     }
   }
@@ -123,7 +124,7 @@ export class GenreService {
     });
 
     if (genreExists)
-      throw CustomError.notFound("This genre name already exists");
+      throw CustomError.badRequest("This genre name already exists");
 
     return genreExists;
   }
@@ -148,12 +149,12 @@ export class GenreService {
 
     if (moviesWithCurrentGenre.length >= 15)
       throw CustomError.badRequest(
-        "You cannot delete this genre because is highly correlated with multiple movies"
+        "You can't delete this genre because it is highly related to multiple films"
       );
 
     if (!moviesWithCurrentGenre.every((movie) => movie.genres.length > 1))
       throw CustomError.badRequest(
-        "There are one or more movies that have only this genre. Add more genres or delete it"
+        "There are one or more movies that have only this genre. Add more genres or remove them"
       );
   }
 }
