@@ -16,7 +16,7 @@ export class AuthService {
     });
     if (!token) throw CustomError.internalServer("Error while creating JWT");
 
-    return { token };
+    return { access_token: token };
   }
 
   async getCurrentSession(userIdDto: UserIdDto) {
