@@ -5,7 +5,7 @@
   "main": "app.ts",
   "scripts": {
     "dev": "tsnd --respawn --clear src/app.ts",
-    "build": "rimraf ./dist && tsc && node dist/app.js",
+    "build": "npx prisma generate && rimraf ./dist && tsc && node dist/app.js",
     "seed": "ts-node-dev ./src/data/seed/seed.ts"
   },
   "author": "Martinchx",
