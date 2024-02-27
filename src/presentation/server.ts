@@ -1,7 +1,6 @@
 import express, { Router } from "express";
 import cors from "cors";
 import morgan from "morgan";
-import { envs } from "../config";
 
 interface Options {
   port: number;
@@ -24,7 +23,7 @@ export class Server {
     /* Middlewares */
     this.app.use(
       cors({
-        origin: [envs.WEBSERVICE_URL],
+        origin: ["*"],
       })
     );
     this.app.use(morgan("dev"));
