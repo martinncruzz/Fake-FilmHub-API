@@ -1,18 +1,11 @@
 export const seedData = {
   users: [
     {
-      fullname: "Martín Cruz",
-      email: "martincruz1426@gmail.com",
-      password: "mc1337",
-      avatar:
-        "https://res.cloudinary.com/dhhxe6sif/image/upload/v1708801497/My%20Images/ehaeoa8le2mztmhw4klj.jpg",
-    },
-    {
       fullname: "Administrator",
       email: "admin@gmail.com",
       password: "admin123",
       avatar:
-        "https://e1.pxfuel.com/desktop-wallpaper/214/623/desktop-wallpaper-dark-pfp-dark-thumbnail.jpg",
+        "https://res.cloudinary.com/dhhxe6sif/image/upload/v1708801497/My%20Images/ehaeoa8le2mztmhw4klj.jpg",
     },
     {
       fullname: "John Doe",
@@ -23,16 +16,9 @@ export const seedData = {
     },
     {
       fullname: "Jane Smith",
-      email: "janesmith@hotmail.com",
+      email: "janesmith@yahoo.com.ar",
       password: "password456",
       avatar: "https://steamavatar.io/img/1477351899v6iQb.jpg",
-    },
-    {
-      fullname: "Mike Johnson",
-      email: "mikejohnson@yahoo.com.ar",
-      password: "mikepass",
-      avatar:
-        "https://wallpapers-clan.com/wp-content/uploads/2023/01/rapper-style-pfp-1.jpg",
     },
   ],
 
