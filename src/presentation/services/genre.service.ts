@@ -2,6 +2,7 @@ import {
   CreateGenreDto,
   GenreIdDto,
   UpdateGenreDto,
+  PaginationDto,
   CustomError,
 } from "../../domain";
 import { prisma } from "../../data/postgres";
@@ -9,8 +10,14 @@ import { prisma } from "../../data/postgres";
 export class GenreService {
   constructor() {}
 
-  async getGenres() {
-    const genres = await prisma.genre.findMany();
+  async getGenres(paginationDto: PaginationDto) {
+    const { page, limit } = paginationDto;
+
+    const genres = await prisma.genre.findMany({
+      skip: (page - 1) * limit,
+      take: limit,
+    });
+
     return genres;
   }
 
