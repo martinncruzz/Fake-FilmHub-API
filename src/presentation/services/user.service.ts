@@ -5,14 +5,21 @@ import {
   UpdateUserDto,
   UserIdDto,
   CheckUserEmailDto,
+  PaginationDto,
   CustomError,
 } from "../../domain";
 
 export class UserService {
   constructor() {}
 
-  async getUsers() {
-    const users = await prisma.user.findMany();
+  async getUsers(paginationDto: PaginationDto) {
+    const { page, limit } = paginationDto;
+
+    const users = await prisma.user.findMany({
+      skip: (page - 1) * limit,
+      take: limit,
+    });
+
     return users;
   }
 

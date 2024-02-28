@@ -5,6 +5,7 @@ import {
   UpdateUserDto,
   UserIdDto,
   CheckUserEmailDto,
+  PaginationDto,
   CustomError,
 } from "../../domain";
 
@@ -20,8 +21,15 @@ export class UserController {
   };
 
   getUsers = async (req: Request, res: Response) => {
+
+    const { page = 1, limit = 10 } = req.query;
+
+    const [error, paginationDto] = PaginationDto.create(+page, +limit);
+
+    if (error) return res.status(400).json({ error });
+
     this.userService
-      .getUsers()
+      .getUsers(paginationDto!)
       .then((users) => res.status(200).json(users))
       .catch((error) => this.handleError(error, res));
   };
