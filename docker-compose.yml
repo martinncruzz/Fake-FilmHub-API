@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  postgres-db:
+    image: postgres:15.3
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: fake-filmhub-api
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
