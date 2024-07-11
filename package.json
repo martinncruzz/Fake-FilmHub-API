@@ -2,11 +2,11 @@
   "name": "fake-filmhub-api",
   "version": "1.0.0",
   "description": "",
-  "main": "app.ts",
+  "main": "dist/app.js",
   "scripts": {
     "dev": "tsnd --respawn --clear src/app.ts",
     "build": "rimraf ./dist && tsc",
-    "start": "npm run build && node dist/app.js",
+    "start": "node dist/app.js",
     "seed": "ts-node-dev ./src/data/seed/seed.ts"
   },
   "author": "Martinchx",
