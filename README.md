@@ -1,9 +1,8 @@
-![peview](https://github.com/Martinchx/Fake-FilmHub-API/assets/98863834/02cfbf5f-9c45-42d2-a5be-964f661efa64)
-
-
 # 🎬 Fake FilmHub API
 
 Welcome to the Fake FilmHub API, a versatile and efficient solution for managing movie-related data. This API, built with clean architecture and clean code principles, provides a solid foundation for applications dealing with movie information.
+
+![image](https://github.com/user-attachments/assets/9635ca13-44e3-42b4-b6a7-da4f73905142)
 
 > [!IMPORTANT]
 > For detailed instructions on how to use the API, please refer to the documentation available. It covers everything from endpoint usage to authentication, ensuring a smooth experience for developers.
