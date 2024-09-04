@@ -8,7 +8,7 @@
     "dev": "tsnd --respawn --clear src/app.ts",
     "build": "rimraf ./dist && tsc",
     "start": "node dist/app.js",
-    "seed": "ts-node-dev ./src/data/seed/seed.ts"
+    "seed": "tsnd ./src/data/seed/seed.ts"
   },
   "author": "Martinchx",
   "license": "MIT",
