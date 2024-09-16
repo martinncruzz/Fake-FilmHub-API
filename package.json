@@ -1,8 +1,8 @@
 {
   "name": "fake-filmhub-api",
   "version": "1.0.0",
-  "description": "",
-  "main": "dist/app.js",
+  "author": "Martinchx",
+  "license": "MIT",
   "scripts": {
     "postinstall": "npx prisma generate",
     "dev": "tsnd --respawn --clear src/app.ts",
@@ -10,8 +10,6 @@
     "start": "node dist/app.js",
     "seed": "tsnd ./src/data/seed/seed.ts"
   },
-  "author": "Martinchx",
-  "license": "MIT",
   "devDependencies": {
     "@types/cors": "2.8.17",
     "@types/express": "4.17.21",
