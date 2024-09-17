@@ -1,4 +1,6 @@
 import { Request, Response } from "express";
+
+import { MovieService } from "..";
 import {
   CreateMovieDto,
   MovieIdDto,
@@ -7,7 +9,6 @@ import {
   MovieFiltersDto,
   CustomError,
 } from "../../domain";
-import { MovieService } from "../services";
 
 export class MovieController {
   constructor(private readonly movieService: MovieService) {}
@@ -28,7 +29,7 @@ export class MovieController {
       release_year,
       min_release_year,
       max_release_year,
-      genre_id
+      genre_id,
     } = req.query;
 
     const [paginationError, paginationDto] = PaginationDto.create(
@@ -43,7 +44,7 @@ export class MovieController {
       release_year,
       min_release_year,
       max_release_year,
-      genre_id
+      genre_id,
     });
 
     if (movieFiltersError) return res.status(400).json({ movieFiltersError });

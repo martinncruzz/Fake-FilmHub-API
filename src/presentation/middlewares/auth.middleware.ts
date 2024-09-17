@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+
 import { JWTAdapter } from "../../config";
 import { prisma } from "../../data/postgres";
 

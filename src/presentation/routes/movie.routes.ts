@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { MovieService } from "../services";
-import { MovieController } from "../controllers/movie.controller";
+
+import { MovieController, MovieService } from "..";
 
 export class MovieRoutes {
   static get routes(): Router {

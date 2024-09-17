@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
-import { UserService } from "../services";
+
+import { UserService } from "..";
 import {
   CreateUserDto,
   UpdateUserDto,
@@ -21,7 +22,6 @@ export class UserController {
   };
 
   getUsers = async (req: Request, res: Response) => {
-
     const { page = 1, limit = 10 } = req.query;
 
     const [error, paginationDto] = PaginationDto.create(+page, +limit);

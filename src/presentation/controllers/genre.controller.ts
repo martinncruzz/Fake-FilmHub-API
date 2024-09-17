@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
-import { GenreService } from "../services";
+
+import { GenreService } from "..";
 import {
   CreateGenreDto,
   GenreIdDto,

@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { GenreService } from "../services";
-import { GenreController } from "../controllers/genre.controller";
+
+import { GenreController, GenreService } from "..";
 
 export class GenreRoutes {
   static get routes(): Router {

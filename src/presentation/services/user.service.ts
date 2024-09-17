@@ -1,4 +1,5 @@
 import { UserRole } from "@prisma/client";
+
 import { prisma } from "../../data/postgres";
 import {
   CreateUserDto,

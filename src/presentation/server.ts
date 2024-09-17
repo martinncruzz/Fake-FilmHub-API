@@ -20,7 +20,6 @@ export class Server {
   }
 
   async start() {
-    /* Middlewares */
     this.app.use(
       cors({
         origin: ["*"],
@@ -31,7 +30,6 @@ export class Server {
 
     this.app.use(express.json());
 
-    /* Routes */
     this.app.use(this.routes);
 
     this.serverListener = this.app.listen(this.port, () => {

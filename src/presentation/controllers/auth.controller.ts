@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import { AuthService } from "../services";
-import { LoginUserDto, UserIdDto, CustomError } from "../../domain";
+
+import { AuthService } from "..";
+import { CustomError, LoginUserDto, UserIdDto } from "../../domain";
 
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
