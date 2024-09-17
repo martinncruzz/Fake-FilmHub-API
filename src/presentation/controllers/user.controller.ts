@@ -1,26 +1,16 @@
 import { Request, Response } from "express";
 
-import { UserService } from "..";
+import { ErrorHandlerService, UserService } from "..";
 import {
   CreateUserDto,
   UpdateUserDto,
   UserIdDto,
   CheckUserEmailDto,
   PaginationDto,
-  CustomError,
 } from "../../domain";
 
 export class UserController {
   constructor(private readonly userService: UserService) {}
-
-  private handleError = (error: unknown, res: Response) => {
-    if (error instanceof CustomError)
-      return res.status(error.statusCode).json({ error: error.message });
-
-    console.log(`${error}`);
-    return res.status(500).json({ error: "Internal server error" });
-  };
-
   getUsers = async (req: Request, res: Response) => {
     const { page = 1, limit = 10 } = req.query;
 
@@ -31,7 +21,7 @@ export class UserController {
     this.userService
       .getUsers(paginationDto!)
       .then((users) => res.status(200).json(users))
-      .catch((error) => this.handleError(error, res));
+      .catch((error) => ErrorHandlerService.handleError(error, res));
   };
 
   getUserById = async (req: Request, res: Response) => {
@@ -44,7 +34,7 @@ export class UserController {
     this.userService
       .getUserById(userIdDto!)
       .then((userFound) => res.status(200).json(userFound))
-      .catch((error) => this.handleError(error, res));
+      .catch((error) => ErrorHandlerService.handleError(error, res));
   };
 
   createUser = async (req: Request, res: Response) => {
@@ -55,7 +45,7 @@ export class UserController {
     this.userService
       .createUser(createUserDto!)
       .then((newUser) => res.status(200).json(newUser))
-      .catch((error) => this.handleError(error, res));
+      .catch((error) => ErrorHandlerService.handleError(error, res));
   };
 
   checkEmail = async (req: Request, res: Response) => {
@@ -66,7 +56,7 @@ export class UserController {
     this.userService
       .checkEmail(checkUserEmailDto!)
       .then((isAvailable) => res.status(200).json(isAvailable))
-      .catch((error) => this.handleError(error, res));
+      .catch((error) => ErrorHandlerService.handleError(error, res));
   };
 
   updateUser = async (req: Request, res: Response) => {
@@ -82,6 +72,6 @@ export class UserController {
     this.userService
       .updateUser(updateUserDto!)
       .then((updatedUser) => res.status(200).json(updatedUser))
-      .catch((error) => this.handleError(error, res));
+      .catch((error) => ErrorHandlerService.handleError(error, res));
   };
 }
