@@ -1,7 +1,6 @@
-import { UserRole } from "@prisma/client";
-
 import { prisma } from "../postgres";
 import { seedData } from "..";
+import { UserRole } from "../../domain";
 
 (async () => {
   await main();
