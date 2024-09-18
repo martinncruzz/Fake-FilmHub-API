@@ -5,7 +5,10 @@ import { envs } from ".";
 const JWT_SEED = envs.JWT_SEED;
 
 export class JWTAdapter {
-  static async generateToken(payload: any, duration: string = "20d") {
+  static async generateToken(
+    payload: Record<string, any>,
+    duration: string = "20d"
+  ): Promise<string | null> {
     return new Promise((resolve) => {
       jwt.sign(
         payload,
@@ -15,8 +18,7 @@ export class JWTAdapter {
         },
         (err, token) => {
           if (err) return resolve(null);
-
-          resolve(token);
+          resolve(token ?? null);
         }
       );
     });
@@ -26,7 +28,6 @@ export class JWTAdapter {
     return new Promise((resolve) => {
       jwt.verify(token, JWT_SEED, (err, decoded) => {
         if (err) return resolve(null);
-
         resolve(decoded as T);
       });
     });
