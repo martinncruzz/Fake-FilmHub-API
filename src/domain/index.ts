@@ -11,4 +11,7 @@ export * from "./dtos/users/check-user-email.dto";
 export * from "./dtos/users/create-user.dto";
 export * from "./dtos/users/update-user.dto";
 export * from "./dtos/users/user-id.dto";
+export * from "./entities/genre.entity";
+export * from "./entities/movie.entity";
+export * from "./entities/user.entity";
 export * from "./errors/custom.error";
