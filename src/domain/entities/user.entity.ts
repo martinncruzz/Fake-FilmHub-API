@@ -12,12 +12,4 @@ export class UserEntity {
     public avatar: string,
     public role: UserRole
   ) {}
-
-  static fromObject(object: Record<string, any>): UserEntity {
-    const { user_id, fullname, email, password, avatar, role } = object;
-
-    //TODO add validations in all fields, and change the record typing from any to unknown
-
-    return new UserEntity(user_id, fullname, email, password, avatar, role);
-  }
 }
