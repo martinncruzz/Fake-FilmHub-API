@@ -1,3 +1,4 @@
+export * from "./datasources/user.datasource";
 export * from "./dtos/auth/login-user.dto";
 export * from "./dtos/genres/create-genre.dto";
 export * from "./dtos/genres/genre-id.dto";
@@ -15,3 +16,9 @@ export * from "./entities/genre.entity";
 export * from "./entities/movie.entity";
 export * from "./entities/user.entity";
 export * from "./errors/custom.error";
+export * from "./repositories/user.repository";
+export * from "./use-cases/user/check-email-availability.use-case";
+export * from "./use-cases/user/create-user.use-case";
+export * from "./use-cases/user/get-user-by-id.use-case";
+export * from "./use-cases/user/get-users.use-case";
+export * from "./use-cases/user/update-user.use-case";
