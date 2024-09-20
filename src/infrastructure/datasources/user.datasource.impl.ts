@@ -1,15 +1,12 @@
 import { UserMapper } from "..";
 import { prisma } from "../../data/postgres";
 import {
-  CheckUserEmailDto,
-  CreateUserDto,
   CustomError,
   PaginationDto,
   UpdateUserDto,
-  UserDatasource,
   UserEntity,
   UserIdDto,
-  UserRole,
+  UserDatasource,
 } from "../../domain";
 
 export class UserDatasourceImpl implements UserDatasource {
@@ -36,41 +33,6 @@ export class UserDatasourceImpl implements UserDatasource {
     return UserMapper.userEntityFromObject(user);
   }
 
-  async createUser(createUserDto: CreateUserDto): Promise<UserEntity> {
-    const isAvailable = await this.checkEmailAvailability({
-      email: createUserDto.email,
-    });
-
-    if (!isAvailable)
-      throw CustomError.badRequest("This email is already registered");
-
-    const newUser = await prisma.user.create({
-      data: {
-        ...createUserDto,
-        role: UserRole.user,
-      },
-    });
-
-    return UserMapper.userEntityFromObject(newUser);
-  }
-
-  async checkEmailAvailability(
-    checkUserEmailDto: CheckUserEmailDto
-  ): Promise<boolean> {
-    const userRegistered = await prisma.user.findFirst({
-      where: {
-        email: {
-          equals: checkUserEmailDto.email,
-          mode: "insensitive",
-        },
-      },
-    });
-
-    if (userRegistered) return false;
-
-    return true;
-  }
-
   async updateUser(updateUserDto: UpdateUserDto): Promise<UserEntity> {
     const { user_id, ...updateUserDtoData } = updateUserDto;
     const userExists = await this.getUserById({ user_id });
@@ -79,8 +41,8 @@ export class UserDatasourceImpl implements UserDatasource {
       updateUserDto.email &&
       updateUserDto.email.toLowerCase() !== userExists.email.toLowerCase()
     ) {
-      const isAvailable = await this.checkEmailAvailability({
-        email: updateUserDto.email,
+      const isAvailable = await prisma.user.findFirst({
+        where: { email: updateUserDto.email },
       });
 
       if (!isAvailable)

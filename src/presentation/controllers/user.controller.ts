@@ -1,10 +1,6 @@
 import { Request, Response } from "express";
 
 import {
-  CheckEmailAvailability,
-  CheckUserEmailDto,
-  CreateUser,
-  CreateUserDto,
   GetUserById,
   GetUsers,
   PaginationDto,
@@ -38,26 +34,6 @@ export class UserController {
 
     new GetUserById(this.userRepository)
       .execute(userIdDto!)
-      .then((data) => res.json(data))
-      .catch((error) => ErrorHandlerService.handleError(error, res));
-  };
-
-  createUser = async (req: Request, res: Response) => {
-    const [error, createUserDto] = CreateUserDto.create(req.body);
-    if (error) return res.status(400).json({ error });
-
-    new CreateUser(this.userRepository)
-      .execute(createUserDto!)
-      .then((data) => res.json(data))
-      .catch((error) => ErrorHandlerService.handleError(error, res));
-  };
-
-  checkEmailAvailability = async (req: Request, res: Response) => {
-    const [error, checkUserEmailDto] = CheckUserEmailDto.create(req.body);
-    if (error) return res.status(400).json({ error });
-
-    new CheckEmailAvailability(this.userRepository)
-      .execute(checkUserEmailDto!)
       .then((data) => res.json(data))
       .catch((error) => ErrorHandlerService.handleError(error, res));
   };

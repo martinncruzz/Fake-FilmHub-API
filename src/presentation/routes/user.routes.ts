@@ -14,8 +14,6 @@ export class UserRoutes {
 
     router.get("/", userController.getUsers);
     router.get("/:id", userController.getUserById);
-    router.post("/", userController.createUser);
-    router.post("/is-available", userController.checkEmailAvailability);
     router.put("/:id", userController.updateUser);
 
     return router;
