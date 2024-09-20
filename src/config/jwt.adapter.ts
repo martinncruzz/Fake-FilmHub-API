@@ -18,7 +18,7 @@ export class JWTAdapter {
         },
         (err, token) => {
           if (err) return resolve(null);
-          resolve(token ?? null);
+          resolve(token!);
         }
       );
     });
