@@ -1,4 +1,4 @@
-export class CreateUserDto {
+export class RegisterUserDto {
   private constructor(
     public readonly fullname: string,
     public readonly email: string,
@@ -24,24 +24,24 @@ export class CreateUserDto {
     return emailPattern.test(email);
   }
 
-  static create(props: { [key: string]: any }): [string?, CreateUserDto?] {
+  static create(props: { [key: string]: any }): [string?, RegisterUserDto?] {
     const { fullname, email, password, avatar } = props;
 
-    if (!CreateUserDto.isStringValid(fullname, 5, 100))
+    if (!RegisterUserDto.isStringValid(fullname, 5, 100))
       return ["Missing fullname or invalid fullname"];
 
     if (
-      !CreateUserDto.isStringValid(email, 10, 255) &&
-      !CreateUserDto.isEmailValid(email)
+      !RegisterUserDto.isStringValid(email, 10, 255) &&
+      !RegisterUserDto.isEmailValid(email)
     )
       return ["Missing email or invalid email"];
 
-    if (!CreateUserDto.isStringValid(password, 5, 255))
+    if (!RegisterUserDto.isStringValid(password, 5, 255))
       return ["Missing password or invalid password"];
 
-    if (!CreateUserDto.isStringValid(avatar, 5, 255))
+    if (!RegisterUserDto.isStringValid(avatar, 5, 255))
       return ["Missing avatar or invalid avatar"];
 
-    return [undefined, new CreateUserDto(fullname, email, password, avatar)];
+    return [undefined, new RegisterUserDto(fullname, email, password, avatar)];
   }
 }
