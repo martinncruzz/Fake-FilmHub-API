@@ -1,15 +1,15 @@
 import { Request, Response } from "express";
 
+import { ErrorHandlerService } from "..";
 import {
-  GetUserById,
-  GetUsers,
+  GetUserByIdUseCaseImpl,
+  GetUsersUseCaseImpl,
   PaginationDto,
-  UpdateUser,
   UpdateUserDto,
+  UpdateUserUseCaseImpl,
   UserIdDto,
   UserRepository,
 } from "../../domain";
-import { ErrorHandlerService } from "..";
 
 export class UserController {
   constructor(private readonly userRepository: UserRepository) {}
@@ -20,7 +20,7 @@ export class UserController {
     const [error, paginationDto] = PaginationDto.create(+page, +limit);
     if (error) return res.status(400).json({ error });
 
-    new GetUsers(this.userRepository)
+    new GetUsersUseCaseImpl(this.userRepository)
       .execute(paginationDto!)
       .then((data) => res.json(data))
       .catch((error) => ErrorHandlerService.handleError(error, res));
@@ -32,7 +32,7 @@ export class UserController {
     const [error, userIdDto] = UserIdDto.get({ user_id: +id });
     if (error) return res.status(400).json({ error });
 
-    new GetUserById(this.userRepository)
+    new GetUserByIdUseCaseImpl(this.userRepository)
       .execute(userIdDto!)
       .then((data) => res.json(data))
       .catch((error) => ErrorHandlerService.handleError(error, res));
@@ -47,7 +47,7 @@ export class UserController {
     });
     if (error) return res.status(400).json({ error });
 
-    new UpdateUser(this.userRepository)
+    new UpdateUserUseCaseImpl(this.userRepository)
       .execute(updateUserDto!)
       .then((data) => res.json(data))
       .catch((error) => ErrorHandlerService.handleError(error, res));
