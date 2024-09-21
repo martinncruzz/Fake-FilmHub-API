@@ -1,26 +1,32 @@
 import { Request, Response } from "express";
 
-import { ErrorHandlerService, GenreService } from "..";
+import { ErrorHandlerService } from "..";
 import {
   CreateGenreDto,
   GenreIdDto,
   UpdateGenreDto,
   PaginationDto,
+  GenreRepository,
+  GetGenresUseCaseImpl,
+  CreateGenreUseCaseImpl,
+  DeleteGenreUseCaseImpl,
+  GetGenreByIdUseCaseImpl,
+  GetMoviesByGenreUseCaseImpl,
+  UpdateGenreUseCaseImpl,
 } from "../../domain";
 
 export class GenreController {
-  constructor(private readonly genreService: GenreService) {}
+  constructor(private readonly genreRepository: GenreRepository) {}
 
   getGenres = async (req: Request, res: Response) => {
     const { page = 1, limit = 10 } = req.query;
 
     const [error, paginationDto] = PaginationDto.create(+page, +limit);
-
     if (error) return res.status(400).json({ error });
 
-    this.genreService
-      .getGenres(paginationDto!)
-      .then((genres) => res.status(200).json(genres))
+    new GetGenresUseCaseImpl(this.genreRepository)
+      .execute(paginationDto!)
+      .then((data) => res.json(data))
       .catch((error) => ErrorHandlerService.handleError(error, res));
   };
 
@@ -28,12 +34,11 @@ export class GenreController {
     const { id } = req.params;
 
     const [error, genreIdDto] = GenreIdDto.get({ genre_id: +id });
-
     if (error) return res.status(400).json({ error });
 
-    this.genreService
-      .getMoviesByGenre(genreIdDto!)
-      .then((moviesFound) => res.status(200).json(moviesFound))
+    new GetMoviesByGenreUseCaseImpl(this.genreRepository)
+      .execute(genreIdDto!)
+      .then((data) => res.json(data))
       .catch((error) => ErrorHandlerService.handleError(error, res));
   };
 
@@ -41,23 +46,21 @@ export class GenreController {
     const { id } = req.params;
 
     const [error, genreIdDto] = GenreIdDto.get({ genre_id: +id });
-
     if (error) return res.status(400).json({ error });
 
-    this.genreService
-      .getGenreById(genreIdDto!)
-      .then((genreFound) => res.status(200).json(genreFound))
+    new GetGenreByIdUseCaseImpl(this.genreRepository)
+      .execute(genreIdDto!)
+      .then((data) => res.json(data))
       .catch((error) => ErrorHandlerService.handleError(error, res));
   };
 
   createGenre = async (req: Request, res: Response) => {
     const [error, createGenreDto] = CreateGenreDto.create(req.body);
-
     if (error) return res.status(400).json({ error });
 
-    this.genreService
-      .createGenre(createGenreDto!)
-      .then((newGenre) => res.status(200).json(newGenre))
+    new CreateGenreUseCaseImpl(this.genreRepository)
+      .execute(createGenreDto!)
+      .then((data) => res.json(data))
       .catch((error) => ErrorHandlerService.handleError(error, res));
   };
 
@@ -68,12 +71,11 @@ export class GenreController {
       ...req.body,
       genre_id: +id,
     });
-
     if (error) return res.status(400).json({ error });
 
-    this.genreService
-      .updateGenre(updateGenreDto!)
-      .then((updatedGenre) => res.status(200).json(updatedGenre))
+    new UpdateGenreUseCaseImpl(this.genreRepository)
+      .execute(updateGenreDto!)
+      .then((data) => res.json(data))
       .catch((error) => ErrorHandlerService.handleError(error, res));
   };
 
@@ -81,12 +83,11 @@ export class GenreController {
     const { id } = req.params;
 
     const [error, genreIdDto] = GenreIdDto.get({ genre_id: +id });
-
     if (error) return res.status(400).json({ error });
 
-    this.genreService
-      .deleteGenre(genreIdDto!)
-      .then((deletedGenre) => res.status(200).json(deletedGenre))
+    new DeleteGenreUseCaseImpl(this.genreRepository)
+      .execute(genreIdDto!)
+      .then((data) => res.json(data))
       .catch((error) => ErrorHandlerService.handleError(error, res));
   };
 }

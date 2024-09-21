@@ -1,13 +1,16 @@
 import { Router } from "express";
 
-import { GenreController, GenreService } from "..";
+import { GenreController } from "..";
+import { GenreDatasourceImpl, GenreRepositoryImpl } from "../../infrastructure";
 
 export class GenreRoutes {
   static get routes(): Router {
     const router = Router();
 
-    const genreService = new GenreService();
-    const genreController = new GenreController(genreService);
+    const genreDatasource = new GenreDatasourceImpl();
+    const genreRepository = new GenreRepositoryImpl(genreDatasource);
+
+    const genreController = new GenreController(genreRepository);
 
     router.get("/", genreController.getGenres);
     router.get("/:id/movies", genreController.getMoviesByGenre);
