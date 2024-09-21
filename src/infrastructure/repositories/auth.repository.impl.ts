@@ -18,9 +18,7 @@ export class AuthRepositoryImpl implements AuthRepository {
     return this.authDatasource.loginUser(loginUserDto);
   }
 
-  checkEmailAvailability(
-    checkUserEmailDto: CheckUserEmailDto
-  ): Promise<boolean> {
-    return this.authDatasource.checkEmailAvailability(checkUserEmailDto);
+  isEmailAvailable(checkUserEmailDto: CheckUserEmailDto): Promise<boolean> {
+    return this.authDatasource.isEmailAvailable(checkUserEmailDto);
   }
 }

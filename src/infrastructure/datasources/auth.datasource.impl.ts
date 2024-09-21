@@ -12,11 +12,11 @@ import {
 
 export class AuthDatasourceImpl implements AuthDatasource {
   async registerUser(registerUserDto: RegisterUserDto): Promise<UserEntity> {
-    const isAvailable = await this.checkEmailAvailability({
+    const isEmailAvailable = await this.isEmailAvailable({
       email: registerUserDto.email,
     });
 
-    if (!isAvailable)
+    if (!isEmailAvailable)
       throw CustomError.badRequest("This email is already registered");
 
     const newUser = await prisma.user.create({
@@ -36,27 +36,21 @@ export class AuthDatasourceImpl implements AuthDatasource {
       where: { email },
     });
 
-    if (!user) throw CustomError.badRequest("Invalid credentials");
-    if (user.password !== password)
+    if (!user || user.password !== password)
       throw CustomError.badRequest("Invalid credentials");
 
     return UserMapper.userEntityFromObject(user);
   }
 
-  async checkEmailAvailability(
+  async isEmailAvailable(
     checkUserEmailDto: CheckUserEmailDto
   ): Promise<boolean> {
     const userRegistered = await prisma.user.findFirst({
       where: {
-        email: {
-          equals: checkUserEmailDto.email,
-          mode: "insensitive",
-        },
+        email: { equals: checkUserEmailDto.email, mode: "insensitive" },
       },
     });
 
-    if (userRegistered) return false;
-
-    return true;
+    return !userRegistered;
   }
 }

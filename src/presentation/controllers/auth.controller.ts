@@ -3,13 +3,13 @@ import { Request, Response } from "express";
 import { ErrorHandlerService } from "..";
 import {
   AuthRepository,
-  CheckEmailAvailability,
   CheckUserEmailDto,
-  GetCurrentSession,
-  LoginUser,
+  GetCurrentSessionUseCaseImpl,
+  IsEmailAvailableUseCaseImpl,
   LoginUserDto,
-  RegisterUser,
+  LoginUserUseCaseImpl,
   RegisterUserDto,
+  RegisterUserUseCaseImpl,
 } from "../../domain";
 
 export class AuthController {
@@ -19,7 +19,7 @@ export class AuthController {
     const [error, registerUserDto] = RegisterUserDto.create(req.body);
     if (error) return res.status(400).json({ error });
 
-    new RegisterUser(this.authRepository)
+    new RegisterUserUseCaseImpl(this.authRepository)
       .execute(registerUserDto!)
       .then((data) => res.json(data))
       .catch((error) => ErrorHandlerService.handleError(error, res));
@@ -29,24 +29,24 @@ export class AuthController {
     const [error, loginUserDto] = LoginUserDto.create(req.body);
     if (error) return res.status(400).json({ error });
 
-    new LoginUser(this.authRepository)
+    new LoginUserUseCaseImpl(this.authRepository)
       .execute(loginUserDto!)
       .then((data) => res.json(data))
       .catch((error) => ErrorHandlerService.handleError(error, res));
   };
 
-  checkEmailAvailability = async (req: Request, res: Response) => {
+  isEmailAvailable = async (req: Request, res: Response) => {
     const [error, checkUserEmailDto] = CheckUserEmailDto.create(req.body);
     if (error) return res.status(400).json({ error });
 
-    new CheckEmailAvailability(this.authRepository)
+    new IsEmailAvailableUseCaseImpl(this.authRepository)
       .execute(checkUserEmailDto!)
       .then((data) => res.json(data))
       .catch((error) => ErrorHandlerService.handleError(error, res));
   };
 
   getCurrentSession = async (req: Request, res: Response) => {
-    const user = new GetCurrentSession().execute(req.body.user);
+    const user = new GetCurrentSessionUseCaseImpl().execute(req.body.user);
     return res.json(user);
   };
 }
