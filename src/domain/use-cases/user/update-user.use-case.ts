@@ -4,7 +4,7 @@ interface UpdateUserUseCase {
   execute(updateUserDto: UpdateUserDto): Promise<UserEntity>;
 }
 
-export class UpdateUser implements UpdateUserUseCase {
+export class UpdateUserUseCaseImpl implements UpdateUserUseCase {
   constructor(private readonly userRepository: UserRepository) {}
 
   async execute(updateUserDto: UpdateUserDto): Promise<UserEntity> {

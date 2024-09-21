@@ -4,7 +4,7 @@ interface RegisterUserUseCase {
   execute(registerUserDto: RegisterUserDto): Promise<UserEntity>;
 }
 
-export class RegisterUser implements RegisterUserUseCase {
+export class RegisterUserUseCaseImpl implements RegisterUserUseCase {
   constructor(private readonly authRepository: AuthRepository) {}
 
   async execute(registerUserDto: RegisterUserDto): Promise<UserEntity> {

@@ -4,7 +4,7 @@ interface GetUserByIdUseCase {
   execute(userIdDto: UserIdDto): Promise<UserEntity>;
 }
 
-export class GetUserById implements GetUserByIdUseCase {
+export class GetUserByIdUseCaseImpl implements GetUserByIdUseCase {
   constructor(private readonly userRepository: UserRepository) {}
 
   async execute(userIdDto: UserIdDto): Promise<UserEntity> {

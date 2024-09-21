@@ -14,7 +14,7 @@ interface LoginUserUseCase {
   execute(loginUserDto: LoginUserDto): Promise<LoginUserUseCaseResponse>;
 }
 
-export class LoginUser implements LoginUserUseCase {
+export class LoginUserUseCaseImpl implements LoginUserUseCase {
   constructor(
     private readonly authRepository: AuthRepository,
     private readonly signToken: SignToken = JWTAdapter.generateToken

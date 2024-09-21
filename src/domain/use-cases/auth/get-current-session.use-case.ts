@@ -4,7 +4,7 @@ interface GetCurrentSessionUseCase {
   execute(user: UserEntity): UserEntity;
 }
 
-export class GetCurrentSession implements GetCurrentSessionUseCase {
+export class GetCurrentSessionUseCaseImpl implements GetCurrentSessionUseCase {
   execute(user: UserEntity): UserEntity {
     return user;
   }

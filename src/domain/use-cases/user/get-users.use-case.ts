@@ -4,7 +4,7 @@ interface GetUsersUseCase {
   execute(paginationDto: PaginationDto): Promise<UserEntity[]>;
 }
 
-export class GetUsers implements GetUsersUseCase {
+export class GetUsersUseCaseImpl implements GetUsersUseCase {
   constructor(private readonly userRepository: UserRepository) {}
 
   async execute(paginationDto: PaginationDto): Promise<UserEntity[]> {
