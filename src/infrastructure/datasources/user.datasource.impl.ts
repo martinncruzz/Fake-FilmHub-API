@@ -23,9 +23,7 @@ export class UserDatasourceImpl implements UserDatasource {
 
   async getUserById(userIdDto: UserIdDto): Promise<UserEntity> {
     const user = await prisma.user.findFirst({
-      where: {
-        user_id: userIdDto.user_id,
-      },
+      where: { user_id: userIdDto.user_id },
     });
 
     if (!user) throw CustomError.notFound("User not found");
@@ -35,24 +33,22 @@ export class UserDatasourceImpl implements UserDatasource {
 
   async updateUser(updateUserDto: UpdateUserDto): Promise<UserEntity> {
     const { user_id, ...updateUserDtoData } = updateUserDto;
-    const userExists = await this.getUserById({ user_id });
+    const userFromDB = await this.getUserById({ user_id });
 
     if (
       updateUserDto.email &&
-      updateUserDto.email.toLowerCase() !== userExists.email.toLowerCase()
+      updateUserDto.email.toLowerCase() !== userFromDB.email.toLowerCase()
     ) {
-      const isAvailable = await prisma.user.findFirst({
+      const isEmailTaken = await prisma.user.findFirst({
         where: { email: updateUserDto.email },
       });
 
-      if (!isAvailable)
+      if (isEmailTaken)
         throw CustomError.badRequest("This email is already registered");
     }
 
     const updatedUser = await prisma.user.update({
-      where: {
-        user_id: user_id,
-      },
+      where: { user_id },
       data: updateUserDtoData,
     });
 
