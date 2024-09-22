@@ -21,8 +21,8 @@ export class GenreController {
   getGenres = async (req: Request, res: Response) => {
     const { page = 1, limit = 10 } = req.query;
 
-    const [error, paginationDto] = PaginationDto.create(+page, +limit);
-    if (error) return res.status(400).json({ error });
+    const [errors, paginationDto] = PaginationDto.create(+page, +limit);
+    if (errors) return res.status(400).json({ errors });
 
     new GetGenresUseCaseImpl(this.genreRepository)
       .execute(paginationDto!)
@@ -33,8 +33,8 @@ export class GenreController {
   getMoviesByGenre = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const [error, genreIdDto] = GenreIdDto.get({ genre_id: +id });
-    if (error) return res.status(400).json({ error });
+    const [errors, genreIdDto] = GenreIdDto.create({ genre_id: +id });
+    if (errors) return res.status(400).json({ errors });
 
     new GetMoviesByGenreUseCaseImpl(this.genreRepository)
       .execute(genreIdDto!)
@@ -45,8 +45,8 @@ export class GenreController {
   getGenreById = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const [error, genreIdDto] = GenreIdDto.get({ genre_id: +id });
-    if (error) return res.status(400).json({ error });
+    const [errors, genreIdDto] = GenreIdDto.create({ genre_id: +id });
+    if (errors) return res.status(400).json({ errors });
 
     new GetGenreByIdUseCaseImpl(this.genreRepository)
       .execute(genreIdDto!)
@@ -55,8 +55,8 @@ export class GenreController {
   };
 
   createGenre = async (req: Request, res: Response) => {
-    const [error, createGenreDto] = CreateGenreDto.create(req.body);
-    if (error) return res.status(400).json({ error });
+    const [errors, createGenreDto] = CreateGenreDto.create(req.body);
+    if (errors) return res.status(400).json({ errors });
 
     new CreateGenreUseCaseImpl(this.genreRepository)
       .execute(createGenreDto!)
@@ -67,11 +67,11 @@ export class GenreController {
   updateGenre = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const [error, updateGenreDto] = UpdateGenreDto.update({
+    const [errors, updateGenreDto] = UpdateGenreDto.create({
       ...req.body,
       genre_id: +id,
     });
-    if (error) return res.status(400).json({ error });
+    if (errors) return res.status(400).json({ errors });
 
     new UpdateGenreUseCaseImpl(this.genreRepository)
       .execute(updateGenreDto!)
@@ -82,8 +82,8 @@ export class GenreController {
   deleteGenre = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const [error, genreIdDto] = GenreIdDto.get({ genre_id: +id });
-    if (error) return res.status(400).json({ error });
+    const [errors, genreIdDto] = GenreIdDto.create({ genre_id: +id });
+    if (errors) return res.status(400).json({ errors });
 
     new DeleteGenreUseCaseImpl(this.genreRepository)
       .execute(genreIdDto!)

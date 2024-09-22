@@ -16,8 +16,8 @@ export class AuthController {
   constructor(private readonly authRepository: AuthRepository) {}
 
   registerUser = async (req: Request, res: Response) => {
-    const [error, registerUserDto] = RegisterUserDto.create(req.body);
-    if (error) return res.status(400).json({ error });
+    const [errors, registerUserDto] = RegisterUserDto.create(req.body);
+    if (errors) return res.status(400).json({ errors });
 
     new RegisterUserUseCaseImpl(this.authRepository)
       .execute(registerUserDto!)
@@ -26,8 +26,8 @@ export class AuthController {
   };
 
   loginUser = async (req: Request, res: Response) => {
-    const [error, loginUserDto] = LoginUserDto.create(req.body);
-    if (error) return res.status(400).json({ error });
+    const [errors, loginUserDto] = LoginUserDto.create(req.body);
+    if (errors) return res.status(400).json({ errors });
 
     new LoginUserUseCaseImpl(this.authRepository)
       .execute(loginUserDto!)
@@ -36,8 +36,8 @@ export class AuthController {
   };
 
   isEmailAvailable = async (req: Request, res: Response) => {
-    const [error, checkUserEmailDto] = CheckUserEmailDto.create(req.body);
-    if (error) return res.status(400).json({ error });
+    const [errors, checkUserEmailDto] = CheckUserEmailDto.create(req.body);
+    if (errors) return res.status(400).json({ errors });
 
     new IsEmailAvailableUseCaseImpl(this.authRepository)
       .execute(checkUserEmailDto!)

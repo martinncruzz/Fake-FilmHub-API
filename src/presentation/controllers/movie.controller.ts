@@ -28,7 +28,8 @@ export class MovieController {
       +limit
     );
 
-    if (paginationError) return res.status(400).json({ paginationError });
+    if (paginationError)
+      return res.status(400).json({ errors: paginationError });
 
     const [movieFiltersError, movieFiltersDto] = MovieFiltersDto.create({
       title,
@@ -38,7 +39,8 @@ export class MovieController {
       genre_id,
     });
 
-    if (movieFiltersError) return res.status(400).json({ movieFiltersError });
+    if (movieFiltersError)
+      return res.status(400).json({ errors: movieFiltersError });
 
     this.movieService
       .getMovies(paginationDto!, movieFiltersDto!)
@@ -49,9 +51,8 @@ export class MovieController {
   getMovieById = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const [error, movieIdDto] = MovieIdDto.get({ movie_id: +id });
-
-    if (error) return res.status(400).json({ error });
+    const [errors, movieIdDto] = MovieIdDto.create({ movie_id: +id });
+    if (errors) return res.status(400).json({ errors });
 
     this.movieService
       .getMovieById(movieIdDto!)
@@ -60,9 +61,8 @@ export class MovieController {
   };
 
   createMovie = async (req: Request, res: Response) => {
-    const [error, createMovieDto] = CreateMovieDto.create(req.body);
-
-    if (error) return res.status(400).json({ error });
+    const [errors, createMovieDto] = CreateMovieDto.create(req.body);
+    if (errors) return res.status(400).json({ errors });
 
     this.movieService
       .createMovie(createMovieDto!)
@@ -73,12 +73,11 @@ export class MovieController {
   updateMovie = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const [error, updateMovieDto] = UpdateMovieDto.update({
+    const [errors, updateMovieDto] = UpdateMovieDto.create({
       ...req.body,
       movie_id: +id,
     });
-
-    if (error) return res.status(400).json({ error });
+    if (errors) return res.status(400).json({ errors });
 
     this.movieService
       .updateMovie(updateMovieDto!)
@@ -89,11 +88,8 @@ export class MovieController {
   deleteMovie = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const [error, movieIdDto] = MovieIdDto.get({
-      movie_id: +id,
-    });
-
-    if (error) return res.status(400).json({ error });
+    const [errors, movieIdDto] = MovieIdDto.create({ movie_id: +id });
+    if (errors) return res.status(400).json({ errors });
 
     this.movieService
       .deleteMovie(movieIdDto!)

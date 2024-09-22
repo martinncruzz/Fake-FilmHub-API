@@ -17,8 +17,8 @@ export class UserController {
   getUsers = async (req: Request, res: Response) => {
     const { page = 1, limit = 10 } = req.query;
 
-    const [error, paginationDto] = PaginationDto.create(+page, +limit);
-    if (error) return res.status(400).json({ error });
+    const [errors, paginationDto] = PaginationDto.create(+page, +limit);
+    if (errors) return res.status(400).json({ errors });
 
     new GetUsersUseCaseImpl(this.userRepository)
       .execute(paginationDto!)
@@ -29,8 +29,8 @@ export class UserController {
   getUserById = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const [error, userIdDto] = UserIdDto.get({ user_id: +id });
-    if (error) return res.status(400).json({ error });
+    const [errors, userIdDto] = UserIdDto.create({ user_id: +id });
+    if (errors) return res.status(400).json({ errors });
 
     new GetUserByIdUseCaseImpl(this.userRepository)
       .execute(userIdDto!)
@@ -41,11 +41,11 @@ export class UserController {
   updateUser = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const [error, updateUserDto] = UpdateUserDto.update({
+    const [errors, updateUserDto] = UpdateUserDto.create({
       ...req.body,
       user_id: +id,
     });
-    if (error) return res.status(400).json({ error });
+    if (errors) return res.status(400).json({ errors });
 
     new UpdateUserUseCaseImpl(this.userRepository)
       .execute(updateUserDto!)
