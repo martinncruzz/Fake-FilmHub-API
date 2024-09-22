@@ -1,11 +1,16 @@
+import { userIdSchema, ZodAdapter } from "../../../config";
+
 export class UserIdDto {
   private constructor(public readonly user_id: number) {}
 
-  static get(props: { [key: string]: any }): [string?, UserIdDto?] {
-    const { user_id } = props;
+  static create(
+    props: Record<string, any>
+  ): [{ field: string; message: string }[]?, UserIdDto?] {
+    const [errors, parsedData] = ZodAdapter.validate(userIdSchema, props);
 
-    if (!user_id || !Number.isInteger(user_id) || user_id <= 0)
-      return ["Missing user id or invalid user id"];
+    if (errors) return [errors];
+
+    const { user_id } = parsedData!;
 
     return [undefined, new UserIdDto(user_id)];
   }

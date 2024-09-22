@@ -1,3 +1,5 @@
+import { updateGenreSchema, ZodAdapter } from "../../../config";
+
 export class UpdateGenreDto {
   private constructor(
     public readonly genre_id: number,
@@ -5,30 +7,14 @@ export class UpdateGenreDto {
     public readonly image?: string
   ) {}
 
-  private static isStringValid(
-    value: string | undefined,
-    minLength: number,
-    maxLength: number
-  ): boolean {
-    return (
-      value === undefined ||
-      (typeof value === "string" &&
-        value.length >= minLength &&
-        value.length <= maxLength)
-    );
-  }
+  static create(
+    props: Record<string, any>
+  ): [{ field: string; message: string }[]?, UpdateGenreDto?] {
+    const [errors, parsedData] = ZodAdapter.validate(updateGenreSchema, props);
 
-  static update(props: { [key: string]: any }): [string?, UpdateGenreDto?] {
-    const { genre_id, name, image } = props;
+    if (errors) return [errors];
 
-    if (!genre_id || !Number.isInteger(genre_id) || genre_id <= 0)
-      return ["Missing genre id or invalid genre id"];
-
-    if (!UpdateGenreDto.isStringValid(name, 2, 255))
-      return ["Missing name or invalid name"];
-
-    if (!UpdateGenreDto.isStringValid(image, 5, 255))
-      return ["Missing image or invalid image"];
+    const { genre_id, name, image } = parsedData!;
 
     return [undefined, new UpdateGenreDto(genre_id, name, image)];
   }

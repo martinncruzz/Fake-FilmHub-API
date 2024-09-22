@@ -1,11 +1,16 @@
+import { movieIdSchema, ZodAdapter } from "../../../config";
+
 export class MovieIdDto {
   private constructor(public readonly movie_id: number) {}
 
-  static get(props: { [key: string]: any }): [string?, MovieIdDto?] {
-    const { movie_id } = props;
+  static create(
+    props: Record<string, any>
+  ): [{ field: string; message: string }[]?, MovieIdDto?] {
+    const [errors, parsedData] = ZodAdapter.validate(movieIdSchema, props);
 
-    if (!movie_id || !Number.isInteger(movie_id) || movie_id <= 0)
-      return ["Missing movie id or invalid movie id"];
+    if (errors) return [errors];
+
+    const { movie_id } = parsedData!;
 
     return [undefined, new MovieIdDto(movie_id)];
   }

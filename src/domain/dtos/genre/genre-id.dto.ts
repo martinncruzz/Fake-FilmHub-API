@@ -1,11 +1,16 @@
+import { genreIdSchema, ZodAdapter } from "../../../config";
+
 export class GenreIdDto {
   private constructor(public readonly genre_id: number) {}
 
-  static get(props: { [key: string]: any }): [string?, GenreIdDto?] {
-    const { genre_id } = props;
+  static create(
+    props: Record<string, any>
+  ): [{ field: string; message: string }[]?, GenreIdDto?] {
+    const [errors, parsedData] = ZodAdapter.validate(genreIdSchema, props);
 
-    if (!genre_id || !Number.isInteger(genre_id) || genre_id <= 0)
-      return ["Missing genre id or invalid genre id"];
+    if (errors) return [errors];
+
+    const { genre_id } = parsedData!;
 
     return [undefined, new GenreIdDto(genre_id)];
   }

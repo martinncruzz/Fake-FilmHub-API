@@ -1,30 +1,19 @@
+import { createGenreSchema, ZodAdapter } from "../../../config";
+
 export class CreateGenreDto {
   private constructor(
     public readonly name: string,
     public readonly image: string
   ) {}
 
-  private static isStringValid(
-    value: string,
-    minLength: number,
-    maxLength: number
-  ): boolean {
-    return (
-      value !== undefined &&
-      typeof value === "string" &&
-      value.length >= minLength &&
-      value.length <= maxLength
-    );
-  }
+  static create(
+    props: Record<string, any>
+  ): [{ field: string; message: string }[]?, CreateGenreDto?] {
+    const [errors, parsedData] = ZodAdapter.validate(createGenreSchema, props);
 
-  static create(props: { [key: string]: any }): [string?, CreateGenreDto?] {
-    const { name, image } = props;
+    if (errors) return [errors];
 
-    if (!CreateGenreDto.isStringValid(name, 2, 50))
-      return ["Missing name or invalid name"];
-
-    if (!CreateGenreDto.isStringValid(image, 5, 255))
-      return ["Missing image or invalid image"];
+    const { name, image } = parsedData!;
 
     return [undefined, new CreateGenreDto(name, image)];
   }
