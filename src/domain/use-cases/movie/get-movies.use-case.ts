@@ -6,11 +6,10 @@ import {
   PaginationDto,
   FiltersQueryBuilder,
   ResourceType,
+  PaginationResult,
 } from "../..";
 
-interface GetMoviesUseCaseResponse {
-  prev: string | null;
-  next: string | null;
+interface GetMoviesUseCaseResponse extends PaginationResult {
   movies: MovieEntity[];
 }
 
@@ -20,7 +19,7 @@ type BuildPagination = (
   total: number,
   resourceType: ResourceType,
   filtersQuery?: string
-) => { next: string | null; prev: string | null };
+) => PaginationResult;
 
 interface GetMoviesUseCase {
   execute(
