@@ -13,7 +13,7 @@ export class UserDatasourceImpl implements UserDatasource {
   async getUsers(paginationDto: PaginationDto): Promise<UserEntity[]> {
     const { page, limit } = paginationDto;
 
-    const users = await prisma.user.findMany({
+    const users = await prisma.userModel.findMany({
       skip: (page - 1) * limit,
       take: limit,
     });
@@ -22,7 +22,7 @@ export class UserDatasourceImpl implements UserDatasource {
   }
 
   async getUserById(userIdDto: UserIdDto): Promise<UserEntity> {
-    const user = await prisma.user.findFirst({
+    const user = await prisma.userModel.findFirst({
       where: { user_id: userIdDto.user_id },
     });
 
@@ -39,7 +39,7 @@ export class UserDatasourceImpl implements UserDatasource {
       updateUserDto.email &&
       updateUserDto.email.toLowerCase() !== userFromDB.email.toLowerCase()
     ) {
-      const isEmailTaken = await prisma.user.findFirst({
+      const isEmailTaken = await prisma.userModel.findFirst({
         where: { email: updateUserDto.email },
       });
 
@@ -47,7 +47,7 @@ export class UserDatasourceImpl implements UserDatasource {
         throw CustomError.badRequest("This email is already registered");
     }
 
-    const updatedUser = await prisma.user.update({
+    const updatedUser = await prisma.userModel.update({
       where: { user_id },
       data: updateUserDtoData,
     });

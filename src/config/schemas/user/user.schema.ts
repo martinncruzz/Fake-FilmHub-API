@@ -8,5 +8,5 @@ export const userSchema: z.ZodType<UserEntity> = z.object({
   email: z.string().email(),
   password: z.string().min(6),
   avatar: z.string().url(),
-  role: z.enum([UserRole.admin, UserRole.user]),
+  role: z.enum([UserRole.ADMIN, UserRole.USER]),
 });

@@ -27,7 +27,7 @@ export class MovieDatasourceImpl implements MovieDatasource {
       genre_id,
     } = movieFiltersDto;
 
-    const movieFilters: Prisma.MovieWhereInput = {
+    const movieFilters: Prisma.MovieModelWhereInput = {
       title: { contains: title, mode: "insensitive" },
       release_year: release_year
         ? { equals: release_year }
@@ -36,10 +36,10 @@ export class MovieDatasourceImpl implements MovieDatasource {
     };
 
     const [total, movies] = await prisma.$transaction([
-      prisma.movie.count({
+      prisma.movieModel.count({
         where: movieFilters,
       }),
-      prisma.movie.findMany({
+      prisma.movieModel.findMany({
         where: movieFilters,
         include: { genres: { include: { genre: true } } },
         skip: (page - 1) * limit,
@@ -59,7 +59,7 @@ export class MovieDatasourceImpl implements MovieDatasource {
   }
 
   async getMovieById(movieIdDto: MovieIdDto): Promise<MovieEntity> {
-    const movie = await prisma.movie.findFirst({
+    const movie = await prisma.movieModel.findFirst({
       where: { movie_id: movieIdDto.movie_id },
       include: { genres: { include: { genre: true } } },
     });
@@ -75,14 +75,14 @@ export class MovieDatasourceImpl implements MovieDatasource {
   async createMovie(createMovieDto: CreateMovieDto): Promise<MovieEntity> {
     const { genre_ids, ...createMovieDtoData } = createMovieDto;
 
-    const genresFromDB = await prisma.genre.findMany({
+    const genresFromDB = await prisma.genreModel.findMany({
       where: { genre_id: { in: genre_ids } },
     });
 
     if (genresFromDB.length !== genre_ids.length)
       throw CustomError.badRequest("One or more genre_ids are invalid");
 
-    const newMovie = await prisma.movie.create({
+    const newMovie = await prisma.movieModel.create({
       data: {
         ...createMovieDtoData,
         genres: {
@@ -104,7 +104,7 @@ export class MovieDatasourceImpl implements MovieDatasource {
     const movieFromDB = await this.getMovieById({ movie_id });
 
     if (!genre_ids || genre_ids.length === 0) {
-      const updatedMovie = await prisma.movie.update({
+      const updatedMovie = await prisma.movieModel.update({
         where: { movie_id },
         data: updateMovieDtoData,
         include: { genres: { include: { genre: true } } },
@@ -116,7 +116,7 @@ export class MovieDatasourceImpl implements MovieDatasource {
       });
     }
 
-    const genresFromDB = await prisma.genre.findMany({
+    const genresFromDB = await prisma.genreModel.findMany({
       where: { genre_id: { in: genre_ids } },
     });
 
@@ -140,7 +140,7 @@ export class MovieDatasourceImpl implements MovieDatasource {
     )
       throw CustomError.badRequest("A movie must have a genre at least");
 
-    const updatedMovie = await prisma.movie.update({
+    const updatedMovie = await prisma.movieModel.update({
       where: { movie_id },
       data: {
         ...updateMovieDtoData,
@@ -166,8 +166,8 @@ export class MovieDatasourceImpl implements MovieDatasource {
     await this.getMovieById({ movie_id });
 
     await prisma.$transaction([
-      prisma.movieGenre.deleteMany({ where: { movie_id } }),
-      prisma.movie.delete({ where: { movie_id } }),
+      prisma.movieGenreModel.deleteMany({ where: { movie_id } }),
+      prisma.movieModel.delete({ where: { movie_id } }),
     ]);
 
     return true;

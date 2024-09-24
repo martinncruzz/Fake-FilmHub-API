@@ -19,10 +19,10 @@ export class AuthDatasourceImpl implements AuthDatasource {
     if (!isEmailAvailable)
       throw CustomError.badRequest("This email is already registered");
 
-    const newUser = await prisma.user.create({
+    const newUser = await prisma.userModel.create({
       data: {
         ...registerUserDto,
-        role: UserRole.user,
+        role: UserRole.USER,
       },
     });
 
@@ -32,7 +32,7 @@ export class AuthDatasourceImpl implements AuthDatasource {
   async loginUser(loginUserDto: LoginUserDto): Promise<UserEntity> {
     const { email, password } = loginUserDto;
 
-    const user = await prisma.user.findFirst({
+    const user = await prisma.userModel.findFirst({
       where: { email },
     });
 
@@ -45,7 +45,7 @@ export class AuthDatasourceImpl implements AuthDatasource {
   async isEmailAvailable(
     checkUserEmailDto: CheckUserEmailDto
   ): Promise<boolean> {
-    const userRegistered = await prisma.user.findFirst({
+    const userRegistered = await prisma.userModel.findFirst({
       where: {
         email: { equals: checkUserEmailDto.email, mode: "insensitive" },
       },

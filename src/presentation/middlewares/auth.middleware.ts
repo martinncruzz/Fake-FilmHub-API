@@ -25,7 +25,7 @@ export class AuthMiddleware {
       );
       if (!payload) return res.status(401).json({ error: "Invalid token" });
 
-      const user = await prisma.user.findFirst({
+      const user = await prisma.userModel.findFirst({
         where: { user_id: payload.user_id },
       });
       if (!user)
