@@ -7,13 +7,18 @@ export enum ResourceType {
   GENRES = "genres",
 }
 
+export interface PaginationResult {
+  next: string | null;
+  prev: string | null;
+}
+
 export class PaginationBuilder {
   static build(
     paginationDto: PaginationDto,
     total: number,
     resourceType: ResourceType,
     filtersQuery?: string
-  ): { next: string | null; prev: string | null } {
+  ): PaginationResult {
     const { page, limit } = paginationDto;
 
     const baseUrl = `${envs.WEBSERVICE_URL}/${resourceType}`;
