@@ -1,6 +1,6 @@
 export enum UserRole {
-  admin = "admin",
-  user = "user",
+  ADMIN = "ADMIN",
+  USER = "USER",
 }
 
 export class UserEntity {
