@@ -1,13 +1,14 @@
-import { GenreEntity, GenreIdDto, GenreRepository } from "../..";
-
-interface GetGenreByIdUseCase {
-  execute(genreIdDto: GenreIdDto): Promise<GenreEntity>;
-}
+import {
+  GenreIdDto,
+  GenreRepository,
+  GetGenreByIdUseCase,
+  GetGenreByIdUseCaseResp,
+} from "../..";
 
 export class GetGenreByIdUseCaseImpl implements GetGenreByIdUseCase {
   constructor(private readonly genreRepository: GenreRepository) {}
 
-  async execute(genreIdDto: GenreIdDto): Promise<GenreEntity> {
+  async execute(genreIdDto: GenreIdDto): GetGenreByIdUseCaseResp {
     const genre = await this.genreRepository.getGenreById(genreIdDto);
     return genre;
   }

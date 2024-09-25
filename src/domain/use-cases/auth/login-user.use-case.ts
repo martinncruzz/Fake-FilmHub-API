@@ -1,18 +1,12 @@
-import { AuthRepository, CustomError, LoginUserDto } from "../..";
+import {
+  AuthRepository,
+  CustomError,
+  LoginUserDto,
+  LoginUserUseCase,
+  LoginUserUseCaseResp,
+  SignToken,
+} from "../..";
 import { JWTAdapter } from "../../../config";
-
-interface LoginUserUseCaseResponse {
-  access_token: string;
-}
-
-type SignToken = (
-  payload: Record<string, any>,
-  duration?: string
-) => Promise<string | null>;
-
-interface LoginUserUseCase {
-  execute(loginUserDto: LoginUserDto): Promise<LoginUserUseCaseResponse>;
-}
 
 export class LoginUserUseCaseImpl implements LoginUserUseCase {
   constructor(
@@ -20,7 +14,7 @@ export class LoginUserUseCaseImpl implements LoginUserUseCase {
     private readonly signToken: SignToken = JWTAdapter.generateToken
   ) {}
 
-  async execute(loginUserDto: LoginUserDto): Promise<LoginUserUseCaseResponse> {
+  async execute(loginUserDto: LoginUserDto): LoginUserUseCaseResp {
     const user = await this.authRepository.loginUser(loginUserDto);
 
     const token = await this.signToken({ user_id: user.user_id });

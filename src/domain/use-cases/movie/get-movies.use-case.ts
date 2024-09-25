@@ -1,32 +1,15 @@
 import {
-  MovieEntity,
   MovieFiltersDto,
   MovieRepository,
   PaginationBuilder,
   PaginationDto,
   FiltersQueryBuilder,
   ResourceType,
-  PaginationResult,
+  BuildFiltersQuery,
+  BuildPagination,
+  GetMoviesUseCase,
+  GetMoviesUseCaseResp,
 } from "../..";
-
-interface GetMoviesUseCaseResponse extends PaginationResult {
-  movies: MovieEntity[];
-}
-
-type BuildFiltersQuery<T> = (filters?: T) => string;
-type BuildPagination = (
-  paginationDto: PaginationDto,
-  total: number,
-  resourceType: ResourceType,
-  filtersQuery?: string
-) => PaginationResult;
-
-interface GetMoviesUseCase {
-  execute(
-    paginationDto: PaginationDto,
-    movieFiltersDto: MovieFiltersDto
-  ): Promise<GetMoviesUseCaseResponse>;
-}
 
 export class GetMoviesUseCaseImpl implements GetMoviesUseCase {
   constructor(
@@ -38,7 +21,7 @@ export class GetMoviesUseCaseImpl implements GetMoviesUseCase {
   async execute(
     paginationDto: PaginationDto,
     movieFiltersDto: MovieFiltersDto
-  ): Promise<GetMoviesUseCaseResponse> {
+  ): GetMoviesUseCaseResp {
     const [total, movies] = await this.movieRepository.getMovies(
       paginationDto,
       movieFiltersDto

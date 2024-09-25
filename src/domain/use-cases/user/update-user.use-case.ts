@@ -1,13 +1,14 @@
-import { UpdateUserDto, UserEntity, UserRepository } from "../..";
-
-interface UpdateUserUseCase {
-  execute(updateUserDto: UpdateUserDto): Promise<UserEntity>;
-}
+import {
+  UpdateUserDto,
+  UpdateUserUseCase,
+  UpdateUserUseCaseResp,
+  UserRepository,
+} from "../..";
 
 export class UpdateUserUseCaseImpl implements UpdateUserUseCase {
   constructor(private readonly userRepository: UserRepository) {}
 
-  async execute(updateUserDto: UpdateUserDto): Promise<UserEntity> {
+  async execute(updateUserDto: UpdateUserDto): UpdateUserUseCaseResp {
     const user = await this.userRepository.updateUser(updateUserDto);
     return user;
   }

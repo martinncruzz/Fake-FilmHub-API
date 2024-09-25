@@ -1,16 +1,5 @@
-import { PaginationDto } from "..";
+import { PaginationDto, PaginationResult, ResourceType } from "..";
 import { envs } from "../../config";
-
-export enum ResourceType {
-  USERS = "users",
-  MOVIES = "movies",
-  GENRES = "genres",
-}
-
-export interface PaginationResult {
-  next: string | null;
-  prev: string | null;
-}
 
 export class PaginationBuilder {
   static build(

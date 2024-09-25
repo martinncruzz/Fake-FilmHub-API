@@ -1,13 +1,14 @@
-import { UserEntity, UserIdDto, UserRepository } from "../..";
-
-interface GetUserByIdUseCase {
-  execute(userIdDto: UserIdDto): Promise<UserEntity>;
-}
+import {
+  GetUserByIdUseCase,
+  GetUserByIdUseCaseResp,
+  UserIdDto,
+  UserRepository,
+} from "../..";
 
 export class GetUserByIdUseCaseImpl implements GetUserByIdUseCase {
   constructor(private readonly userRepository: UserRepository) {}
 
-  async execute(userIdDto: UserIdDto): Promise<UserEntity> {
+  async execute(userIdDto: UserIdDto): GetUserByIdUseCaseResp {
     const user = await this.userRepository.getUserById(userIdDto);
     return user;
   }

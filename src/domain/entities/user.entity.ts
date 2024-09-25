@@ -1,7 +1,4 @@
-export enum UserRole {
-  ADMIN = "ADMIN",
-  USER = "USER",
-}
+import { UserRole } from "..";
 
 export class UserEntity {
   constructor(

@@ -1,11 +1,11 @@
-import { UserEntity } from "../..";
-
-interface GetCurrentSessionUseCase {
-  execute(user: UserEntity): UserEntity;
-}
+import {
+  GetCurrentSessionUseCase,
+  GetCurrentSessionUseCaseResp,
+  UserEntity,
+} from "../..";
 
 export class GetCurrentSessionUseCaseImpl implements GetCurrentSessionUseCase {
-  execute(user: UserEntity): UserEntity {
+  execute(user: UserEntity): GetCurrentSessionUseCaseResp {
     return user;
   }
 }
