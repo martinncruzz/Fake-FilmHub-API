@@ -8,12 +8,11 @@ export class CreateGenreDto {
   ) {}
 
   static create(props: Record<string, any>): ValidationResult<CreateGenreDto> {
-    const [errors, parsedData] = ZodAdapter.validate(createGenreSchema, props);
+    const { errors, validatedData } = ZodAdapter.validate(
+      createGenreSchema,
+      props
+    );
 
-    if (errors) return [errors];
-
-    const { name, image } = parsedData!;
-
-    return [undefined, new CreateGenreDto(name, image)];
+    return errors ? { errors } : { validatedData };
   }
 }

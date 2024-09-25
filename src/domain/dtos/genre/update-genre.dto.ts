@@ -9,12 +9,11 @@ export class UpdateGenreDto {
   ) {}
 
   static create(props: Record<string, any>): ValidationResult<UpdateGenreDto> {
-    const [errors, parsedData] = ZodAdapter.validate(updateGenreSchema, props);
+    const { errors, validatedData } = ZodAdapter.validate(
+      updateGenreSchema,
+      props
+    );
 
-    if (errors) return [errors];
-
-    const { genre_id, name, image } = parsedData!;
-
-    return [undefined, new UpdateGenreDto(genre_id, name, image)];
+    return errors ? { errors } : { validatedData };
   }
 }

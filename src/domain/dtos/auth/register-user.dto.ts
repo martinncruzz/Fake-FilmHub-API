@@ -10,12 +10,11 @@ export class RegisterUserDto {
   ) {}
 
   static create(props: Record<string, any>): ValidationResult<RegisterUserDto> {
-    const [errors, parsedData] = ZodAdapter.validate(registerUserSchema, props);
+    const { errors, validatedData } = ZodAdapter.validate(
+      registerUserSchema,
+      props
+    );
 
-    if (errors) return [errors];
-
-    const { fullname, email, password, avatar } = parsedData!;
-
-    return [undefined, new RegisterUserDto(fullname, email, password, avatar)];
+    return errors ? { errors } : { validatedData };
   }
 }

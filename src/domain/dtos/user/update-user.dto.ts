@@ -11,15 +11,11 @@ export class UpdateUserDto {
   ) {}
 
   static create(props: Record<string, any>): ValidationResult<UpdateUserDto> {
-    const [errors, parsedData] = ZodAdapter.validate(updateUserSchema, props);
+    const { errors, validatedData } = ZodAdapter.validate(
+      updateUserSchema,
+      props
+    );
 
-    if (errors) return [errors];
-
-    const { user_id, fullname, email, password, avatar } = parsedData!;
-
-    return [
-      undefined,
-      new UpdateUserDto(user_id, fullname, email, password, avatar),
-    ];
+    return errors ? { errors } : { validatedData };
   }
 }

@@ -11,13 +11,11 @@ export class PaginationDto {
     page: number = 1,
     limit: number = 10
   ): ValidationResult<PaginationDto> {
-    const [errors, parsedData] = ZodAdapter.validate(paginationSchema, {
+    const { errors, validatedData } = ZodAdapter.validate(paginationSchema, {
       page,
       limit,
     });
 
-    if (errors) return [errors];
-
-    return [undefined, new PaginationDto(parsedData!.page, parsedData!.limit)];
+    return errors ? { errors } : { validatedData };
   }
 }

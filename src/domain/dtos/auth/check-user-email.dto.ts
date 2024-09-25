@@ -7,15 +7,11 @@ export class CheckUserEmailDto {
   static create(
     props: Record<string, any>
   ): ValidationResult<CheckUserEmailDto> {
-    const [errors, parsedData] = ZodAdapter.validate(
+    const { errors, validatedData } = ZodAdapter.validate(
       checkUserEmailSchema,
       props
     );
 
-    if (errors) return [errors];
-
-    const { email } = parsedData!;
-
-    return [undefined, new CheckUserEmailDto(email)];
+    return errors ? { errors } : { validatedData };
   }
 }

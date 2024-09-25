@@ -5,12 +5,8 @@ export class MovieIdDto {
   private constructor(public readonly movie_id: number) {}
 
   static create(props: Record<string, any>): ValidationResult<MovieIdDto> {
-    const [errors, parsedData] = ZodAdapter.validate(movieIdSchema, props);
+    const { errors, validatedData } = ZodAdapter.validate(movieIdSchema, props);
 
-    if (errors) return [errors];
-
-    const { movie_id } = parsedData!;
-
-    return [undefined, new MovieIdDto(movie_id)];
+    return errors ? { errors } : { validatedData };
   }
 }

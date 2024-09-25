@@ -2,19 +2,24 @@ import { z, ZodError } from "zod";
 import { ValidationResult } from "../../domain";
 
 export class ZodAdapter {
-  static validate<T>(schema: z.ZodSchema<T>, data: any): ValidationResult<T> {
+  static validate<T>(
+    schema: z.ZodSchema<T>,
+    data: Record<string, any>
+  ): ValidationResult<T> {
     try {
-      const parsedData = schema.parse(data);
-      return [undefined, parsedData];
+      const validatedData = schema.parse(data);
+      return { validatedData };
     } catch (error) {
       if (error instanceof ZodError) {
         const errors = error.errors.map((e) => ({
           field: e.path.join("."),
           message: e.message,
         }));
-        return [errors];
+        return { errors };
       }
-      return [[{ field: "unknown", message: "Unknown validation error" }]];
+      return {
+        errors: [{ field: "unknown", message: "Unknown validation error" }],
+      };
     }
   }
 }

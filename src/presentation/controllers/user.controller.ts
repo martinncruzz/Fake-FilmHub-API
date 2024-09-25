@@ -17,11 +17,11 @@ export class UserController {
   getUsers = async (req: Request, res: Response) => {
     const { page = 1, limit = 10 } = req.query;
 
-    const [errors, paginationDto] = PaginationDto.create(+page, +limit);
+    const { errors, validatedData } = PaginationDto.create(+page, +limit);
     if (errors) return res.status(400).json({ errors });
 
     new GetUsersUseCaseImpl(this.userRepository)
-      .execute(paginationDto!)
+      .execute(validatedData!)
       .then((data) => res.json(data))
       .catch((error) => ErrorHandlerService.handleError(error, res));
   };
@@ -29,11 +29,11 @@ export class UserController {
   getUserById = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const [errors, userIdDto] = UserIdDto.create({ user_id: +id });
+    const { errors, validatedData } = UserIdDto.create({ user_id: +id });
     if (errors) return res.status(400).json({ errors });
 
     new GetUserByIdUseCaseImpl(this.userRepository)
-      .execute(userIdDto!)
+      .execute(validatedData!)
       .then((data) => res.json(data))
       .catch((error) => ErrorHandlerService.handleError(error, res));
   };
@@ -41,14 +41,14 @@ export class UserController {
   updateUser = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const [errors, updateUserDto] = UpdateUserDto.create({
+    const { errors, validatedData } = UpdateUserDto.create({
       ...req.body,
       user_id: +id,
     });
     if (errors) return res.status(400).json({ errors });
 
     new UpdateUserUseCaseImpl(this.userRepository)
-      .execute(updateUserDto!)
+      .execute(validatedData!)
       .then((data) => res.json(data))
       .catch((error) => ErrorHandlerService.handleError(error, res));
   };

@@ -15,43 +15,16 @@ export class UpdateMovieDto {
   ) {}
 
   static create(props: Record<string, any>): ValidationResult<UpdateMovieDto> {
-    const [errors, parsedData] = ZodAdapter.validate(updateMovieSchema, {
+    const { errors, validatedData } = ZodAdapter.validate(updateMovieSchema, {
       ...props,
       genre_ids:
         props.genre_ids !== undefined
-          ? Array.isArray(props.genre_ids)
+          ? Array.isArray(props.genre_ids) && props.genre_ids.length > 0
             ? props.genre_ids
             : [props.genre_ids]
           : undefined,
     });
 
-    if (errors) return [errors];
-
-    const {
-      movie_id,
-      title,
-      description,
-      release_year,
-      director,
-      duration_minutes,
-      trailer_link,
-      poster_image_url,
-      genre_ids,
-    } = parsedData!;
-
-    return [
-      undefined,
-      new UpdateMovieDto(
-        movie_id,
-        title,
-        description,
-        release_year,
-        director,
-        duration_minutes,
-        trailer_link,
-        poster_image_url,
-        genre_ids
-      ),
-    ];
+    return errors ? { errors } : { validatedData };
   }
 }

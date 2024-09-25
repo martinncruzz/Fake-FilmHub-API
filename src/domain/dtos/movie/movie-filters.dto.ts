@@ -11,27 +11,11 @@ export class MovieFiltersDto {
   ) {}
 
   static create(props: Record<string, any>): ValidationResult<MovieFiltersDto> {
-    const [errors, parsedData] = ZodAdapter.validate(movieFiltersSchema, props);
+    const { errors, validatedData } = ZodAdapter.validate(
+      movieFiltersSchema,
+      props
+    );
 
-    if (errors) return [errors];
-
-    const {
-      title,
-      release_year,
-      min_release_year,
-      max_release_year,
-      genre_id,
-    } = parsedData!;
-
-    return [
-      undefined,
-      new MovieFiltersDto(
-        title,
-        release_year,
-        min_release_year,
-        max_release_year,
-        genre_id
-      ),
-    ];
+    return errors ? { errors } : { validatedData };
   }
 }

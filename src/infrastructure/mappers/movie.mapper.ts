@@ -4,7 +4,7 @@ import { CustomError, MovieEntity } from "../../domain";
 
 export class MovieMapper {
   static movieEntityFromObject(object: Record<string, any>): MovieEntity {
-    const [errors, parsedData] = ZodAdapter.validate(movieSchema, object);
+    const { errors, validatedData } = ZodAdapter.validate(movieSchema, object);
 
     if (errors) throw CustomError.internalServer("Error processing movie data");
 
@@ -18,7 +18,7 @@ export class MovieMapper {
       trailer_link,
       poster_image_url,
       genres,
-    } = parsedData!;
+    } = validatedData!;
 
     return new MovieEntity(
       movie_id,
