@@ -1,6 +1,6 @@
 import { prisma } from "../postgres";
 import { seedData } from "..";
-import { UserRole } from "../../domain/entities/user.entity";
+import { UserRole } from "../../domain/interfaces/shared/shared.interfaces";
 
 (async () => {
   await main();
