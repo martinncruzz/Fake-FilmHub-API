@@ -1,10 +1,8 @@
 import { z, ZodError } from "zod";
+import { ValidationResult } from "../../domain";
 
 export class ZodAdapter {
-  static validate<T>(
-    schema: z.ZodSchema<T>,
-    data: any
-  ): [{ field: string; message: string }[]?, T?] {
+  static validate<T>(schema: z.ZodSchema<T>, data: any): ValidationResult<T> {
     try {
       const parsedData = schema.parse(data);
       return [undefined, parsedData];

@@ -1,11 +1,10 @@
+import { ValidationResult } from "../..";
 import { genreIdSchema, ZodAdapter } from "../../../config";
 
 export class GenreIdDto {
   private constructor(public readonly genre_id: number) {}
 
-  static create(
-    props: Record<string, any>
-  ): [{ field: string; message: string }[]?, GenreIdDto?] {
+  static create(props: Record<string, any>): ValidationResult<GenreIdDto> {
     const [errors, parsedData] = ZodAdapter.validate(genreIdSchema, props);
 
     if (errors) return [errors];

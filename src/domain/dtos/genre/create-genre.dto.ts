@@ -1,3 +1,4 @@
+import { ValidationResult } from "../..";
 import { createGenreSchema, ZodAdapter } from "../../../config";
 
 export class CreateGenreDto {
@@ -6,9 +7,7 @@ export class CreateGenreDto {
     public readonly image: string
   ) {}
 
-  static create(
-    props: Record<string, any>
-  ): [{ field: string; message: string }[]?, CreateGenreDto?] {
+  static create(props: Record<string, any>): ValidationResult<CreateGenreDto> {
     const [errors, parsedData] = ZodAdapter.validate(createGenreSchema, props);
 
     if (errors) return [errors];

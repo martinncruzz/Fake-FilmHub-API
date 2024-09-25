@@ -1,11 +1,10 @@
+import { ValidationResult } from "../..";
 import { movieIdSchema, ZodAdapter } from "../../../config";
 
 export class MovieIdDto {
   private constructor(public readonly movie_id: number) {}
 
-  static create(
-    props: Record<string, any>
-  ): [{ field: string; message: string }[]?, MovieIdDto?] {
+  static create(props: Record<string, any>): ValidationResult<MovieIdDto> {
     const [errors, parsedData] = ZodAdapter.validate(movieIdSchema, props);
 
     if (errors) return [errors];

@@ -1,3 +1,4 @@
+import { ValidationResult } from "../..";
 import { paginationSchema, ZodAdapter } from "../../../config";
 
 export class PaginationDto {
@@ -9,7 +10,7 @@ export class PaginationDto {
   static create(
     page: number = 1,
     limit: number = 10
-  ): [{ field: string; message: string }[]?, PaginationDto?] {
+  ): ValidationResult<PaginationDto> {
     const [errors, parsedData] = ZodAdapter.validate(paginationSchema, {
       page,
       limit,

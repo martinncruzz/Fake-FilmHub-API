@@ -1,3 +1,4 @@
+import { ValidationResult } from "../..";
 import { createMovieSchema, ZodAdapter } from "../../../config";
 
 export class CreateMovieDto {
@@ -12,9 +13,7 @@ export class CreateMovieDto {
     public readonly genre_ids: number[]
   ) {}
 
-  static create(
-    props: Record<string, any>
-  ): [{ field: string; message: string }[]?, CreateMovieDto?] {
+  static create(props: Record<string, any>): ValidationResult<CreateMovieDto> {
     const [errors, parsedData] = ZodAdapter.validate(createMovieSchema, {
       ...props,
       genre_ids: Array.isArray(props.genre_ids)

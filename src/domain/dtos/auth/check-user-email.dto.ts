@@ -1,3 +1,4 @@
+import { ValidationResult } from "../..";
 import { checkUserEmailSchema, ZodAdapter } from "../../../config";
 
 export class CheckUserEmailDto {
@@ -5,7 +6,7 @@ export class CheckUserEmailDto {
 
   static create(
     props: Record<string, any>
-  ): [{ field: string; message: string }[]?, CheckUserEmailDto?] {
+  ): ValidationResult<CheckUserEmailDto> {
     const [errors, parsedData] = ZodAdapter.validate(
       checkUserEmailSchema,
       props

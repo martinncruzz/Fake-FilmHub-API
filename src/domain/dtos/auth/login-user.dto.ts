@@ -1,3 +1,4 @@
+import { ValidationResult } from "../..";
 import { loginUserSchema, ZodAdapter } from "../../../config";
 
 export class LoginUserDto {
@@ -6,9 +7,7 @@ export class LoginUserDto {
     public readonly password: string
   ) {}
 
-  static create(
-    props: Record<string, any>
-  ): [{ field: string; message: string }[]?, LoginUserDto?] {
+  static create(props: Record<string, any>): ValidationResult<LoginUserDto> {
     const [errors, parsedData] = ZodAdapter.validate(loginUserSchema, props);
 
     if (errors) return [errors];

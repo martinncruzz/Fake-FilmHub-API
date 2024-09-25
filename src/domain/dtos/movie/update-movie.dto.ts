@@ -1,3 +1,4 @@
+import { ValidationResult } from "../..";
 import { updateMovieSchema, ZodAdapter } from "../../../config";
 
 export class UpdateMovieDto {
@@ -13,9 +14,7 @@ export class UpdateMovieDto {
     public readonly genre_ids?: number[]
   ) {}
 
-  static create(
-    props: Record<string, any>
-  ): [{ field: string; message: string }[]?, UpdateMovieDto?] {
+  static create(props: Record<string, any>): ValidationResult<UpdateMovieDto> {
     const [errors, parsedData] = ZodAdapter.validate(updateMovieSchema, {
       ...props,
       genre_ids:
