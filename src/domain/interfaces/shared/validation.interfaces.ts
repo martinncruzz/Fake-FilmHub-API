@@ -3,4 +3,7 @@ export interface ValidationError {
   message: string;
 }
 
-export type ValidationResult<T> = [ValidationError[]?, T?];
+export interface ValidationResult<T> {
+  errors?: ValidationError[];
+  validatedData?: T;
+}
