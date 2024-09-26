@@ -5,6 +5,7 @@ import {
   MovieFiltersDto,
   MovieIdDto,
   MovieRepository,
+  MoviesData,
   PaginationDto,
   UpdateMovieDto,
 } from "../../domain";
@@ -15,7 +16,7 @@ export class MovieRepositoryImpl implements MovieRepository {
   getMovies(
     paginationDto: PaginationDto,
     movieFiltersDto: MovieFiltersDto
-  ): Promise<[number, MovieEntity[]]> {
+  ): Promise<MoviesData> {
     return this.movieDatasource.getMovies(paginationDto, movieFiltersDto);
   }
   getMovieById(movieIdDto: MovieIdDto): Promise<MovieEntity> {

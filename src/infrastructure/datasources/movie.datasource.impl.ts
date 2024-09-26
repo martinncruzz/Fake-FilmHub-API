@@ -9,6 +9,7 @@ import {
   MovieEntity,
   MovieFiltersDto,
   MovieIdDto,
+  MoviesData,
   PaginationDto,
   UpdateMovieDto,
 } from "../../domain";
@@ -17,7 +18,7 @@ export class MovieDatasourceImpl implements MovieDatasource {
   async getMovies(
     paginationDto: PaginationDto,
     movieFiltersDto: MovieFiltersDto
-  ): Promise<[number, MovieEntity[]]> {
+  ): Promise<MoviesData> {
     const { page, limit } = paginationDto;
     const {
       title,
@@ -47,15 +48,15 @@ export class MovieDatasourceImpl implements MovieDatasource {
       }),
     ]);
 
-    return [
+    return {
       total,
-      movies.map((movie) =>
+      movies: movies.map((movie) =>
         MovieMapper.movieEntityFromObject({
           ...movie,
           genres: movie.genres.map(({ genre }) => genre),
         })
       ),
-    ];
+    };
   }
 
   async getMovieById(movieIdDto: MovieIdDto): Promise<MovieEntity> {

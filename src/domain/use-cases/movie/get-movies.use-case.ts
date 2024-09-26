@@ -22,7 +22,7 @@ export class GetMoviesUseCaseImpl implements GetMoviesUseCase {
     paginationDto: PaginationDto,
     movieFiltersDto: MovieFiltersDto
   ): GetMoviesUseCaseResp {
-    const [total, movies] = await this.movieRepository.getMovies(
+    const { total, movies } = await this.movieRepository.getMovies(
       paginationDto,
       movieFiltersDto
     );
