@@ -5,12 +5,13 @@ import {
   UserEntity,
   UserIdDto,
   UserRepository,
+  UsersData,
 } from "../../domain";
 
 export class UserRepositoryImpl implements UserRepository {
   constructor(private readonly userDatasource: UserDatasource) {}
 
-  getUsers(paginationDto: PaginationDto): Promise<UserEntity[]> {
+  getUsers(paginationDto: PaginationDto): Promise<UsersData> {
     return this.userDatasource.getUsers(paginationDto);
   }
 

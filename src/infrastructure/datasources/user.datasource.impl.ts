@@ -7,18 +7,25 @@ import {
   UserEntity,
   UserIdDto,
   UserDatasource,
+  UsersData,
 } from "../../domain";
 
 export class UserDatasourceImpl implements UserDatasource {
-  async getUsers(paginationDto: PaginationDto): Promise<UserEntity[]> {
+  async getUsers(paginationDto: PaginationDto): Promise<UsersData> {
     const { page, limit } = paginationDto;
 
-    const users = await prisma.userModel.findMany({
-      skip: (page - 1) * limit,
-      take: limit,
-    });
+    const [total, users] = await prisma.$transaction([
+      prisma.userModel.count(),
+      prisma.userModel.findMany({
+        skip: (page - 1) * limit,
+        take: limit,
+      }),
+    ]);
 
-    return users.map(UserMapper.userEntityFromObject);
+    return {
+      total,
+      users: users.map(UserMapper.userEntityFromObject),
+    };
   }
 
   async getUserById(userIdDto: UserIdDto): Promise<UserEntity> {
