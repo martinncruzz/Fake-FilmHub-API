@@ -17,11 +17,14 @@ export class UserController {
   getUsers = async (req: Request, res: Response) => {
     const { page = 1, limit = 10 } = req.query;
 
-    const { errors, validatedData } = PaginationDto.create(+page, +limit);
-    if (errors) return res.status(400).json({ errors });
+    const { errors: paginationErrors, validatedData: paginationDto } =
+      PaginationDto.create(+page, +limit);
+
+    if (paginationErrors)
+      return res.status(400).json({ errors: paginationErrors });
 
     new GetUsersUseCaseImpl(this.userRepository)
-      .execute(validatedData!)
+      .execute(paginationDto!)
       .then((data) => res.json(data))
       .catch((error) => ErrorHandlerService.handleError(error, res));
   };
