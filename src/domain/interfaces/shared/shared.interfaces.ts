@@ -12,8 +12,8 @@ export enum ResourceType {
 }
 
 export interface PaginationResult {
-  next: string | null;
   prev: string | null;
+  next: string | null;
 }
 
 export type BuildFiltersQuery<T> = (filters?: T) => string;

@@ -12,16 +12,16 @@ export class PaginationBuilder {
 
     const baseUrl = `${envs.WEBSERVICE_URL}/${resourceType}`;
 
-    const next =
-      limit * page < total
-        ? `${baseUrl}?page=${page + 1}&limit=${limit}${filtersQuery}`
-        : null;
-
     const prev =
       page > 1
         ? `${baseUrl}?page=${page - 1}&limit=${limit}${filtersQuery}`
         : null;
 
-    return { next, prev };
+    const next =
+      limit * page < total
+        ? `${baseUrl}?page=${page + 1}&limit=${limit}${filtersQuery}`
+        : null;
+
+    return { prev, next };
   }
 }
