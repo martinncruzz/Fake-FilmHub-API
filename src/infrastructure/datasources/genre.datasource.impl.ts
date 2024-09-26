@@ -6,20 +6,27 @@ import {
   GenreDatasource,
   GenreEntity,
   GenreIdDto,
+  GenresData,
   PaginationDto,
   UpdateGenreDto,
 } from "../../domain";
 
 export class GenreDatasourceImpl implements GenreDatasource {
-  async getGenres(paginationDto: PaginationDto): Promise<GenreEntity[]> {
+  async getGenres(paginationDto: PaginationDto): Promise<GenresData> {
     const { page, limit } = paginationDto;
 
-    const genres = await prisma.genreModel.findMany({
-      skip: (page - 1) * limit,
-      take: limit,
-    });
+    const [total, genres] = await prisma.$transaction([
+      prisma.genreModel.count(),
+      prisma.genreModel.findMany({
+        skip: (page - 1) * limit,
+        take: limit,
+      }),
+    ]);
 
-    return genres.map(GenreMapper.genreEntityFromObject);
+    return {
+      total,
+      genres: genres.map(GenreMapper.genreEntityFromObject),
+    };
   }
 
   async getMoviesByGenre(genreIdDto: GenreIdDto): Promise<GenreEntity> {
