@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 
 import { envs } from "..";
 
-const JWT_SEED = envs.JWT_SEED;
+const JWT_SECRET = envs.JWT_SECRET;
 
 export class JWTAdapter {
   static async generateToken(
@@ -12,7 +12,7 @@ export class JWTAdapter {
     return new Promise((resolve) => {
       jwt.sign(
         payload,
-        JWT_SEED,
+        JWT_SECRET,
         {
           expiresIn: duration,
         },
@@ -26,7 +26,7 @@ export class JWTAdapter {
 
   static validateToken<T>(token: string): Promise<T | null> {
     return new Promise((resolve) => {
-      jwt.verify(token, JWT_SEED, (err, decoded) => {
+      jwt.verify(token, JWT_SECRET, (err, decoded) => {
         if (err) return resolve(null);
         resolve(decoded as T);
       });
