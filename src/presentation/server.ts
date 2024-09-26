@@ -19,8 +19,7 @@ export class Server {
     this.routes = routes;
   }
 
-  async start() {
-    /* Middlewares */
+  public async start() {
     this.app.use(
       cors({
         origin: ["*"],
@@ -29,9 +28,6 @@ export class Server {
     this.app.use(morgan("dev"));
     this.app.use(express.json());
 
-    this.app.use(express.json());
-
-    /* Routes */
     this.app.use(this.routes);
 
     this.serverListener = this.app.listen(this.port, () => {

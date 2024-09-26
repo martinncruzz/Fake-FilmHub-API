@@ -1,3 +1,6 @@
+import { ValidationResult } from "../..";
+import { paginationSchema, ZodAdapter } from "../../../config";
+
 export class PaginationDto {
   private constructor(
     public readonly page: number,
@@ -7,12 +10,12 @@ export class PaginationDto {
   static create(
     page: number = 1,
     limit: number = 10
-  ): [string?, PaginationDto?] {
-    if (isNaN(page) || isNaN(limit)) return ["Page and Limit must be numbers"];
+  ): ValidationResult<PaginationDto> {
+    const { errors, validatedData } = ZodAdapter.validate(paginationSchema, {
+      page,
+      limit,
+    });
 
-    if (page <= 0) return ["Page must be greater than 0"];
-    if (limit <= 0) return ["Limit must be greater than 0"];
-
-    return [undefined, new PaginationDto(page, limit)];
+    return errors ? { errors } : { validatedData };
   }
 }

@@ -1,37 +1,52 @@
 import { Request, Response } from "express";
-import { AuthService } from "../services";
-import { LoginUserDto, UserIdDto, CustomError } from "../../domain";
+
+import { ErrorHandlerService } from "..";
+import {
+  AuthRepository,
+  CheckUserEmailDto,
+  GetCurrentSessionUseCaseImpl,
+  IsEmailAvailableUseCaseImpl,
+  LoginUserDto,
+  LoginUserUseCaseImpl,
+  RegisterUserDto,
+  RegisterUserUseCaseImpl,
+} from "../../domain";
 
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authRepository: AuthRepository) {}
 
-  private handleError = (error: unknown, res: Response) => {
-    if (error instanceof CustomError)
-      return res.status(error.statusCode).json({ error: error.message });
+  registerUser = async (req: Request, res: Response) => {
+    const { errors, validatedData } = RegisterUserDto.create(req.body);
+    if (errors) return res.status(400).json({ errors });
 
-    console.log(`${error}`);
-    return res.status(500).json({ error: "Internal server error" });
+    new RegisterUserUseCaseImpl(this.authRepository)
+      .execute(validatedData!)
+      .then((data) => res.json(data))
+      .catch((error) => ErrorHandlerService.handleError(error, res));
   };
 
   loginUser = async (req: Request, res: Response) => {
-    const [error, loginUserDto] = LoginUserDto.create(req.body);
+    const { errors, validatedData } = LoginUserDto.create(req.body);
+    if (errors) return res.status(400).json({ errors });
 
-    if (error) return res.status(400).json({ error });
-
-    this.authService
-      .loginUser(loginUserDto!)
-      .then((token) => res.status(200).json(token))
-      .catch((error) => this.handleError(error, res));
+    new LoginUserUseCaseImpl(this.authRepository)
+      .execute(validatedData!)
+      .then((data) => res.json(data))
+      .catch((error) => ErrorHandlerService.handleError(error, res));
   };
 
-  getCurrentSession = (req: Request, res: Response) => {
-    const [error, userIdDto] = UserIdDto.get(req.body);
+  isEmailAvailable = async (req: Request, res: Response) => {
+    const { errors, validatedData } = CheckUserEmailDto.create(req.body);
+    if (errors) return res.status(400).json({ errors });
 
-    if (error) return res.status(400).json({ error });
+    new IsEmailAvailableUseCaseImpl(this.authRepository)
+      .execute(validatedData!)
+      .then((data) => res.json(data))
+      .catch((error) => ErrorHandlerService.handleError(error, res));
+  };
 
-    this.authService
-      .getCurrentSession(userIdDto!)
-      .then((user) => res.status(200).json(user))
-      .catch((error) => this.handleError(error, res));
+  getCurrentSession = async (req: Request, res: Response) => {
+    const user = new GetCurrentSessionUseCaseImpl().execute(req.body.user);
+    return res.json(user);
   };
 }

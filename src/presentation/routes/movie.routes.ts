@@ -1,13 +1,16 @@
 import { Router } from "express";
-import { MovieService } from "../services";
-import { MovieController } from "../controllers/movie.controller";
+
+import { MovieController } from "..";
+import { MovieDatasourceImpl, MovieRepositoryImpl } from "../../infrastructure";
 
 export class MovieRoutes {
   static get routes(): Router {
     const router = Router();
 
-    const movieService = new MovieService();
-    const movieController = new MovieController(movieService);
+    const movieDatasource = new MovieDatasourceImpl();
+    const movieRepository = new MovieRepositoryImpl(movieDatasource);
+
+    const movieController = new MovieController(movieRepository);
 
     router.get("/", movieController.getMovies);
     router.get("/:id", movieController.getMovieById);

@@ -1,6 +1,6 @@
-import { UserRole } from "@prisma/client";
 import { prisma } from "../postgres";
-import { seedData } from "./data";
+import { seedData } from "..";
+import { UserRole } from "../../domain/interfaces/shared/shared.interfaces";
 
 (async () => {
   await main();
@@ -8,18 +8,18 @@ import { seedData } from "./data";
 
 async function main() {
   await prisma.$transaction([
-    prisma.user.deleteMany(),
-    prisma.movieGenre.deleteMany(),
-    prisma.genre.deleteMany(),
-    prisma.movie.deleteMany(),
+    prisma.userModel.deleteMany(),
+    prisma.movieGenreModel.deleteMany(),
+    prisma.genreModel.deleteMany(),
+    prisma.movieModel.deleteMany(),
   ]);
 
   await prisma.$transaction([
-    prisma.user.createMany({
-      data: seedData.users.map((user) => ({ ...user, role: UserRole.user })),
+    prisma.userModel.createMany({
+      data: seedData.users.map((user) => ({ ...user, role: UserRole.USER })),
     }),
 
-    prisma.genre.createMany({
+    prisma.genreModel.createMany({
       data: seedData.genres.map((genre) => genre),
     }),
   ]);
@@ -27,7 +27,7 @@ async function main() {
   for (const movie of seedData.movies) {
     const { genre_ids, ...movieData } = movie;
 
-    await prisma.movie.create({
+    await prisma.movieModel.create({
       data: {
         ...movieData,
         genres: {

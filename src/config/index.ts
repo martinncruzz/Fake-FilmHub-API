@@ -1,4 +1,11 @@
-/* Adapters */
-
-export * from "./envs.adapter";
-export * from "./jwt.adapter";
+export * from "./adapters/envs.adapter";
+export * from "./adapters/jwt.adapter";
+export * from "./adapters/zod.adapter";
+export * from "./schemas/genre/genre-dtos.schemas";
+export * from "./schemas/genre/genre.schema";
+export * from "./schemas/movie/movie-dtos.schemas";
+export * from "./schemas/movie/movie.schema";
+export * from "./schemas/shared/filters.schemas";
+export * from "./schemas/shared/pagination.schema";
+export * from "./schemas/user/user-dtos.schemas";
+export * from "./schemas/user/user.schema";

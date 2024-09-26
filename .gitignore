@@ -5,5 +5,10 @@
 node_modules/
 
 # DB Container
-
 postgres/
+
+# Dist
+dist
+
+# Configs
+.vscode

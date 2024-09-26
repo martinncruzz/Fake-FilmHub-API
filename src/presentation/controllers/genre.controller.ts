@@ -1,100 +1,96 @@
 import { Request, Response } from "express";
-import { GenreService } from "../services";
+
+import { ErrorHandlerService } from "..";
 import {
   CreateGenreDto,
   GenreIdDto,
   UpdateGenreDto,
   PaginationDto,
-  CustomError,
+  GenreRepository,
+  GetGenresUseCaseImpl,
+  CreateGenreUseCaseImpl,
+  DeleteGenreUseCaseImpl,
+  GetGenreByIdUseCaseImpl,
+  GetMoviesByGenreUseCaseImpl,
+  UpdateGenreUseCaseImpl,
 } from "../../domain";
 
 export class GenreController {
-  constructor(private readonly genreService: GenreService) {}
-
-  private handleError = (error: unknown, res: Response) => {
-    if (error instanceof CustomError)
-      return res.status(error.statusCode).json({ error: error.message });
-
-    console.log(`${error}`);
-    return res.status(500).json({ error: "Internal server error" });
-  };
+  constructor(private readonly genreRepository: GenreRepository) {}
 
   getGenres = async (req: Request, res: Response) => {
     const { page = 1, limit = 10 } = req.query;
 
-    const [error, paginationDto] = PaginationDto.create(+page, +limit);
+    const { errors: paginationErrors, validatedData: paginationDto } =
+      PaginationDto.create(+page, +limit);
 
-    if (error) return res.status(400).json({ error });
+    if (paginationErrors)
+      return res.status(400).json({ errors: paginationErrors });
 
-    this.genreService
-      .getGenres(paginationDto!)
-      .then((genres) => res.status(200).json(genres))
-      .catch((error) => this.handleError(error, res));
+    new GetGenresUseCaseImpl(this.genreRepository)
+      .execute(paginationDto!)
+      .then((data) => res.json(data))
+      .catch((error) => ErrorHandlerService.handleError(error, res));
   };
 
   getMoviesByGenre = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const [error, genreIdDto] = GenreIdDto.get({ genre_id: +id });
+    const { errors, validatedData } = GenreIdDto.create({ genre_id: +id });
+    if (errors) return res.status(400).json({ errors });
 
-    if (error) return res.status(400).json({ error });
-
-    this.genreService
-      .getMoviesByGenre(genreIdDto!)
-      .then((moviesFound) => res.status(200).json(moviesFound))
-      .catch((error) => this.handleError(error, res));
+    new GetMoviesByGenreUseCaseImpl(this.genreRepository)
+      .execute(validatedData!)
+      .then((data) => res.json(data))
+      .catch((error) => ErrorHandlerService.handleError(error, res));
   };
 
   getGenreById = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const [error, genreIdDto] = GenreIdDto.get({ genre_id: +id });
+    const { errors, validatedData } = GenreIdDto.create({ genre_id: +id });
+    if (errors) return res.status(400).json({ errors });
 
-    if (error) return res.status(400).json({ error });
-
-    this.genreService
-      .getGenreById(genreIdDto!)
-      .then((genreFound) => res.status(200).json(genreFound))
-      .catch((error) => this.handleError(error, res));
+    new GetGenreByIdUseCaseImpl(this.genreRepository)
+      .execute(validatedData!)
+      .then((data) => res.json(data))
+      .catch((error) => ErrorHandlerService.handleError(error, res));
   };
 
   createGenre = async (req: Request, res: Response) => {
-    const [error, createGenreDto] = CreateGenreDto.create(req.body);
+    const { errors, validatedData } = CreateGenreDto.create(req.body);
+    if (errors) return res.status(400).json({ errors });
 
-    if (error) return res.status(400).json({ error });
-
-    this.genreService
-      .createGenre(createGenreDto!)
-      .then((newGenre) => res.status(200).json(newGenre))
-      .catch((error) => this.handleError(error, res));
+    new CreateGenreUseCaseImpl(this.genreRepository)
+      .execute(validatedData!)
+      .then((data) => res.json(data))
+      .catch((error) => ErrorHandlerService.handleError(error, res));
   };
 
   updateGenre = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const [error, updateGenreDto] = UpdateGenreDto.update({
+    const { errors, validatedData } = UpdateGenreDto.create({
       ...req.body,
       genre_id: +id,
     });
+    if (errors) return res.status(400).json({ errors });
 
-    if (error) return res.status(400).json({ error });
-
-    this.genreService
-      .updateGenre(updateGenreDto!)
-      .then((updatedGenre) => res.status(200).json(updatedGenre))
-      .catch((error) => this.handleError(error, res));
+    new UpdateGenreUseCaseImpl(this.genreRepository)
+      .execute(validatedData!)
+      .then((data) => res.json(data))
+      .catch((error) => ErrorHandlerService.handleError(error, res));
   };
 
   deleteGenre = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const [error, genreIdDto] = GenreIdDto.get({ genre_id: +id });
+    const { errors, validatedData } = GenreIdDto.create({ genre_id: +id });
+    if (errors) return res.status(400).json({ errors });
 
-    if (error) return res.status(400).json({ error });
-
-    this.genreService
-      .deleteGenre(genreIdDto!)
-      .then((deletedGenre) => res.status(200).json(deletedGenre))
-      .catch((error) => this.handleError(error, res));
+    new DeleteGenreUseCaseImpl(this.genreRepository)
+      .execute(validatedData!)
+      .then((data) => res.json(data))
+      .catch((error) => ErrorHandlerService.handleError(error, res));
   };
 }

@@ -1,87 +1,58 @@
 import { Request, Response } from "express";
-import { UserService } from "../services";
+
+import { ErrorHandlerService } from "..";
 import {
-  CreateUserDto,
-  UpdateUserDto,
-  UserIdDto,
-  CheckUserEmailDto,
+  GetUserByIdUseCaseImpl,
+  GetUsersUseCaseImpl,
   PaginationDto,
-  CustomError,
+  UpdateUserDto,
+  UpdateUserUseCaseImpl,
+  UserIdDto,
+  UserRepository,
 } from "../../domain";
 
 export class UserController {
-  constructor(private readonly userService: UserService) {}
-
-  private handleError = (error: unknown, res: Response) => {
-    if (error instanceof CustomError)
-      return res.status(error.statusCode).json({ error: error.message });
-
-    console.log(`${error}`);
-    return res.status(500).json({ error: "Internal server error" });
-  };
+  constructor(private readonly userRepository: UserRepository) {}
 
   getUsers = async (req: Request, res: Response) => {
-
     const { page = 1, limit = 10 } = req.query;
 
-    const [error, paginationDto] = PaginationDto.create(+page, +limit);
+    const { errors: paginationErrors, validatedData: paginationDto } =
+      PaginationDto.create(+page, +limit);
 
-    if (error) return res.status(400).json({ error });
+    if (paginationErrors)
+      return res.status(400).json({ errors: paginationErrors });
 
-    this.userService
-      .getUsers(paginationDto!)
-      .then((users) => res.status(200).json(users))
-      .catch((error) => this.handleError(error, res));
+    new GetUsersUseCaseImpl(this.userRepository)
+      .execute(paginationDto!)
+      .then((data) => res.json(data))
+      .catch((error) => ErrorHandlerService.handleError(error, res));
   };
 
   getUserById = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const [error, userIdDto] = UserIdDto.get({ user_id: +id });
+    const { errors, validatedData } = UserIdDto.create({ user_id: +id });
+    if (errors) return res.status(400).json({ errors });
 
-    if (error) return res.status(400).json({ error });
-
-    this.userService
-      .getUserById(userIdDto!)
-      .then((userFound) => res.status(200).json(userFound))
-      .catch((error) => this.handleError(error, res));
-  };
-
-  createUser = async (req: Request, res: Response) => {
-    const [error, createUserDto] = CreateUserDto.create(req.body);
-
-    if (error) return res.status(400).json({ error });
-
-    this.userService
-      .createUser(createUserDto!)
-      .then((newUser) => res.status(200).json(newUser))
-      .catch((error) => this.handleError(error, res));
-  };
-
-  checkEmail = async (req: Request, res: Response) => {
-    const [error, checkUserEmailDto] = CheckUserEmailDto.create(req.body);
-
-    if (error) return res.status(400).json({ error });
-
-    this.userService
-      .checkEmail(checkUserEmailDto!)
-      .then((isAvailable) => res.status(200).json(isAvailable))
-      .catch((error) => this.handleError(error, res));
+    new GetUserByIdUseCaseImpl(this.userRepository)
+      .execute(validatedData!)
+      .then((data) => res.json(data))
+      .catch((error) => ErrorHandlerService.handleError(error, res));
   };
 
   updateUser = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const [error, updateUserDto] = UpdateUserDto.update({
+    const { errors, validatedData } = UpdateUserDto.create({
       ...req.body,
       user_id: +id,
     });
+    if (errors) return res.status(400).json({ errors });
 
-    if (error) return res.status(400).json({ error });
-
-    this.userService
-      .updateUser(updateUserDto!)
-      .then((updatedUser) => res.status(200).json(updatedUser))
-      .catch((error) => this.handleError(error, res));
+    new UpdateUserUseCaseImpl(this.userRepository)
+      .execute(validatedData!)
+      .then((data) => res.json(data))
+      .catch((error) => ErrorHandlerService.handleError(error, res));
   };
 }

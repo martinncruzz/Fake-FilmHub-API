@@ -1,111 +1,90 @@
 import { Request, Response } from "express";
+
+import { ErrorHandlerService } from "..";
 import {
   CreateMovieDto,
   MovieIdDto,
   UpdateMovieDto,
   PaginationDto,
   MovieFiltersDto,
-  CustomError,
+  MovieRepository,
+  GetMoviesUseCaseImpl,
+  GetMovieByIdUseCaseImpl,
+  CreateMovieUseCaseImpl,
+  UpdateMovieUseCaseImpl,
+  DeleteMovieUseCaseImpl,
 } from "../../domain";
-import { MovieService } from "../services";
 
 export class MovieController {
-  constructor(private readonly movieService: MovieService) {}
-
-  private handleError = (error: unknown, res: Response) => {
-    if (error instanceof CustomError)
-      return res.status(error.statusCode).json({ error: error.message });
-
-    console.log(`${error}`);
-    return res.status(500).json({ error: "Internal server error" });
-  };
+  constructor(private readonly movieRepository: MovieRepository) {}
 
   getMovies = async (req: Request, res: Response) => {
-    const {
-      page = 1,
-      limit = 10,
-      title,
-      release_year,
-      min_release_year,
-      max_release_year,
-      genre_id
-    } = req.query;
+    const { page = 1, limit = 10 } = req.query;
 
-    const [paginationError, paginationDto] = PaginationDto.create(
-      +page,
-      +limit
-    );
+    const { errors: paginationErrors, validatedData: paginationDto } =
+      PaginationDto.create(+page, +limit);
 
-    if (paginationError) return res.status(400).json({ paginationError });
+    if (paginationErrors)
+      return res.status(400).json({ errors: paginationErrors });
 
-    const [movieFiltersError, movieFiltersDto] = MovieFiltersDto.create({
-      title,
-      release_year,
-      min_release_year,
-      max_release_year,
-      genre_id
-    });
+    const { errors: movieFiltersErrors, validatedData: movieFiltersDto } =
+      MovieFiltersDto.create(req.query);
 
-    if (movieFiltersError) return res.status(400).json({ movieFiltersError });
+    if (movieFiltersErrors)
+      return res.status(400).json({ errors: movieFiltersErrors });
 
-    this.movieService
-      .getMovies(paginationDto!, movieFiltersDto!)
-      .then((movies) => res.status(200).json(movies))
-      .catch((error) => this.handleError(error, res));
+    new GetMoviesUseCaseImpl(this.movieRepository)
+      .execute(paginationDto!, movieFiltersDto!)
+      .then((data) => res.json(data))
+      .catch((error) => ErrorHandlerService.handleError(error, res));
   };
 
   getMovieById = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const [error, movieIdDto] = MovieIdDto.get({ movie_id: +id });
+    const { errors, validatedData } = MovieIdDto.create({ movie_id: +id });
+    if (errors) return res.status(400).json({ errors });
 
-    if (error) return res.status(400).json({ error });
-
-    this.movieService
-      .getMovieById(movieIdDto!)
-      .then((movieFound) => res.status(200).json(movieFound))
-      .catch((error) => this.handleError(error, res));
+    new GetMovieByIdUseCaseImpl(this.movieRepository)
+      .execute(validatedData!)
+      .then((data) => res.json(data))
+      .catch((error) => ErrorHandlerService.handleError(error, res));
   };
 
   createMovie = async (req: Request, res: Response) => {
-    const [error, createMovieDto] = CreateMovieDto.create(req.body);
+    const { errors, validatedData } = CreateMovieDto.create(req.body);
+    if (errors) return res.status(400).json({ errors });
 
-    if (error) return res.status(400).json({ error });
-
-    this.movieService
-      .createMovie(createMovieDto!)
-      .then((newMovie) => res.status(200).json(newMovie))
-      .catch((error) => this.handleError(error, res));
+    new CreateMovieUseCaseImpl(this.movieRepository)
+      .execute(validatedData!)
+      .then((data) => res.json(data))
+      .catch((error) => ErrorHandlerService.handleError(error, res));
   };
 
   updateMovie = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const [error, updateMovieDto] = UpdateMovieDto.update({
+    const { errors, validatedData } = UpdateMovieDto.create({
       ...req.body,
       movie_id: +id,
     });
+    if (errors) return res.status(400).json({ errors });
 
-    if (error) return res.status(400).json({ error });
-
-    this.movieService
-      .updateMovie(updateMovieDto!)
-      .then((updatedMovie) => res.status(200).json(updatedMovie))
-      .catch((error) => this.handleError(error, res));
+    new UpdateMovieUseCaseImpl(this.movieRepository)
+      .execute(validatedData!)
+      .then((data) => res.json(data))
+      .catch((error) => ErrorHandlerService.handleError(error, res));
   };
 
   deleteMovie = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const [error, movieIdDto] = MovieIdDto.get({
-      movie_id: +id,
-    });
+    const { errors, validatedData } = MovieIdDto.create({ movie_id: +id });
+    if (errors) return res.status(400).json({ errors });
 
-    if (error) return res.status(400).json({ error });
-
-    this.movieService
-      .deleteMovie(movieIdDto!)
-      .then((deletedMovie) => res.status(200).json(deletedMovie))
-      .catch((error) => this.handleError(error, res));
+    new DeleteMovieUseCaseImpl(this.movieRepository)
+      .execute(validatedData!)
+      .then((data) => res.json(data))
+      .catch((error) => ErrorHandlerService.handleError(error, res));
   };
 }
