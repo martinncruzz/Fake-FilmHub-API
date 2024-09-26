@@ -1,4 +1,9 @@
-import { GenreEntity, GenreIdDto, PaginationDto } from "../..";
+import {
+  GenreEntity,
+  GenreIdDto,
+  PaginationDto,
+  PaginationResult,
+} from "../..";
 
 export interface GenresData {
   total: number;
@@ -9,7 +14,11 @@ export type GetMoviesByGenreUseCaseResp = Promise<GenreEntity>;
 
 export type GetGenreByIdUseCaseResp = Promise<GenreEntity>;
 
-export type GetGenresUseCaseResp = Promise<GenreEntity[]>;
+export type GetGenresUseCaseResp = Promise<
+  PaginationResult & {
+    genres: GenreEntity[];
+  }
+>;
 
 export interface GetGenreByIdUseCase {
   execute(genreIdDto: GenreIdDto): GetGenreByIdUseCaseResp;
