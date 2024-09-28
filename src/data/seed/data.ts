@@ -9,7 +9,7 @@ export const seedData = {
     },
     {
       fullname: "John Doe",
-      email: "johndoe@hotmal.com",
+      email: "johndoe@hotmail.com",
       password: "pass123",
       avatar:
         "https://steamuserimages-a.akamaihd.net/ugc/789739407890659924/10D7DFE496F51CC4F90854EE09A83B69E09B6247/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false",
