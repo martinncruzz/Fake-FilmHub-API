@@ -1,24 +1,25 @@
 export const seedData = {
   users: [
     {
-      fullname: "Administrator",
-      email: "admin@gmail.com",
-      password: "admin123",
+      fullname: "Charlotte Evans",
+      email: "charlotte.evans@outlook.com",
+      password: "charlottePass998",
       avatar:
-        "https://res.cloudinary.com/dhhxe6sif/image/upload/v1708801497/My%20Images/ehaeoa8le2mztmhw4klj.jpg",
+        "https://res.cloudinary.com/dhhxe6sif/image/upload/v1727556454/FilmHub-API-Images/Users/ydlfl6dajinxbzts9gsr.jpg",
     },
     {
-      fullname: "John Doe",
-      email: "johndoe@hotmail.com",
-      password: "pass123",
+      fullname: "Lucas Harrison",
+      email: "lucas.harrison@gmail.com",
+      password: "lucasH123!",
       avatar:
-        "https://steamuserimages-a.akamaihd.net/ugc/789739407890659924/10D7DFE496F51CC4F90854EE09A83B69E09B6247/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false",
+        "https://res.cloudinary.com/dhhxe6sif/image/upload/v1727556455/FilmHub-API-Images/Users/qkoztblmwb3bwr3r4nqq.jpg",
     },
     {
       fullname: "Jane Smith",
       email: "janesmith@yahoo.com.ar",
-      password: "password456",
-      avatar: "https://steamavatar.io/img/1477351899v6iQb.jpg",
+      password: "janeS2021*",
+      avatar:
+        "https://res.cloudinary.com/dhhxe6sif/image/upload/v1727555616/FilmHub-API-Images/Users/v793nmhksqzzvujwpkdw.jpg",
     },
   ],
 
@@ -26,27 +27,27 @@ export const seedData = {
     {
       name: "Drama",
       image:
-        "https://res.cloudinary.com/dhhxe6sif/image/upload/v1708801194/FilmHub-API-Images/qop48liphehtjcwqwvus.jpg",
+        "https://res.cloudinary.com/dhhxe6sif/image/upload/v1708801194/FilmHub-API-Images/Genres/qop48liphehtjcwqwvus.jpg",
     },
     {
       name: "Action/Adventure",
       image:
-        "https://res.cloudinary.com/dhhxe6sif/image/upload/v1708801185/FilmHub-API-Images/bmyrv4yltisupvso2ejs.jpg",
+        "https://res.cloudinary.com/dhhxe6sif/image/upload/v1708801185/FilmHub-API-Images/Genres/bmyrv4yltisupvso2ejs.jpg",
     },
     {
       name: "Science Fiction/Fantasy",
       image:
-        "https://res.cloudinary.com/dhhxe6sif/image/upload/v1708801221/FilmHub-API-Images/wuwf7fyuhpntw27knzj5.jpg",
+        "https://res.cloudinary.com/dhhxe6sif/image/upload/v1708801221/FilmHub-API-Images/Genres/wuwf7fyuhpntw27knzj5.jpg",
     },
     {
       name: "Comedy",
       image:
-        "https://res.cloudinary.com/dhhxe6sif/image/upload/v1708801176/FilmHub-API-Images/oj3cw7uby6tdatt3c1ij.jpg",
+        "https://res.cloudinary.com/dhhxe6sif/image/upload/v1708801176/FilmHub-API-Images/Genres/oj3cw7uby6tdatt3c1ij.jpg",
     },
     {
       name: "Animation/Family",
       image:
-        "https://res.cloudinary.com/dhhxe6sif/image/upload/v1708801159/FilmHub-API-Images/y8oemtwwq5vnjm3xitzq.jpg",
+        "https://res.cloudinary.com/dhhxe6sif/image/upload/v1708801159/FilmHub-API-Images/Genres/y8oemtwwq5vnjm3xitzq.jpg",
     },
   ],
 
