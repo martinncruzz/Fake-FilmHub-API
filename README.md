@@ -2,7 +2,7 @@
 
 Welcome to Fake FilmHub API, a versatile and efficient solution for managing movie-related data. This API follows Domain-Driven Design (DDD) and Clean Architecture, ensuring scalability, maintainability, and ease of extension for future features.
 
-![image](https://github.com/user-attachments/assets/9635ca13-44e3-42b4-b6a7-da4f73905142)
+![image](https://github.com/user-attachments/assets/dd44d585-3a59-44a4-b55f-7497a9f6e9fe)
 
 > [!IMPORTANT]
 > For detailed instructions on how to use the API, please refer to the documentation available. It covers everything from endpoints usage to authentication, ensuring a smooth experience for developers.
