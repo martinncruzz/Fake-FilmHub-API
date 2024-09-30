@@ -2,21 +2,21 @@ export const seedData = {
   users: [
     {
       fullname: "Charlotte Evans",
-      email: "charlotte.evans@outlook.com",
+      email: "charlotte@outlook.com",
       password: "charlottePass998",
       avatar:
         "https://res.cloudinary.com/dhhxe6sif/image/upload/v1727556454/FilmHub-API-Images/Users/ydlfl6dajinxbzts9gsr.jpg",
     },
     {
-      fullname: "Lucas Harrison",
-      email: "lucas.harrison@gmail.com",
-      password: "lucasH123!",
+      fullname: "John Doe",
+      email: "john@mail.com",
+      password: "johnD123!",
       avatar:
         "https://res.cloudinary.com/dhhxe6sif/image/upload/v1727556455/FilmHub-API-Images/Users/qkoztblmwb3bwr3r4nqq.jpg",
     },
     {
       fullname: "Jane Smith",
-      email: "janesmith@yahoo.com.ar",
+      email: "jane@yahoo.com.ar",
       password: "janeS2021*",
       avatar:
         "https://res.cloudinary.com/dhhxe6sif/image/upload/v1727555616/FilmHub-API-Images/Users/v793nmhksqzzvujwpkdw.jpg",
