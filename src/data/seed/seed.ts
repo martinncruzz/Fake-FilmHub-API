@@ -10,11 +10,16 @@ import { UserRole } from "../../domain/interfaces/shared/shared.interfaces";
 
 async function seedDatabase(): Promise<void> {
   try {
-    await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
-      await resetDatabaseSequences(tx);
-      await clearDatabase(tx);
-      await initializeDatabaseWithSeedData(tx);
-    });
+    await prisma.$transaction(
+      async (tx: Prisma.TransactionClient) => {
+        await resetDatabaseSequences(tx);
+        await clearDatabase(tx);
+        await initializeDatabaseWithSeedData(tx);
+      },
+      {
+        timeout: 120000,
+      }
+    );
 
     console.log("Database seeding completed successfully.");
   } catch (error) {
