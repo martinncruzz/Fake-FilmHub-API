@@ -8,15 +8,12 @@ import {
   MoviesData,
   PaginationDto,
   UpdateMovieDto,
-} from "../../domain";
+} from '../../domain';
 
 export class MovieRepositoryImpl implements MovieRepository {
   constructor(private readonly movieDatasource: MovieDatasource) {}
 
-  getMovies(
-    paginationDto: PaginationDto,
-    movieFiltersDto: MovieFiltersDto
-  ): Promise<MoviesData> {
+  getMovies(paginationDto: PaginationDto, movieFiltersDto: MovieFiltersDto): Promise<MoviesData> {
     return this.movieDatasource.getMovies(paginationDto, movieFiltersDto);
   }
   getMovieById(movieIdDto: MovieIdDto): Promise<MovieEntity> {

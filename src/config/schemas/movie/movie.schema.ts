@@ -1,7 +1,7 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-import { MovieEntity } from "../../../domain";
-import { genreSchema } from "../..";
+import { MovieEntity } from '../../../domain';
+import { genreSchema } from '../..';
 
 export const movieSchema: z.ZodType<MovieEntity> = z.object({
   movie_id: z.number().positive().int(),

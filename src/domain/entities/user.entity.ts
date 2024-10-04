@@ -1,4 +1,4 @@
-import { UserRole } from "..";
+import { UserRole } from '..';
 
 export class UserEntity {
   constructor(
@@ -7,6 +7,6 @@ export class UserEntity {
     public email: string,
     public password: string,
     public avatar: string,
-    public role: UserRole
+    public role: UserRole,
   ) {}
 }

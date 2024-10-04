@@ -1,4 +1,4 @@
-import { MovieEntity, UpdateMovieDto } from "../..";
+import { MovieEntity, UpdateMovieDto } from '../..';
 
 export type UpdateMovieUseCaseResp = Promise<MovieEntity>;
 

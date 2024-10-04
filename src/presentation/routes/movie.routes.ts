@@ -1,7 +1,7 @@
-import { Router } from "express";
+import { Router } from 'express';
 
-import { MovieController } from "..";
-import { MovieDatasourceImpl, MovieRepositoryImpl } from "../../infrastructure";
+import { MovieController } from '..';
+import { MovieDatasourceImpl, MovieRepositoryImpl } from '../../infrastructure';
 
 export class MovieRoutes {
   static get routes(): Router {
@@ -12,11 +12,11 @@ export class MovieRoutes {
 
     const movieController = new MovieController(movieRepository);
 
-    router.get("/", movieController.getMovies);
-    router.get("/:id", movieController.getMovieById);
-    router.post("/", movieController.createMovie);
-    router.put("/:id", movieController.updateMovie);
-    router.delete("/:id", movieController.deleteMovie);
+    router.get('/', movieController.getMovies);
+    router.get('/:id', movieController.getMovieById);
+    router.post('/', movieController.createMovie);
+    router.put('/:id', movieController.updateMovie);
+    router.delete('/:id', movieController.deleteMovie);
 
     return router;
   }

@@ -1,9 +1,4 @@
-import {
-  CreateGenreDto,
-  CreateGenreUseCase,
-  CreateGenreUseCaseResp,
-  GenreRepository,
-} from "../..";
+import { CreateGenreDto, CreateGenreUseCase, CreateGenreUseCaseResp, GenreRepository } from '../..';
 
 export class CreateGenreUseCaseImpl implements CreateGenreUseCase {
   constructor(private readonly genreRepository: GenreRepository) {}

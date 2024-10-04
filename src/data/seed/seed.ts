@@ -1,8 +1,8 @@
-import { Prisma } from "@prisma/client";
+import { Prisma } from '@prisma/client';
 
-import { prisma } from "../postgres";
-import { seedData } from "..";
-import { UserRole } from "../../domain/interfaces/shared/shared.interfaces";
+import { prisma } from '../postgres';
+import { seedData } from '..';
+import { UserRole } from '../../domain/interfaces/shared/shared.interfaces';
 
 (async () => {
   await seedDatabase();
@@ -18,28 +18,20 @@ async function seedDatabase(): Promise<void> {
       },
       {
         timeout: 120000,
-      }
+      },
     );
 
-    console.log("Database seeding completed successfully.");
+    console.log('Database seeding completed successfully.');
   } catch (error) {
-    console.error("Error during database seeding:", error);
+    console.error('Error during database seeding:', error);
   }
 }
 
-async function resetDatabaseSequences(
-  tx: Prisma.TransactionClient
-): Promise<void> {
+async function resetDatabaseSequences(tx: Prisma.TransactionClient): Promise<void> {
   await Promise.all([
-    tx.$executeRawUnsafe(
-      `ALTER SEQUENCE "UserModel_user_id_seq" RESTART WITH 1;`
-    ),
-    tx.$executeRawUnsafe(
-      `ALTER SEQUENCE "GenreModel_genre_id_seq" RESTART WITH 1;`
-    ),
-    tx.$executeRawUnsafe(
-      `ALTER SEQUENCE "MovieModel_movie_id_seq" RESTART WITH 1;`
-    ),
+    tx.$executeRawUnsafe(`ALTER SEQUENCE "UserModel_user_id_seq" RESTART WITH 1;`),
+    tx.$executeRawUnsafe(`ALTER SEQUENCE "GenreModel_genre_id_seq" RESTART WITH 1;`),
+    tx.$executeRawUnsafe(`ALTER SEQUENCE "MovieModel_movie_id_seq" RESTART WITH 1;`),
   ]);
 }
 
@@ -52,9 +44,7 @@ async function clearDatabase(tx: Prisma.TransactionClient): Promise<void> {
   ]);
 }
 
-async function initializeDatabaseWithSeedData(
-  tx: Prisma.TransactionClient
-): Promise<void> {
+async function initializeDatabaseWithSeedData(tx: Prisma.TransactionClient): Promise<void> {
   await Promise.all([
     tx.userModel.createMany({
       data: seedData.users.map((user) => ({

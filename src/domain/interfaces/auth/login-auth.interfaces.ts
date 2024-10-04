@@ -1,4 +1,4 @@
-import { LoginUserDto } from "../..";
+import { LoginUserDto } from '../..';
 
 export type LoginUserUseCaseResp = Promise<{
   access_token: string;

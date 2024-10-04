@@ -1,6 +1,6 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-import { PaginationDto } from "../../../domain";
+import { PaginationDto } from '../../../domain';
 
 export const paginationSchema: z.ZodType<PaginationDto> = z.object({
   page: z.number().positive().int(),

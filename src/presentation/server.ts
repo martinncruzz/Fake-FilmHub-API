@@ -1,6 +1,6 @@
-import express, { Router } from "express";
-import cors from "cors";
-import morgan from "morgan";
+import express, { Router } from 'express';
+import cors from 'cors';
+import morgan from 'morgan';
 
 interface Options {
   port: number;
@@ -22,10 +22,10 @@ export class Server {
   public async start() {
     this.app.use(
       cors({
-        origin: ["*"],
-      })
+        origin: ['*'],
+      }),
     );
-    this.app.use(morgan("dev"));
+    this.app.use(morgan('dev'));
     this.app.use(express.json());
 
     this.app.use(this.routes);

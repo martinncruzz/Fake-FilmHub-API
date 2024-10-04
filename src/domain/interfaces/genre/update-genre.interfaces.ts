@@ -1,4 +1,4 @@
-import { GenreEntity, UpdateGenreDto } from "../..";
+import { GenreEntity, UpdateGenreDto } from '../..';
 
 export type UpdateGenreUseCaseResp = Promise<GenreEntity>;
 

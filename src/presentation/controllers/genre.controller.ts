@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 
-import { ErrorHandlerService } from "..";
+import { ErrorHandlerService } from '..';
 import {
   CreateGenreDto,
   GenreIdDto,
@@ -13,7 +13,7 @@ import {
   GetGenreByIdUseCaseImpl,
   GetMoviesByGenreUseCaseImpl,
   UpdateGenreUseCaseImpl,
-} from "../../domain";
+} from '../../domain';
 
 export class GenreController {
   constructor(private readonly genreRepository: GenreRepository) {}
@@ -21,11 +21,9 @@ export class GenreController {
   getGenres = async (req: Request, res: Response) => {
     const { page = 1, limit = 10 } = req.query;
 
-    const { errors: paginationErrors, validatedData: paginationDto } =
-      PaginationDto.create(+page, +limit);
+    const { errors: paginationErrors, validatedData: paginationDto } = PaginationDto.create(+page, +limit);
 
-    if (paginationErrors)
-      return res.status(400).json({ errors: paginationErrors });
+    if (paginationErrors) return res.status(400).json({ errors: paginationErrors });
 
     new GetGenresUseCaseImpl(this.genreRepository)
       .execute(paginationDto!)

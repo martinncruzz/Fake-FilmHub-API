@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 
-import { ErrorHandlerService } from "..";
+import { ErrorHandlerService } from '..';
 import {
   CreateMovieDto,
   MovieIdDto,
@@ -13,7 +13,7 @@ import {
   CreateMovieUseCaseImpl,
   UpdateMovieUseCaseImpl,
   DeleteMovieUseCaseImpl,
-} from "../../domain";
+} from '../../domain';
 
 export class MovieController {
   constructor(private readonly movieRepository: MovieRepository) {}
@@ -21,17 +21,13 @@ export class MovieController {
   getMovies = async (req: Request, res: Response) => {
     const { page = 1, limit = 10 } = req.query;
 
-    const { errors: paginationErrors, validatedData: paginationDto } =
-      PaginationDto.create(+page, +limit);
+    const { errors: paginationErrors, validatedData: paginationDto } = PaginationDto.create(+page, +limit);
 
-    if (paginationErrors)
-      return res.status(400).json({ errors: paginationErrors });
+    if (paginationErrors) return res.status(400).json({ errors: paginationErrors });
 
-    const { errors: movieFiltersErrors, validatedData: movieFiltersDto } =
-      MovieFiltersDto.create(req.query);
+    const { errors: movieFiltersErrors, validatedData: movieFiltersDto } = MovieFiltersDto.create(req.query);
 
-    if (movieFiltersErrors)
-      return res.status(400).json({ errors: movieFiltersErrors });
+    if (movieFiltersErrors) return res.status(400).json({ errors: movieFiltersErrors });
 
     new GetMoviesUseCaseImpl(this.movieRepository)
       .execute(paginationDto!, movieFiltersDto!)

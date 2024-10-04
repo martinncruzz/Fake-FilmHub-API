@@ -1,9 +1,4 @@
-import {
-  DeleteGenreUseCase,
-  DeleteGenreUseCaseResp,
-  GenreIdDto,
-  GenreRepository,
-} from "../..";
+import { DeleteGenreUseCase, DeleteGenreUseCaseResp, GenreIdDto, GenreRepository } from '../..';
 
 export class DeleteGenreUseCaseImpl implements DeleteGenreUseCase {
   constructor(private readonly genreRepository: GenreRepository) {}

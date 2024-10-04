@@ -1,6 +1,6 @@
-import { Response } from "express";
+import { Response } from 'express';
 
-import { CustomError } from "../../domain";
+import { CustomError } from '../../domain';
 
 export class ErrorHandlerService {
   static handleError(error: unknown, res: Response) {
@@ -9,6 +9,6 @@ export class ErrorHandlerService {
     }
 
     console.error(`Error: ${error}`);
-    return res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: 'Internal server error' });
   }
 }

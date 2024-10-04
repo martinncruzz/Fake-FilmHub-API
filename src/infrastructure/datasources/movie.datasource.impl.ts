@@ -1,7 +1,7 @@
-import { Prisma } from "@prisma/client";
+import { Prisma } from '@prisma/client';
 
-import { MovieMapper } from "..";
-import { prisma } from "../../data/postgres";
+import { MovieMapper } from '..';
+import { prisma } from '../../data/postgres';
 import {
   CreateMovieDto,
   CustomError,
@@ -12,27 +12,16 @@ import {
   MoviesData,
   PaginationDto,
   UpdateMovieDto,
-} from "../../domain";
+} from '../../domain';
 
 export class MovieDatasourceImpl implements MovieDatasource {
-  async getMovies(
-    paginationDto: PaginationDto,
-    movieFiltersDto: MovieFiltersDto
-  ): Promise<MoviesData> {
+  async getMovies(paginationDto: PaginationDto, movieFiltersDto: MovieFiltersDto): Promise<MoviesData> {
     const { page, limit } = paginationDto;
-    const {
-      title,
-      release_year,
-      min_release_year,
-      max_release_year,
-      genre_id,
-    } = movieFiltersDto;
+    const { title, release_year, min_release_year, max_release_year, genre_id } = movieFiltersDto;
 
     const movieFilters: Prisma.MovieModelWhereInput = {
-      title: { contains: title, mode: "insensitive" },
-      release_year: release_year
-        ? { equals: release_year }
-        : { gte: min_release_year, lte: max_release_year },
+      title: { contains: title, mode: 'insensitive' },
+      release_year: release_year ? { equals: release_year } : { gte: min_release_year, lte: max_release_year },
       genres: { some: { genre_id } },
     };
 
@@ -54,7 +43,7 @@ export class MovieDatasourceImpl implements MovieDatasource {
         MovieMapper.movieEntityFromObject({
           ...movie,
           genres: movie.genres.map(({ genre }) => genre),
-        })
+        }),
       ),
     };
   }
@@ -65,7 +54,7 @@ export class MovieDatasourceImpl implements MovieDatasource {
       include: { genres: { include: { genre: true } } },
     });
 
-    if (!movie) throw CustomError.notFound("Movie not found");
+    if (!movie) throw CustomError.notFound('Movie not found');
 
     return MovieMapper.movieEntityFromObject({
       ...movie,
@@ -80,8 +69,7 @@ export class MovieDatasourceImpl implements MovieDatasource {
       where: { genre_id: { in: genre_ids } },
     });
 
-    if (genresFromDB.length !== genre_ids.length)
-      throw CustomError.badRequest("One or more genre_ids are invalid");
+    if (genresFromDB.length !== genre_ids.length) throw CustomError.badRequest('One or more genre_ids are invalid');
 
     const newMovie = await prisma.movieModel.create({
       data: {
@@ -121,25 +109,15 @@ export class MovieDatasourceImpl implements MovieDatasource {
       where: { genre_id: { in: genre_ids } },
     });
 
-    if (genresFromDB.length !== genre_ids.length)
-      throw CustomError.badRequest("One or more genre_ids are invalid");
+    if (genresFromDB.length !== genre_ids.length) throw CustomError.badRequest('One or more genre_ids are invalid');
 
-    const genreIdsFromMovie = movieFromDB.genres!.map(
-      ({ genre_id }) => genre_id
-    );
+    const genreIdsFromMovie = movieFromDB.genres!.map(({ genre_id }) => genre_id);
 
-    const genreIdsToDelete = genre_ids.filter((genre_id) =>
-      genreIdsFromMovie.includes(genre_id)
-    );
-    const genreIdsToAdd = genre_ids.filter(
-      (genre_id) => !genreIdsFromMovie.includes(genre_id)
-    );
+    const genreIdsToDelete = genre_ids.filter((genre_id) => genreIdsFromMovie.includes(genre_id));
+    const genreIdsToAdd = genre_ids.filter((genre_id) => !genreIdsFromMovie.includes(genre_id));
 
-    if (
-      genreIdsFromMovie.length === genreIdsToDelete.length &&
-      genreIdsToAdd.length === 0
-    )
-      throw CustomError.badRequest("A movie must have a genre at least");
+    if (genreIdsFromMovie.length === genreIdsToDelete.length && genreIdsToAdd.length === 0)
+      throw CustomError.badRequest('A movie must have a genre at least');
 
     const updatedMovie = await prisma.movieModel.update({
       where: { movie_id },

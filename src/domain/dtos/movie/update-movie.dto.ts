@@ -1,5 +1,5 @@
-import { ValidationResult } from "../..";
-import { updateMovieSchema, ZodAdapter } from "../../../config";
+import { ValidationResult } from '../..';
+import { updateMovieSchema, ZodAdapter } from '../../../config';
 
 export class UpdateMovieDto {
   private constructor(
@@ -11,7 +11,7 @@ export class UpdateMovieDto {
     public readonly duration_minutes?: number,
     public readonly trailer_link?: string,
     public readonly poster_image_url?: string,
-    public readonly genre_ids?: number[]
+    public readonly genre_ids?: number[],
   ) {}
 
   static create(props: Record<string, any>): ValidationResult<UpdateMovieDto> {

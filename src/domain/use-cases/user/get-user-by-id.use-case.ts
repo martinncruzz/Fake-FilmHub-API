@@ -1,9 +1,4 @@
-import {
-  GetUserByIdUseCase,
-  GetUserByIdUseCaseResp,
-  UserIdDto,
-  UserRepository,
-} from "../..";
+import { GetUserByIdUseCase, GetUserByIdUseCaseResp, UserIdDto, UserRepository } from '../..';
 
 export class GetUserByIdUseCaseImpl implements GetUserByIdUseCase {
   constructor(private readonly userRepository: UserRepository) {}

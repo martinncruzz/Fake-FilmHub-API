@@ -1,7 +1,7 @@
-import { Router } from "express";
+import { Router } from 'express';
 
-import { GenreController } from "..";
-import { GenreDatasourceImpl, GenreRepositoryImpl } from "../../infrastructure";
+import { GenreController } from '..';
+import { GenreDatasourceImpl, GenreRepositoryImpl } from '../../infrastructure';
 
 export class GenreRoutes {
   static get routes(): Router {
@@ -12,12 +12,12 @@ export class GenreRoutes {
 
     const genreController = new GenreController(genreRepository);
 
-    router.get("/", genreController.getGenres);
-    router.get("/:id/movies", genreController.getMoviesByGenre);
-    router.get("/:id", genreController.getGenreById);
-    router.post("/", genreController.createGenre);
-    router.put("/:id", genreController.updateGenre);
-    router.delete("/:id", genreController.deleteGenre);
+    router.get('/', genreController.getGenres);
+    router.get('/:id/movies', genreController.getMoviesByGenre);
+    router.get('/:id', genreController.getGenreById);
+    router.post('/', genreController.createGenre);
+    router.put('/:id', genreController.updateGenre);
+    router.delete('/:id', genreController.deleteGenre);
 
     return router;
   }

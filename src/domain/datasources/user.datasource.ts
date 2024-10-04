@@ -1,10 +1,4 @@
-import {
-  PaginationDto,
-  UpdateUserDto,
-  UserEntity,
-  UserIdDto,
-  UsersData,
-} from "..";
+import { PaginationDto, UpdateUserDto, UserEntity, UserIdDto, UsersData } from '..';
 
 export abstract class UserDatasource {
   abstract getUsers(paginationDto: PaginationDto): Promise<UsersData>;

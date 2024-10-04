@@ -1,5 +1,5 @@
-import { GenreMapper } from "..";
-import { prisma } from "../../data/postgres";
+import { GenreMapper } from '..';
+import { prisma } from '../../data/postgres';
 import {
   CreateGenreDto,
   CustomError,
@@ -9,7 +9,7 @@ import {
   GenresData,
   PaginationDto,
   UpdateGenreDto,
-} from "../../domain";
+} from '../../domain';
 
 export class GenreDatasourceImpl implements GenreDatasource {
   async getGenres(paginationDto: PaginationDto): Promise<GenresData> {
@@ -35,7 +35,7 @@ export class GenreDatasourceImpl implements GenreDatasource {
       include: { movies: { include: { movie: true } } },
     });
 
-    if (!genreWithMovies) throw CustomError.notFound("Genre not found");
+    if (!genreWithMovies) throw CustomError.notFound('Genre not found');
 
     return GenreMapper.genreEntityFromObject({
       ...genreWithMovies,
@@ -48,7 +48,7 @@ export class GenreDatasourceImpl implements GenreDatasource {
       where: { genre_id: genreIdDto.genre_id },
     });
 
-    if (!genre) throw CustomError.notFound("Genre not found");
+    if (!genre) throw CustomError.notFound('Genre not found');
 
     return GenreMapper.genreEntityFromObject(genre);
   }
@@ -56,12 +56,11 @@ export class GenreDatasourceImpl implements GenreDatasource {
   async createGenre(createGenreDto: CreateGenreDto): Promise<GenreEntity> {
     const genreNameRegistered = await prisma.genreModel.findFirst({
       where: {
-        name: { equals: createGenreDto.name, mode: "insensitive" },
+        name: { equals: createGenreDto.name, mode: 'insensitive' },
       },
     });
 
-    if (genreNameRegistered)
-      throw CustomError.badRequest("This genre name already exists");
+    if (genreNameRegistered) throw CustomError.badRequest('This genre name already exists');
 
     const newGenre = await prisma.genreModel.create({
       data: createGenreDto,
@@ -75,18 +74,14 @@ export class GenreDatasourceImpl implements GenreDatasource {
 
     const genreFromDB = await this.getGenreById({ genre_id });
 
-    if (
-      updateGenreDto.name &&
-      updateGenreDto.name.toLowerCase() !== genreFromDB.name.toLowerCase()
-    ) {
+    if (updateGenreDto.name && updateGenreDto.name.toLowerCase() !== genreFromDB.name.toLowerCase()) {
       const genreNameRegistered = await prisma.genreModel.findFirst({
         where: {
-          name: { equals: updateGenreDto.name, mode: "insensitive" },
+          name: { equals: updateGenreDto.name, mode: 'insensitive' },
         },
       });
 
-      if (genreNameRegistered)
-        throw CustomError.badRequest("This genre name already exists");
+      if (genreNameRegistered) throw CustomError.badRequest('This genre name already exists');
     }
 
     const updatedGenre = await prisma.genreModel.update({
@@ -108,13 +103,11 @@ export class GenreDatasourceImpl implements GenreDatasource {
     });
 
     if (relatedMovies.length >= 15)
-      throw CustomError.badRequest(
-        "This genre cannot be deleted because it is linked to too many movies"
-      );
+      throw CustomError.badRequest('This genre cannot be deleted because it is linked to too many movies');
 
     if (relatedMovies.some((movie) => movie.genres.length === 1))
       throw CustomError.badRequest(
-        "One or more movies only have this genre. Add more genres or remove the movies before deleting this genre"
+        'One or more movies only have this genre. Add more genres or remove the movies before deleting this genre',
       );
 
     await prisma.$transaction([

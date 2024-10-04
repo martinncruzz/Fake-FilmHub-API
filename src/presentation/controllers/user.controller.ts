@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 
-import { ErrorHandlerService } from "..";
+import { ErrorHandlerService } from '..';
 import {
   GetUserByIdUseCaseImpl,
   GetUsersUseCaseImpl,
@@ -9,7 +9,7 @@ import {
   UpdateUserUseCaseImpl,
   UserIdDto,
   UserRepository,
-} from "../../domain";
+} from '../../domain';
 
 export class UserController {
   constructor(private readonly userRepository: UserRepository) {}
@@ -17,11 +17,9 @@ export class UserController {
   getUsers = async (req: Request, res: Response) => {
     const { page = 1, limit = 10 } = req.query;
 
-    const { errors: paginationErrors, validatedData: paginationDto } =
-      PaginationDto.create(+page, +limit);
+    const { errors: paginationErrors, validatedData: paginationDto } = PaginationDto.create(+page, +limit);
 
-    if (paginationErrors)
-      return res.status(400).json({ errors: paginationErrors });
+    if (paginationErrors) return res.status(400).json({ errors: paginationErrors });
 
     new GetUsersUseCaseImpl(this.userRepository)
       .execute(paginationDto!)

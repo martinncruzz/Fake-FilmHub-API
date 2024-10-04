@@ -1,7 +1,7 @@
-import { Router } from "express";
+import { Router } from 'express';
 
-import { AuthController, AuthMiddleware } from "..";
-import { AuthDatasourceImpl, AuthRepositoryImpl } from "../../infrastructure";
+import { AuthController, AuthMiddleware } from '..';
+import { AuthDatasourceImpl, AuthRepositoryImpl } from '../../infrastructure';
 
 export class AuthRoutes {
   static get routes(): Router {
@@ -12,14 +12,10 @@ export class AuthRoutes {
 
     const authController = new AuthController(authRepository);
 
-    router.post("/register", authController.registerUser);
-    router.post("/login", authController.loginUser);
-    router.post("/is-available", authController.isEmailAvailable);
-    router.get(
-      "/profile",
-      [AuthMiddleware.validateJWT],
-      authController.getCurrentSession
-    );
+    router.post('/register', authController.registerUser);
+    router.post('/login', authController.loginUser);
+    router.post('/is-available', authController.isEmailAvailable);
+    router.get('/profile', [AuthMiddleware.validateJWT], authController.getCurrentSession);
 
     return router;
   }

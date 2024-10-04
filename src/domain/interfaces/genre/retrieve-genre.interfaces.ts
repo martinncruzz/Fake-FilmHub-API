@@ -1,9 +1,4 @@
-import {
-  GenreEntity,
-  GenreIdDto,
-  PaginationDto,
-  PaginationResult,
-} from "../..";
+import { GenreEntity, GenreIdDto, PaginationDto, PaginationResult } from '../..';
 
 export interface GenresData {
   total: number;

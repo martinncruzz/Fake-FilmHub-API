@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 
-import { ErrorHandlerService } from "..";
+import { ErrorHandlerService } from '..';
 import {
   AuthRepository,
   CheckUserEmailDto,
@@ -10,7 +10,7 @@ import {
   LoginUserUseCaseImpl,
   RegisterUserDto,
   RegisterUserUseCaseImpl,
-} from "../../domain";
+} from '../../domain';
 
 export class AuthController {
   constructor(private readonly authRepository: AuthRepository) {}
