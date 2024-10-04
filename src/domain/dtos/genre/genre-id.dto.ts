@@ -1,5 +1,5 @@
-import { ValidationResult } from "../..";
-import { genreIdSchema, ZodAdapter } from "../../../config";
+import { ValidationResult } from '../..';
+import { genreIdSchema, ZodAdapter } from '../../../config';
 
 export class GenreIdDto {
   private constructor(public readonly genre_id: number) {}

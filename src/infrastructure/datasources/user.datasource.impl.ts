@@ -1,5 +1,5 @@
-import { UserMapper } from "..";
-import { prisma } from "../../data/postgres";
+import { UserMapper } from '..';
+import { prisma } from '../../data/postgres';
 import {
   CustomError,
   PaginationDto,
@@ -8,7 +8,7 @@ import {
   UserIdDto,
   UserDatasource,
   UsersData,
-} from "../../domain";
+} from '../../domain';
 
 export class UserDatasourceImpl implements UserDatasource {
   async getUsers(paginationDto: PaginationDto): Promise<UsersData> {
@@ -33,7 +33,7 @@ export class UserDatasourceImpl implements UserDatasource {
       where: { user_id: userIdDto.user_id },
     });
 
-    if (!user) throw CustomError.notFound("User not found");
+    if (!user) throw CustomError.notFound('User not found');
 
     return UserMapper.userEntityFromObject(user);
   }
@@ -42,16 +42,12 @@ export class UserDatasourceImpl implements UserDatasource {
     const { user_id, ...updateUserDtoData } = updateUserDto;
     const userFromDB = await this.getUserById({ user_id });
 
-    if (
-      updateUserDto.email &&
-      updateUserDto.email.toLowerCase() !== userFromDB.email.toLowerCase()
-    ) {
+    if (updateUserDto.email && updateUserDto.email.toLowerCase() !== userFromDB.email.toLowerCase()) {
       const isEmailTaken = await prisma.userModel.findFirst({
         where: { email: updateUserDto.email },
       });
 
-      if (isEmailTaken)
-        throw CustomError.badRequest("This email is already registered");
+      if (isEmailTaken) throw CustomError.badRequest('This email is already registered');
     }
 
     const updatedUser = await prisma.userModel.update({

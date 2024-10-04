@@ -1,7 +1,7 @@
-import { Router } from "express";
+import { Router } from 'express';
 
-import { UserController } from "..";
-import { UserDatasourceImpl, UserRepositoryImpl } from "../../infrastructure";
+import { UserController } from '..';
+import { UserDatasourceImpl, UserRepositoryImpl } from '../../infrastructure';
 
 export class UserRoutes {
   static get routes(): Router {
@@ -12,9 +12,9 @@ export class UserRoutes {
 
     const userController = new UserController(userRepository);
 
-    router.get("/", userController.getUsers);
-    router.get("/:id", userController.getUserById);
-    router.put("/:id", userController.updateUser);
+    router.get('/', userController.getUsers);
+    router.get('/:id', userController.getUserById);
+    router.put('/:id', userController.updateUser);
 
     return router;
   }

@@ -1,4 +1,4 @@
-import { PaginationDto, PaginationResult, UserEntity, UserIdDto } from "../..";
+import { PaginationDto, PaginationResult, UserEntity, UserIdDto } from '../..';
 
 export interface UsersData {
   total: number;

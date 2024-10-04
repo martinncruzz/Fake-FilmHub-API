@@ -1,9 +1,4 @@
-import {
-  AuthRepository,
-  RegisterUserDto,
-  RegisterUserUseCase,
-  RegisterUserUseCaseResp,
-} from "../..";
+import { AuthRepository, RegisterUserDto, RegisterUserUseCase, RegisterUserUseCaseResp } from '../..';
 
 export class RegisterUserUseCaseImpl implements RegisterUserUseCase {
   constructor(private readonly authRepository: AuthRepository) {}

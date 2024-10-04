@@ -1,9 +1,4 @@
-import {
-  CreateMovieDto,
-  CreateMovieUseCase,
-  CreateMovieUseCaseResp,
-  MovieRepository,
-} from "../..";
+import { CreateMovieDto, CreateMovieUseCase, CreateMovieUseCaseResp, MovieRepository } from '../..';
 
 export class CreateMovieUseCaseImpl implements CreateMovieUseCase {
   constructor(private readonly movieRepository: MovieRepository) {}

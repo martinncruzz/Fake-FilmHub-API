@@ -7,7 +7,7 @@ import {
   GenresData,
   PaginationDto,
   UpdateGenreDto,
-} from "../../domain";
+} from '../../domain';
 
 export class GenreRepositoryImpl implements GenreRepository {
   constructor(private readonly genreDatasource: GenreDatasource) {}

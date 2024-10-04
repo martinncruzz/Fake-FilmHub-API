@@ -1,4 +1,4 @@
-import { UpdateUserDto, UserEntity } from "../..";
+import { UpdateUserDto, UserEntity } from '../..';
 
 export type UpdateUserUseCaseResp = Promise<UserEntity>;
 

@@ -1,14 +1,14 @@
-import { PaginationDto } from "../..";
+import { PaginationDto } from '../..';
 
 export enum UserRole {
-  ADMIN = "ADMIN",
-  USER = "USER",
+  ADMIN = 'ADMIN',
+  USER = 'USER',
 }
 
 export enum ResourceType {
-  USERS = "users",
-  MOVIES = "movies",
-  GENRES = "genres",
+  USERS = 'users',
+  MOVIES = 'movies',
+  GENRES = 'genres',
 }
 
 export interface PaginationResult {
@@ -22,10 +22,7 @@ export type BuildPagination = (
   paginationDto: PaginationDto,
   total: number,
   resourceType: ResourceType,
-  filtersQuery?: string
+  filtersQuery?: string,
 ) => PaginationResult;
 
-export type SignToken = (
-  payload: Record<string, any>,
-  duration?: string
-) => Promise<string | null>;
+export type SignToken = (payload: Record<string, any>, duration?: string) => Promise<string | null>;

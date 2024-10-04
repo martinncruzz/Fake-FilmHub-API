@@ -1,14 +1,11 @@
-import jwt from "jsonwebtoken";
+import jwt from 'jsonwebtoken';
 
-import { envs } from "..";
+import { envs } from '..';
 
 const JWT_SECRET = envs.JWT_SECRET;
 
 export class JWTAdapter {
-  static async generateToken(
-    payload: Record<string, any>,
-    duration: string = "20d"
-  ): Promise<string | null> {
+  static async generateToken(payload: Record<string, any>, duration: string = '20d'): Promise<string | null> {
     return new Promise((resolve) => {
       jwt.sign(
         payload,
@@ -19,7 +16,7 @@ export class JWTAdapter {
         (err, token) => {
           if (err) return resolve(null);
           resolve(token!);
-        }
+        },
       );
     });
   }

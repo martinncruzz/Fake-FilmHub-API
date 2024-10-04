@@ -1,5 +1,5 @@
-import { UserMapper } from "..";
-import { prisma } from "../../data/postgres";
+import { UserMapper } from '..';
+import { prisma } from '../../data/postgres';
 import {
   AuthDatasource,
   CheckUserEmailDto,
@@ -8,7 +8,7 @@ import {
   RegisterUserDto,
   UserEntity,
   UserRole,
-} from "../../domain";
+} from '../../domain';
 
 export class AuthDatasourceImpl implements AuthDatasource {
   async registerUser(registerUserDto: RegisterUserDto): Promise<UserEntity> {
@@ -16,8 +16,7 @@ export class AuthDatasourceImpl implements AuthDatasource {
       email: registerUserDto.email,
     });
 
-    if (!isEmailAvailable)
-      throw CustomError.badRequest("This email is already registered");
+    if (!isEmailAvailable) throw CustomError.badRequest('This email is already registered');
 
     const newUser = await prisma.userModel.create({
       data: {
@@ -36,18 +35,15 @@ export class AuthDatasourceImpl implements AuthDatasource {
       where: { email },
     });
 
-    if (!user || user.password !== password)
-      throw CustomError.badRequest("Invalid credentials");
+    if (!user || user.password !== password) throw CustomError.badRequest('Invalid credentials');
 
     return UserMapper.userEntityFromObject(user);
   }
 
-  async isEmailAvailable(
-    checkUserEmailDto: CheckUserEmailDto
-  ): Promise<boolean> {
+  async isEmailAvailable(checkUserEmailDto: CheckUserEmailDto): Promise<boolean> {
     const userRegistered = await prisma.userModel.findFirst({
       where: {
-        email: { equals: checkUserEmailDto.email, mode: "insensitive" },
+        email: { equals: checkUserEmailDto.email, mode: 'insensitive' },
       },
     });
 

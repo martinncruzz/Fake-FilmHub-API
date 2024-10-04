@@ -1,12 +1,6 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-import {
-  CheckUserEmailDto,
-  LoginUserDto,
-  RegisterUserDto,
-  UpdateUserDto,
-  UserIdDto,
-} from "../../../domain";
+import { CheckUserEmailDto, LoginUserDto, RegisterUserDto, UpdateUserDto, UserIdDto } from '../../../domain';
 
 export const registerUserSchema: z.ZodType<RegisterUserDto> = z.object({
   fullname: z.string().min(5),

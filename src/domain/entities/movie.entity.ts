@@ -1,4 +1,4 @@
-import { GenreEntity } from "..";
+import { GenreEntity } from '..';
 
 export class MovieEntity {
   constructor(
@@ -10,6 +10,6 @@ export class MovieEntity {
     public duration_minutes: number,
     public trailer_link: string,
     public poster_image_url: string,
-    public genres?: GenreEntity[]
+    public genres?: GenreEntity[],
   ) {}
 }

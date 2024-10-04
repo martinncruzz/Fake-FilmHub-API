@@ -1,6 +1,6 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-import { CreateMovieDto, MovieIdDto, UpdateMovieDto } from "../../../domain";
+import { CreateMovieDto, MovieIdDto, UpdateMovieDto } from '../../../domain';
 
 export const createMovieSchema: z.ZodType<CreateMovieDto> = z.object({
   title: z.string().min(2),

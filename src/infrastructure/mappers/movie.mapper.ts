@@ -1,12 +1,12 @@
-import { GenreMapper } from "..";
-import { movieSchema, ZodAdapter } from "../../config";
-import { CustomError, MovieEntity } from "../../domain";
+import { GenreMapper } from '..';
+import { movieSchema, ZodAdapter } from '../../config';
+import { CustomError, MovieEntity } from '../../domain';
 
 export class MovieMapper {
   static movieEntityFromObject(object: Record<string, any>): MovieEntity {
     const { errors, validatedData } = ZodAdapter.validate(movieSchema, object);
 
-    if (errors) throw CustomError.internalServer("Error processing movie data");
+    if (errors) throw CustomError.internalServer('Error processing movie data');
 
     const {
       movie_id,
@@ -29,7 +29,7 @@ export class MovieMapper {
       duration_minutes,
       trailer_link,
       poster_image_url,
-      genres ? genres.map(GenreMapper.genreEntityFromObject) : undefined
+      genres ? genres.map(GenreMapper.genreEntityFromObject) : undefined,
     );
   }
 }

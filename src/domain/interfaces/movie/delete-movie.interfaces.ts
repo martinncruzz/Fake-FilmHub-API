@@ -1,4 +1,4 @@
-import { MovieIdDto } from "../..";
+import { MovieIdDto } from '../..';
 
 export type DeleteMovieUseCaseResp = Promise<boolean>;
 

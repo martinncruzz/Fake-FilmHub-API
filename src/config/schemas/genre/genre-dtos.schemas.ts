@@ -1,6 +1,6 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-import { CreateGenreDto, GenreIdDto, UpdateGenreDto } from "../../../domain";
+import { CreateGenreDto, GenreIdDto, UpdateGenreDto } from '../../../domain';
 
 export const createGenreSchema: z.ZodType<CreateGenreDto> = z.object({
   name: z.string().min(2),

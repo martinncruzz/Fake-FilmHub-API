@@ -1,4 +1,4 @@
-import { CheckUserEmailDto } from "../..";
+import { CheckUserEmailDto } from '../..';
 
 export type IsEmailAvailableUseCaseResp = Promise<{
   isAvailable: boolean;

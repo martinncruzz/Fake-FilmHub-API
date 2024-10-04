@@ -1,5 +1,5 @@
-import { ValidationResult } from "../..";
-import { movieIdSchema, ZodAdapter } from "../../../config";
+import { ValidationResult } from '../..';
+import { movieIdSchema, ZodAdapter } from '../../../config';
 
 export class MovieIdDto {
   private constructor(public readonly movie_id: number) {}

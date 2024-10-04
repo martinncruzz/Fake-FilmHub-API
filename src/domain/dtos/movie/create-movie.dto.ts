@@ -1,5 +1,5 @@
-import { ValidationResult } from "../..";
-import { createMovieSchema, ZodAdapter } from "../../../config";
+import { ValidationResult } from '../..';
+import { createMovieSchema, ZodAdapter } from '../../../config';
 
 export class CreateMovieDto {
   private constructor(
@@ -10,15 +10,13 @@ export class CreateMovieDto {
     public readonly duration_minutes: number,
     public readonly trailer_link: string,
     public readonly poster_image_url: string,
-    public readonly genre_ids: number[]
+    public readonly genre_ids: number[],
   ) {}
 
   static create(props: Record<string, any>): ValidationResult<CreateMovieDto> {
     const { errors, validatedData } = ZodAdapter.validate(createMovieSchema, {
       ...props,
-      genre_ids: Array.isArray(props.genre_ids)
-        ? props.genre_ids
-        : [props.genre_ids],
+      genre_ids: Array.isArray(props.genre_ids) ? props.genre_ids : [props.genre_ids],
     });
 
     return errors ? { errors } : { validatedData };

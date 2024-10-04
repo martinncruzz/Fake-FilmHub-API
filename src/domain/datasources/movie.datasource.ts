@@ -6,13 +6,10 @@ import {
   MoviesData,
   PaginationDto,
   UpdateMovieDto,
-} from "..";
+} from '..';
 
 export abstract class MovieDatasource {
-  abstract getMovies(
-    paginationDto: PaginationDto,
-    movieFiltersDto: MovieFiltersDto
-  ): Promise<MoviesData>;
+  abstract getMovies(paginationDto: PaginationDto, movieFiltersDto: MovieFiltersDto): Promise<MoviesData>;
   abstract getMovieById(movieIdDto: MovieIdDto): Promise<MovieEntity>;
   abstract createMovie(createMovieDto: CreateMovieDto): Promise<MovieEntity>;
   abstract updateMovie(updateMovieDto: UpdateMovieDto): Promise<MovieEntity>;

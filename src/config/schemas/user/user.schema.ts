@@ -1,6 +1,6 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-import { UserEntity, UserRole } from "../../../domain";
+import { UserEntity, UserRole } from '../../../domain';
 
 export const userSchema: z.ZodType<UserEntity> = z.object({
   user_id: z.number().positive().int(),

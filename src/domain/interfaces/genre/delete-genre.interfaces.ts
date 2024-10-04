@@ -1,4 +1,4 @@
-import { GenreIdDto } from "../..";
+import { GenreIdDto } from '../..';
 
 export type DeleteGenreUseCaseResp = Promise<boolean>;
 

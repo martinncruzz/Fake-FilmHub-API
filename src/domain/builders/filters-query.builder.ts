@@ -1,6 +1,6 @@
 export class FiltersQueryBuilder {
   static build<T>(filters?: T): string {
-    if (!filters) return "";
+    if (!filters) return '';
 
     const filtersQuery = new URLSearchParams();
 
@@ -10,6 +10,6 @@ export class FiltersQueryBuilder {
       }
     });
 
-    return filtersQuery.toString() ? `&${filtersQuery.toString()}` : "";
+    return filtersQuery.toString() ? `&${filtersQuery.toString()}` : '';
   }
 }

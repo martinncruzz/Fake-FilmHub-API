@@ -1,9 +1,4 @@
-import {
-  GetMovieByIdUseCase,
-  GetMovieByIdUseCaseResp,
-  MovieIdDto,
-  MovieRepository,
-} from "../..";
+import { GetMovieByIdUseCase, GetMovieByIdUseCaseResp, MovieIdDto, MovieRepository } from '../..';
 
 export class GetMovieByIdUseCaseImpl implements GetMovieByIdUseCase {
   constructor(private readonly movieRepository: MovieRepository) {}

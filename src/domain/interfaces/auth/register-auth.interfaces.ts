@@ -1,4 +1,4 @@
-import { RegisterUserDto, UserEntity } from "../..";
+import { RegisterUserDto, UserEntity } from '../..';
 
 export type RegisterUserUseCaseResp = Promise<UserEntity>;
 

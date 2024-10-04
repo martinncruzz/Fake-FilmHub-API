@@ -1,9 +1,4 @@
-import {
-  DeleteMovieUseCase,
-  DeleteMovieUseCaseResp,
-  MovieIdDto,
-  MovieRepository,
-} from "../..";
+import { DeleteMovieUseCase, DeleteMovieUseCaseResp, MovieIdDto, MovieRepository } from '../..';
 
 export class DeleteMovieUseCaseImpl implements DeleteMovieUseCase {
   constructor(private readonly movieRepository: MovieRepository) {}

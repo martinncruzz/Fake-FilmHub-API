@@ -1,10 +1,4 @@
-import {
-  MovieEntity,
-  MovieFiltersDto,
-  MovieIdDto,
-  PaginationDto,
-  PaginationResult,
-} from "../..";
+import { MovieEntity, MovieFiltersDto, MovieIdDto, PaginationDto, PaginationResult } from '../..';
 
 export interface MoviesData {
   total: number;
@@ -24,8 +18,5 @@ export interface GetMovieByIdUseCase {
 }
 
 export interface GetMoviesUseCase {
-  execute(
-    paginationDto: PaginationDto,
-    movieFiltersDto: MovieFiltersDto
-  ): GetMoviesUseCaseResp;
+  execute(paginationDto: PaginationDto, movieFiltersDto: MovieFiltersDto): GetMoviesUseCaseResp;
 }

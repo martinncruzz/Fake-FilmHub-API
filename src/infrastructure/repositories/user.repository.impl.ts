@@ -6,7 +6,7 @@ import {
   UserIdDto,
   UserRepository,
   UsersData,
-} from "../../domain";
+} from '../../domain';
 
 export class UserRepositoryImpl implements UserRepository {
   constructor(private readonly userDatasource: UserDatasource) {}
