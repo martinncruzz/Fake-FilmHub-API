@@ -1,4 +1,3 @@
-import { GenreMapper } from '..';
 import { movieSchema, ZodAdapter } from '../../config';
 import { CustomError, MovieEntity } from '../../domain';
 
@@ -29,7 +28,7 @@ export class MovieMapper {
       duration_minutes,
       trailer_link,
       poster_image_url,
-      genres ? genres.map(GenreMapper.genreEntityFromObject) : undefined,
+      genres,
     );
   }
 }
