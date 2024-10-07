@@ -13,12 +13,13 @@ enum UserRole {
 }
 
 model UserModel {
-  user_id  Int      @id @default(autoincrement())
-  fullname String   @db.VarChar(100)
-  email    String   @unique @db.VarChar(255)
-  password String   @db.VarChar(255)
-  avatar   String   @db.VarChar(255)
+  user_id  Int           @id @default(autoincrement())
+  fullname String        @db.VarChar(100)
+  email    String        @unique @db.VarChar(255)
+  password String        @db.VarChar(255)
+  avatar   String        @db.VarChar(255)
   role     UserRole
+  reviews  ReviewModel[]
 }
 
 model MovieModel {
@@ -31,6 +32,7 @@ model MovieModel {
   trailer_link     String            @db.VarChar(255)
   poster_image_url String            @db.VarChar(255)
   genres           MovieGenreModel[]
+  reviews          ReviewModel[]
 }
 
 model GenreModel {
@@ -48,4 +50,17 @@ model MovieGenreModel {
   genre    GenreModel @relation(fields: [genre_id], references: [genre_id])
 
   @@id([movie_id, genre_id])
+}
+
+model ReviewModel {
+  rating  Int?
+  comment String? @db.VarChar(255)
+
+  user_id Int
+  user    UserModel @relation(fields: [user_id], references: [user_id])
+
+  movie_id Int
+  movie    MovieModel @relation(fields: [movie_id], references: [movie_id])
+
+  @@id([user_id, movie_id])
 }
