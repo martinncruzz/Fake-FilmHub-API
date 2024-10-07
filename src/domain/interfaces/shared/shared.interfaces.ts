@@ -1,4 +1,4 @@
-import { PaginationDto } from '../..';
+import { GenreEntity, MovieEntity, PaginationDto, UserEntity } from '../..';
 
 export enum UserRole {
   ADMIN = 'ADMIN',
@@ -15,6 +15,10 @@ export interface PaginationResult {
   prev: string | null;
   next: string | null;
 }
+
+export type PartialUserEntity = Partial<UserEntity>;
+export type PartialMovieEntity = Partial<MovieEntity>;
+export type PartialGenreEntity = Partial<GenreEntity>;
 
 export type BuildFiltersQuery<T> = (filters?: T) => string;
 
