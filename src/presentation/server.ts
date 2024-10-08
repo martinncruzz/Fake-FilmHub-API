@@ -19,7 +19,7 @@ export class Server {
     this.routes = routes;
   }
 
-  public async start() {
+  public start() {
     this.app.use(
       cors({
         origin: ['*'],
