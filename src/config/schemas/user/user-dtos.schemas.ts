@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 import { CheckUserEmailDto, LoginUserDto, RegisterUserDto, UpdateUserDto, UserIdDto } from '../../../domain';
+import { idSchema } from '../..';
 
 export const registerUserSchema: z.ZodType<RegisterUserDto> = z.object({
   fullname: z.string().min(5),
@@ -19,11 +20,11 @@ export const checkUserEmailSchema: z.ZodType<CheckUserEmailDto> = z.object({
 });
 
 export const userIdSchema: z.ZodType<UserIdDto> = z.object({
-  user_id: z.number().positive().int(),
+  user_id: z.lazy(() => idSchema),
 });
 
 export const updateUserSchema: z.ZodType<UpdateUserDto> = z.object({
-  user_id: z.number().positive().int(),
+  user_id: z.lazy(() => idSchema),
   fullname: z.string().min(5).optional(),
   email: z.string().email().optional(),
   password: z.string().min(5).optional(),

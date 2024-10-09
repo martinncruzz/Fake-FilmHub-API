@@ -1,10 +1,10 @@
 import { z } from 'zod';
 
 import { GenreEntity, PartialGenreEntity } from '../../../domain';
-import { partialMovieSchema } from '../..';
+import { idSchema, partialMovieSchema } from '../..';
 
 const baseGenreSchema = z.object({
-  genre_id: z.number().positive().int(),
+  genre_id: z.lazy(() => idSchema),
   name: z.string().min(2),
   image: z.string().url(),
   movies: z.array(z.lazy(() => partialMovieSchema)).optional(),

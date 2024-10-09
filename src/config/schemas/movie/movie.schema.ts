@@ -1,10 +1,10 @@
 import { z } from 'zod';
 
 import { MovieEntity, PartialMovieEntity } from '../../../domain';
-import { partialGenreSchema } from '../..';
+import { idSchema, partialGenreSchema } from '../..';
 
 const baseMovieSchema = z.object({
-  movie_id: z.number().positive().int(),
+  movie_id: z.lazy(() => idSchema),
   title: z.string().min(2),
   description: z.string().min(10),
   release_year: z.number().int().min(1900).max(2024),
