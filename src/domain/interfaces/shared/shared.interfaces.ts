@@ -1,4 +1,4 @@
-import { GenreEntity, MovieEntity, PaginationDto, UserEntity } from '../..';
+import { GenreEntity, MovieEntity, PaginationDto, ReviewEntity, UserEntity } from '../..';
 
 export enum UserRole {
   ADMIN = 'ADMIN',
@@ -9,6 +9,7 @@ export enum ResourceType {
   USERS = 'users',
   MOVIES = 'movies',
   GENRES = 'genres',
+  REVIEWS = 'reviews',
 }
 
 export interface PaginationResult {
@@ -19,6 +20,7 @@ export interface PaginationResult {
 export type PartialUserEntity = Partial<UserEntity>;
 export type PartialMovieEntity = Partial<MovieEntity>;
 export type PartialGenreEntity = Partial<GenreEntity>;
+export type PartialReviewEntity = Partial<ReviewEntity>;
 
 export type BuildFiltersQuery<T> = (filters?: T) => string;
 
