@@ -53,8 +53,9 @@ model MovieGenreModel {
 }
 
 model ReviewModel {
-  rating  Int?
-  comment String? @db.VarChar(255)
+  review_id Int     @id @default(autoincrement())
+  rating    Int?
+  comment   String? @db.VarChar(255)
 
   user_id Int
   user    UserModel @relation(fields: [user_id], references: [user_id])
@@ -62,5 +63,5 @@ model ReviewModel {
   movie_id Int
   movie    MovieModel @relation(fields: [movie_id], references: [movie_id])
 
-  @@id([user_id, movie_id])
+  @@unique([user_id, movie_id])
 }
