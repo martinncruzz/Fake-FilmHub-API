@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import { PartialUserEntity, UserEntity, UserRole } from '../../../domain';
-import { idSchema } from '../..';
+import { idSchema, partialReviewSchema } from '../..';
 
 const baseUserSchema = z.object({
   user_id: z.lazy(() => idSchema),
@@ -10,6 +10,7 @@ const baseUserSchema = z.object({
   password: z.string().min(6),
   avatar: z.string().url(),
   role: z.enum([UserRole.ADMIN, UserRole.USER]),
+  reviews: z.array(z.lazy(() => partialReviewSchema)).optional(),
 });
 
 export const userSchema: z.ZodType<UserEntity> = baseUserSchema;

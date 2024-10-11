@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import { MovieEntity, PartialMovieEntity } from '../../../domain';
-import { idSchema, partialGenreSchema } from '../..';
+import { idSchema, partialGenreSchema, partialReviewSchema } from '../..';
 
 const baseMovieSchema = z.object({
   movie_id: z.lazy(() => idSchema),
@@ -13,6 +13,7 @@ const baseMovieSchema = z.object({
   trailer_link: z.string().url(),
   poster_image_url: z.string().url(),
   genres: z.array(z.lazy(() => partialGenreSchema)).optional(),
+  reviews: z.array(z.lazy(() => partialReviewSchema)).optional(),
 });
 
 export const movieSchema: z.ZodType<MovieEntity> = baseMovieSchema;
