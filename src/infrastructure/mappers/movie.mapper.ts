@@ -17,6 +17,7 @@ export class MovieMapper {
       trailer_link,
       poster_image_url,
       genres,
+      reviews,
     } = validatedData!;
 
     return new MovieEntity(
@@ -29,6 +30,7 @@ export class MovieMapper {
       trailer_link,
       poster_image_url,
       genres,
+      reviews,
     );
   }
 }
