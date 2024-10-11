@@ -1,4 +1,4 @@
-import { PartialGenreEntity } from '..';
+import { PartialGenreEntity, PartialReviewEntity } from '..';
 
 export class MovieEntity {
   constructor(
@@ -11,5 +11,6 @@ export class MovieEntity {
     public trailer_link: string,
     public poster_image_url: string,
     public genres?: PartialGenreEntity[],
+    public reviews?: PartialReviewEntity[],
   ) {}
 }
