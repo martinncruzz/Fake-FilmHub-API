@@ -17,7 +17,7 @@ async function seedDatabase(): Promise<void> {
         await initializeDatabaseWithSeedData(tx);
       },
       {
-        timeout: 120000,
+        timeout: 300000,
       },
     );
 
@@ -32,12 +32,14 @@ async function resetDatabaseSequences(tx: Prisma.TransactionClient): Promise<voi
     tx.$executeRawUnsafe(`ALTER SEQUENCE "UserModel_user_id_seq" RESTART WITH 1;`),
     tx.$executeRawUnsafe(`ALTER SEQUENCE "GenreModel_genre_id_seq" RESTART WITH 1;`),
     tx.$executeRawUnsafe(`ALTER SEQUENCE "MovieModel_movie_id_seq" RESTART WITH 1;`),
+    tx.$executeRawUnsafe(`ALTER SEQUENCE "ReviewModel_review_id_seq" RESTART WITH 1;`),
   ]);
 }
 
 async function clearDatabase(tx: Prisma.TransactionClient): Promise<void> {
   await Promise.all([
     tx.movieGenreModel.deleteMany(),
+    tx.reviewModel.deleteMany(),
     tx.genreModel.deleteMany(),
     tx.movieModel.deleteMany(),
     tx.userModel.deleteMany(),
@@ -73,4 +75,10 @@ async function initializeDatabaseWithSeedData(tx: Prisma.TransactionClient): Pro
   });
 
   await Promise.all(moviesCreation);
+
+  const reviewsCreation = seedData.reviews.map(async (review) => {
+    return tx.reviewModel.create({ data: review });
+  });
+
+  await Promise.all(reviewsCreation);
 }
