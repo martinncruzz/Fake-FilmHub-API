@@ -7,6 +7,7 @@ import {
   ResourceType,
   UserRepository,
 } from '../..';
+import { envs } from '../../../config';
 
 export class GetUsersUseCaseImpl implements GetUsersUseCase {
   constructor(
@@ -17,7 +18,8 @@ export class GetUsersUseCaseImpl implements GetUsersUseCase {
   async execute(paginationDto: PaginationDto): GetUsersUseCaseResp {
     const { total, users } = await this.userRepository.getUsers(paginationDto);
 
-    const { prev, next } = this.buildPagination(paginationDto, total, ResourceType.USERS, '');
+    const baseUrl = `${envs.WEBSERVICE_URL}/${ResourceType.USERS}`;
+    const { prev, next } = this.buildPagination(paginationDto, total, baseUrl, '');
 
     return {
       prev,

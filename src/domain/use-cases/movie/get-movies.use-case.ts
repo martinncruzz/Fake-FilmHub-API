@@ -10,6 +10,7 @@ import {
   GetMoviesUseCase,
   GetMoviesUseCaseResp,
 } from '../..';
+import { envs } from '../../../config';
 
 export class GetMoviesUseCaseImpl implements GetMoviesUseCase {
   constructor(
@@ -21,8 +22,9 @@ export class GetMoviesUseCaseImpl implements GetMoviesUseCase {
   async execute(paginationDto: PaginationDto, movieFiltersDto: MovieFiltersDto): GetMoviesUseCaseResp {
     const { total, movies } = await this.movieRepository.getMovies(paginationDto, movieFiltersDto);
 
+    const baseUrl = `${envs.WEBSERVICE_URL}/${ResourceType.MOVIES}`;
     const filtersQuery = this.buildFiltersQuery(movieFiltersDto);
-    const { prev, next } = this.buildPagination(paginationDto, total, ResourceType.MOVIES, filtersQuery);
+    const { prev, next } = this.buildPagination(paginationDto, total, baseUrl, filtersQuery);
 
     return {
       prev,

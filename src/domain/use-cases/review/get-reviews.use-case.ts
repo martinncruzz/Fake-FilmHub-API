@@ -7,6 +7,7 @@ import {
   ResourceType,
   ReviewRepository,
 } from '../..';
+import { envs } from '../../../config';
 
 export class GetReviewsUseCaseImpl implements GetReviewsUseCase {
   constructor(
@@ -17,7 +18,8 @@ export class GetReviewsUseCaseImpl implements GetReviewsUseCase {
   async execute(paginationDto: PaginationDto): GetReviewsUseCaseResp {
     const { total, reviews } = await this.reviewRepository.getReviews(paginationDto);
 
-    const { prev, next } = this.buildPagination(paginationDto, total, ResourceType.REVIEWS, '');
+    const baseUrl = `${envs.WEBSERVICE_URL}/${ResourceType.REVIEWS}`;
+    const { prev, next } = this.buildPagination(paginationDto, total, baseUrl, '');
 
     return {
       prev,
