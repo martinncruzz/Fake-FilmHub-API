@@ -62,6 +62,17 @@ export class MovieDatasourceImpl implements MovieDatasource {
     });
   }
 
+  async getReviewsByMovie(movieIdDto: MovieIdDto): Promise<MovieEntity> {
+    const movieWithReviews = await prisma.movieModel.findFirst({
+      where: { movie_id: movieIdDto.movie_id },
+      include: { reviews: { include: { user: { select: { fullname: true, avatar: true } } } } },
+    });
+
+    if (!movieWithReviews) throw CustomError.notFound('Movie not found');
+
+    return MovieMapper.movieEntityFromObject(movieWithReviews);
+  }
+
   async createMovie(createMovieDto: CreateMovieDto): Promise<MovieEntity> {
     const { genre_ids, ...createMovieDtoData } = createMovieDto;
 
