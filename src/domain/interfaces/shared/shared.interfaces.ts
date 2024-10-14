@@ -27,7 +27,7 @@ export type BuildFiltersQuery<T> = (filters?: T) => string;
 export type BuildPagination = (
   paginationDto: PaginationDto,
   total: number,
-  resourceType: ResourceType,
+  baseUrl: string,
   filtersQuery?: string,
 ) => PaginationResult;
 
