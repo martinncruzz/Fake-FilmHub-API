@@ -13,6 +13,7 @@ import {
   CreateMovieUseCaseImpl,
   UpdateMovieUseCaseImpl,
   DeleteMovieUseCaseImpl,
+  GetReviewsByMovieUseCaseImpl,
 } from '../../domain';
 
 export class MovieController {
@@ -22,11 +23,9 @@ export class MovieController {
     const { page = 1, limit = 10 } = req.query;
 
     const { errors: paginationErrors, validatedData: paginationDto } = PaginationDto.create(+page, +limit);
-
     if (paginationErrors) return res.status(400).json({ errors: paginationErrors });
 
     const { errors: movieFiltersErrors, validatedData: movieFiltersDto } = MovieFiltersDto.create(req.query);
-
     if (movieFiltersErrors) return res.status(400).json({ errors: movieFiltersErrors });
 
     new GetMoviesUseCaseImpl(this.movieRepository)
@@ -45,6 +44,18 @@ export class MovieController {
       .execute(validatedData!)
       .then((data) => res.json(data))
       .catch((error) => ErrorHandlerService.handleError(error, res));
+  };
+
+  getReviewsByMovie = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    const { errors, validatedData } = MovieIdDto.create({ movie_id: +id });
+    if (errors) return res.status(400).json({ errors });
+
+    new GetReviewsByMovieUseCaseImpl(this.movieRepository)
+      .execute(validatedData!)
+      .then((data: any) => res.json(data))
+      .catch((error: unknown) => ErrorHandlerService.handleError(error, res));
   };
 
   createMovie = async (req: Request, res: Response) => {
