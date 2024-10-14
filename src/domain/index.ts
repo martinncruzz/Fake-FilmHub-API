@@ -65,6 +65,7 @@ export * from './use-cases/movie/create-movie.use-case';
 export * from './use-cases/movie/delete-movie.use-case';
 export * from './use-cases/movie/get-movie-by-id.use-case';
 export * from './use-cases/movie/get-movies.use-case';
+export * from './use-cases/movie/get-reviews-by-movie.use-case';
 export * from './use-cases/movie/update-movie.use-case';
 export * from './use-cases/review/create-review.use-case';
 export * from './use-cases/review/delete-review.use-case';
