@@ -1,3 +1,4 @@
+export * from './builders/base-url.builder';
 export * from './builders/filters-query.builder';
 export * from './builders/pagination.builder';
 export * from './datasources/auth.datasource';
@@ -72,6 +73,7 @@ export * from './use-cases/review/delete-review.use-case';
 export * from './use-cases/review/get-review-by-id.use-case';
 export * from './use-cases/review/get-reviews.use-case';
 export * from './use-cases/review/update-review.use-case';
+export * from './use-cases/user/get-reviews-by-user.use-case';
 export * from './use-cases/user/get-user-by-id.use-case';
 export * from './use-cases/user/get-users.use-case';
 export * from './use-cases/user/update-user.use-case';
