@@ -24,7 +24,7 @@ export type PartialReviewEntity = Partial<ReviewEntity>;
 
 export type BuildFiltersQuery<T> = (filters?: T) => string;
 
-export type BuildBaseUrl = (resourceType: ResourceType, customPart?: string) => string;
+export type BuildBaseUrl = (resourceType: ResourceType, additionalPath?: string) => string;
 
 export type BuildPagination = (
   paginationDto: PaginationDto,
