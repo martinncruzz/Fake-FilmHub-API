@@ -8,6 +8,7 @@ import {
   UserIdDto,
   UserDatasource,
   UsersData,
+  UserWithReviews,
 } from '../../domain';
 
 export class UserDatasourceImpl implements UserDatasource {
@@ -36,6 +37,32 @@ export class UserDatasourceImpl implements UserDatasource {
     if (!user) throw CustomError.notFound('User not found');
 
     return UserMapper.userEntityFromObject(user);
+  }
+
+  async getReviewsByUser(userIdDto: UserIdDto, paginationDto: PaginationDto): Promise<UserWithReviews> {
+    const { user_id } = userIdDto;
+    const { page, limit } = paginationDto;
+
+    const [totalReviews, userWithReviews] = await prisma.$transaction([
+      prisma.reviewModel.count({ where: { user_id } }),
+      prisma.userModel.findUnique({
+        where: { user_id },
+        include: {
+          reviews: {
+            include: { movie: { select: { title: true, release_year: true, director: true, poster_image_url: true } } },
+            skip: (page - 1) * limit,
+            take: limit,
+          },
+        },
+      }),
+    ]);
+
+    if (!userWithReviews) throw CustomError.notFound('User not found');
+
+    return {
+      totalReviews,
+      user: UserMapper.userEntityFromObject(userWithReviews),
+    };
   }
 
   async updateUser(updateUserDto: UpdateUserDto): Promise<UserEntity> {
