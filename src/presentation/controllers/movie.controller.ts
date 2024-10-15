@@ -48,12 +48,16 @@ export class MovieController {
 
   getReviewsByMovie = async (req: Request, res: Response) => {
     const { id } = req.params;
+    const { page = 1, limit = 10 } = req.query;
 
     const { errors, validatedData } = MovieIdDto.create({ movie_id: +id });
     if (errors) return res.status(400).json({ errors });
 
+    const { errors: paginationErrors, validatedData: paginationDto } = PaginationDto.create(+page, +limit);
+    if (paginationErrors) return res.status(400).json({ errors: paginationErrors });
+
     new GetReviewsByMovieUseCaseImpl(this.movieRepository)
-      .execute(validatedData!)
+      .execute(validatedData!, paginationDto!)
       .then((data: any) => res.json(data))
       .catch((error: unknown) => ErrorHandlerService.handleError(error, res));
   };
@@ -71,10 +75,7 @@ export class MovieController {
   updateMovie = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const { errors, validatedData } = UpdateMovieDto.create({
-      ...req.body,
-      movie_id: +id,
-    });
+    const { errors, validatedData } = UpdateMovieDto.create({ ...req.body, movie_id: +id });
     if (errors) return res.status(400).json({ errors });
 
     new UpdateMovieUseCaseImpl(this.movieRepository)

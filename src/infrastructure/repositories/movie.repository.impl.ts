@@ -8,6 +8,7 @@ import {
   PaginationDto,
   UpdateMovieDto,
   MovieDatasource,
+  MovieWithReviews,
 } from '../../domain';
 
 export class MovieRepositoryImpl implements MovieRepository {
@@ -19,8 +20,8 @@ export class MovieRepositoryImpl implements MovieRepository {
   getMovieById(movieIdDto: MovieIdDto): Promise<MovieEntity> {
     return this.movieDatasource.getMovieById(movieIdDto);
   }
-  getReviewsByMovie(movieIdDto: MovieIdDto): Promise<MovieEntity> {
-    return this.movieDatasource.getReviewsByMovie(movieIdDto);
+  getReviewsByMovie(movieIdDto: MovieIdDto, paginationDto: PaginationDto): Promise<MovieWithReviews> {
+    return this.movieDatasource.getReviewsByMovie(movieIdDto, paginationDto);
   }
   createMovie(createMovieDto: CreateMovieDto): Promise<MovieEntity> {
     return this.movieDatasource.createMovie(createMovieDto);
