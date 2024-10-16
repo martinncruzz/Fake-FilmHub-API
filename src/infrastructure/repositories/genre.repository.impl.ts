@@ -5,6 +5,7 @@ import {
   GenreIdDto,
   GenreRepository,
   GenresData,
+  GenresWithMovies,
   PaginationDto,
   UpdateGenreDto,
 } from '../../domain';
@@ -15,11 +16,11 @@ export class GenreRepositoryImpl implements GenreRepository {
   getGenres(paginationDto: PaginationDto): Promise<GenresData> {
     return this.genreDatasource.getGenres(paginationDto);
   }
-  getMoviesByGenre(genreIdDto: GenreIdDto): Promise<GenreEntity> {
-    return this.genreDatasource.getMoviesByGenre(genreIdDto);
-  }
   getGenreById(genreIdDto: GenreIdDto): Promise<GenreEntity> {
     return this.genreDatasource.getGenreById(genreIdDto);
+  }
+  getMoviesByGenre(genreIdDto: GenreIdDto, paginationDto: PaginationDto): Promise<GenresWithMovies> {
+    return this.genreDatasource.getMoviesByGenre(genreIdDto, paginationDto);
   }
   createGenre(createGenreDto: CreateGenreDto): Promise<GenreEntity> {
     return this.genreDatasource.createGenre(createGenreDto);

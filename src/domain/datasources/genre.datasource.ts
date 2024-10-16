@@ -1,9 +1,17 @@
-import { CreateGenreDto, GenreEntity, GenreIdDto, GenresData, PaginationDto, UpdateGenreDto } from '..';
+import {
+  CreateGenreDto,
+  GenreEntity,
+  GenreIdDto,
+  GenresData,
+  GenresWithMovies,
+  PaginationDto,
+  UpdateGenreDto,
+} from '..';
 
 export abstract class GenreDatasource {
   abstract getGenres(paginationDto: PaginationDto): Promise<GenresData>;
-  abstract getMoviesByGenre(genreIdDto: GenreIdDto): Promise<GenreEntity>;
   abstract getGenreById(genreIdDto: GenreIdDto): Promise<GenreEntity>;
+  abstract getMoviesByGenre(genreIdDto: GenreIdDto, paginationDto: PaginationDto): Promise<GenresWithMovies>;
   abstract createGenre(createGenreDto: CreateGenreDto): Promise<GenreEntity>;
   abstract updateGenre(updateGenreDto: UpdateGenreDto): Promise<GenreEntity>;
   abstract deleteGenre(genreIdDto: GenreIdDto): Promise<boolean>;

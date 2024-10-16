@@ -22,23 +22,10 @@ export class GenreController {
     const { page = 1, limit = 10 } = req.query;
 
     const { errors: paginationErrors, validatedData: paginationDto } = PaginationDto.create(+page, +limit);
-
     if (paginationErrors) return res.status(400).json({ errors: paginationErrors });
 
     new GetGenresUseCaseImpl(this.genreRepository)
       .execute(paginationDto!)
-      .then((data) => res.json(data))
-      .catch((error) => ErrorHandlerService.handleError(error, res));
-  };
-
-  getMoviesByGenre = async (req: Request, res: Response) => {
-    const { id } = req.params;
-
-    const { errors, validatedData } = GenreIdDto.create({ genre_id: +id });
-    if (errors) return res.status(400).json({ errors });
-
-    new GetMoviesByGenreUseCaseImpl(this.genreRepository)
-      .execute(validatedData!)
       .then((data) => res.json(data))
       .catch((error) => ErrorHandlerService.handleError(error, res));
   };
@@ -51,6 +38,22 @@ export class GenreController {
 
     new GetGenreByIdUseCaseImpl(this.genreRepository)
       .execute(validatedData!)
+      .then((data) => res.json(data))
+      .catch((error) => ErrorHandlerService.handleError(error, res));
+  };
+
+  getMoviesByGenre = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { page = 1, limit = 10 } = req.query;
+
+    const { errors, validatedData } = GenreIdDto.create({ genre_id: +id });
+    if (errors) return res.status(400).json({ errors });
+
+    const { errors: paginationErrors, validatedData: paginationDto } = PaginationDto.create(+page, +limit);
+    if (paginationErrors) return res.status(400).json({ errors: paginationErrors });
+
+    new GetMoviesByGenreUseCaseImpl(this.genreRepository)
+      .execute(validatedData!, paginationDto!)
       .then((data) => res.json(data))
       .catch((error) => ErrorHandlerService.handleError(error, res));
   };
@@ -68,10 +71,7 @@ export class GenreController {
   updateGenre = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const { errors, validatedData } = UpdateGenreDto.create({
-      ...req.body,
-      genre_id: +id,
-    });
+    const { errors, validatedData } = UpdateGenreDto.create({ ...req.body, genre_id: +id });
     if (errors) return res.status(400).json({ errors });
 
     new UpdateGenreUseCaseImpl(this.genreRepository)
