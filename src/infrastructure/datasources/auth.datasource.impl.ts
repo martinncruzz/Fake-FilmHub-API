@@ -12,18 +12,11 @@ import {
 
 export class AuthDatasourceImpl implements AuthDatasource {
   async registerUser(registerUserDto: RegisterUserDto): Promise<UserEntity> {
-    const isEmailAvailable = await this.isEmailAvailable({
-      email: registerUserDto.email,
-    });
+    const isEmailAvailable = await this.isEmailAvailable({ email: registerUserDto.email });
 
     if (!isEmailAvailable) throw CustomError.badRequest('This email is already registered');
 
-    const newUser = await prisma.userModel.create({
-      data: {
-        ...registerUserDto,
-        role: UserRole.USER,
-      },
-    });
+    const newUser = await prisma.userModel.create({ data: { ...registerUserDto, role: UserRole.USER } });
 
     return UserMapper.userEntityFromObject(newUser);
   }
@@ -31,9 +24,7 @@ export class AuthDatasourceImpl implements AuthDatasource {
   async loginUser(loginUserDto: LoginUserDto): Promise<UserEntity> {
     const { email, password } = loginUserDto;
 
-    const user = await prisma.userModel.findFirst({
-      where: { email },
-    });
+    const user = await prisma.userModel.findFirst({ where: { email } });
 
     if (!user || user.password !== password) throw CustomError.badRequest('Invalid credentials');
 
@@ -42,9 +33,7 @@ export class AuthDatasourceImpl implements AuthDatasource {
 
   async isEmailAvailable(checkUserEmailDto: CheckUserEmailDto): Promise<boolean> {
     const userRegistered = await prisma.userModel.findFirst({
-      where: {
-        email: { equals: checkUserEmailDto.email, mode: 'insensitive' },
-      },
+      where: { email: { equals: checkUserEmailDto.email, mode: 'insensitive' } },
     });
 
     return !userRegistered;

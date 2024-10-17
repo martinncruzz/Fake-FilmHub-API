@@ -14,6 +14,7 @@ export class MovieRoutes {
 
     router.get('/', movieController.getMovies);
     router.get('/:id', movieController.getMovieById);
+    router.get('/:id/reviews', movieController.getReviewsByMovie);
     router.post('/', movieController.createMovie);
     router.put('/:id', movieController.updateMovie);
     router.delete('/:id', movieController.deleteMovie);

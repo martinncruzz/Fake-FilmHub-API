@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { AuthRoutes, GenreRoutes, MovieRoutes, UserRoutes } from '.';
+import { AuthRoutes, GenreRoutes, MovieRoutes, ReviewRoutes, UserRoutes } from '.';
 
 export class AppRoutes {
   static get routes(): Router {
@@ -10,6 +10,7 @@ export class AppRoutes {
     router.use('/api/users', UserRoutes.routes);
     router.use('/api/movies', MovieRoutes.routes);
     router.use('/api/genres', GenreRoutes.routes);
+    router.use('/api/reviews', ReviewRoutes.routes);
 
     return router;
   }

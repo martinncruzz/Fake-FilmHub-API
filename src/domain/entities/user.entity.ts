@@ -1,4 +1,4 @@
-import { UserRole } from '..';
+import { PartialReviewEntity, UserRole } from '..';
 
 export class UserEntity {
   constructor(
@@ -8,5 +8,6 @@ export class UserEntity {
     public password: string,
     public avatar: string,
     public role: UserRole,
+    public reviews?: PartialReviewEntity[],
   ) {}
 }

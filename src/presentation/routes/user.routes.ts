@@ -14,6 +14,7 @@ export class UserRoutes {
 
     router.get('/', userController.getUsers);
     router.get('/:id', userController.getUserById);
+    router.get('/:id/reviews', userController.getReviewsByUser);
     router.put('/:id', userController.updateUser);
 
     return router;

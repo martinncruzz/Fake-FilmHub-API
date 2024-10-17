@@ -19,12 +19,8 @@ export class Server {
     this.routes = routes;
   }
 
-  public async start() {
-    this.app.use(
-      cors({
-        origin: ['*'],
-      }),
-    );
+  public start() {
+    this.app.use(cors({ origin: ['*'] }));
     this.app.use(morgan('dev'));
     this.app.use(express.json());
 

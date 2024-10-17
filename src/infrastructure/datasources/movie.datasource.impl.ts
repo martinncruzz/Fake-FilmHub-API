@@ -10,6 +10,7 @@ import {
   MovieFiltersDto,
   MovieIdDto,
   MoviesData,
+  MovieWithReviews,
   PaginationDto,
   UpdateMovieDto,
 } from '../../domain';
@@ -49,7 +50,7 @@ export class MovieDatasourceImpl implements MovieDatasource {
   }
 
   async getMovieById(movieIdDto: MovieIdDto): Promise<MovieEntity> {
-    const movie = await prisma.movieModel.findFirst({
+    const movie = await prisma.movieModel.findUnique({
       where: { movie_id: movieIdDto.movie_id },
       include: { genres: { include: { genre: true } } },
     });
@@ -60,6 +61,32 @@ export class MovieDatasourceImpl implements MovieDatasource {
       ...movie,
       genres: movie.genres.map(({ genre }) => genre),
     });
+  }
+
+  async getReviewsByMovie(movieIdDto: MovieIdDto, paginationDto: PaginationDto): Promise<MovieWithReviews> {
+    const { movie_id } = movieIdDto;
+    const { page, limit } = paginationDto;
+
+    const [totalReviews, movieWithReviews] = await prisma.$transaction([
+      prisma.reviewModel.count({ where: { movie_id } }),
+      prisma.movieModel.findUnique({
+        where: { movie_id },
+        include: {
+          reviews: {
+            include: { user: { select: { fullname: true, avatar: true } } },
+            skip: (page - 1) * limit,
+            take: limit,
+          },
+        },
+      }),
+    ]);
+
+    if (!movieWithReviews) throw CustomError.notFound('User not found');
+
+    return {
+      totalReviews,
+      movie: MovieMapper.movieEntityFromObject(movieWithReviews),
+    };
   }
 
   async createMovie(createMovieDto: CreateMovieDto): Promise<MovieEntity> {
@@ -146,6 +173,7 @@ export class MovieDatasourceImpl implements MovieDatasource {
 
     await prisma.$transaction([
       prisma.movieGenreModel.deleteMany({ where: { movie_id } }),
+      prisma.reviewModel.deleteMany({ where: { movie_id } }),
       prisma.movieModel.delete({ where: { movie_id } }),
     ]);
 

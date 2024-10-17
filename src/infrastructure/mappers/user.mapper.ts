@@ -7,8 +7,8 @@ export class UserMapper {
 
     if (errors) throw CustomError.internalServer('Error processing user data');
 
-    const { user_id, fullname, email, password, avatar, role } = validatedData!;
+    const { user_id, fullname, email, password, avatar, role, reviews } = validatedData!;
 
-    return new UserEntity(user_id, fullname, email, password, avatar, role);
+    return new UserEntity(user_id, fullname, email, password, avatar, role, reviews);
   }
 }

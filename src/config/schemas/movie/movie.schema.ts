@@ -1,10 +1,10 @@
 import { z } from 'zod';
 
-import { MovieEntity } from '../../../domain';
-import { genreSchema } from '../..';
+import { MovieEntity, PartialMovieEntity } from '../../../domain';
+import { idSchema, partialGenreSchema, partialReviewSchema } from '../..';
 
-export const movieSchema: z.ZodType<MovieEntity> = z.object({
-  movie_id: z.number().positive().int(),
+const baseMovieSchema = z.object({
+  movie_id: z.lazy(() => idSchema),
   title: z.string().min(2),
   description: z.string().min(10),
   release_year: z.number().int().min(1900).max(2024),
@@ -12,5 +12,10 @@ export const movieSchema: z.ZodType<MovieEntity> = z.object({
   duration_minutes: z.number().int().min(30).max(720),
   trailer_link: z.string().url(),
   poster_image_url: z.string().url(),
-  genres: z.array(z.lazy(() => genreSchema)).optional(),
+  genres: z.array(z.lazy(() => partialGenreSchema)).optional(),
+  reviews: z.array(z.lazy(() => partialReviewSchema)).optional(),
 });
+
+export const movieSchema: z.ZodType<MovieEntity> = baseMovieSchema;
+
+export const partialMovieSchema: z.ZodType<PartialMovieEntity> = baseMovieSchema.partial();
