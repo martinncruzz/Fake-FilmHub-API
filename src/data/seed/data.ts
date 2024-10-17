@@ -23,14 +23,14 @@ export const seedData = {
     },
     {
       fullname: 'Michael Brown',
-      email: 'michael.brown@domain.com',
+      email: 'michael@gmail.com',
       password: 'michaelBrown2024!',
       avatar:
         'https://res.cloudinary.com/dhhxe6sif/image/upload/v1728876385/FilmHub-API-Images/Users/hqzqrn9w2aljy1krz8sn.jpg',
     },
     {
       fullname: 'David Thompson',
-      email: 'david.thompson@mail.com',
+      email: 'david@gmail.com',
       password: 'davidT789#',
       avatar:
         'https://res.cloudinary.com/dhhxe6sif/image/upload/v1728876385/FilmHub-API-Images/Users/mvge3kzjztsbrn8hjwiy.jpg',
