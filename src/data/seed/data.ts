@@ -44,12 +44,12 @@ export const seedData = {
         'https://res.cloudinary.com/dhhxe6sif/image/upload/v1708801194/FilmHub-API-Images/Genres/qop48liphehtjcwqwvus.jpg',
     },
     {
-      name: 'Action/Adventure',
+      name: 'Action',
       image:
         'https://res.cloudinary.com/dhhxe6sif/image/upload/v1708801185/FilmHub-API-Images/Genres/bmyrv4yltisupvso2ejs.jpg',
     },
     {
-      name: 'Science Fiction/Fantasy',
+      name: 'Science Fiction',
       image:
         'https://res.cloudinary.com/dhhxe6sif/image/upload/v1708801221/FilmHub-API-Images/Genres/wuwf7fyuhpntw27knzj5.jpg',
     },
@@ -59,7 +59,7 @@ export const seedData = {
         'https://res.cloudinary.com/dhhxe6sif/image/upload/v1708801176/FilmHub-API-Images/Genres/oj3cw7uby6tdatt3c1ij.jpg',
     },
     {
-      name: 'Animation/Family',
+      name: 'Animation',
       image:
         'https://res.cloudinary.com/dhhxe6sif/image/upload/v1708801159/FilmHub-API-Images/Genres/y8oemtwwq5vnjm3xitzq.jpg',
     },
