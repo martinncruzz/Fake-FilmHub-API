@@ -173,6 +173,7 @@ export class MovieDatasourceImpl implements MovieDatasource {
 
     await prisma.$transaction([
       prisma.movieGenreModel.deleteMany({ where: { movie_id } }),
+      prisma.reviewModel.deleteMany({ where: { movie_id } }),
       prisma.movieModel.delete({ where: { movie_id } }),
     ]);
 
