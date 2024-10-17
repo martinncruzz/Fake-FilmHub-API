@@ -8,10 +8,7 @@ export class PaginationDto {
   ) {}
 
   static create(page: number = 1, limit: number = 10): ValidationResult<PaginationDto> {
-    const { errors, validatedData } = ZodAdapter.validate(paginationSchema, {
-      page,
-      limit,
-    });
+    const { errors, validatedData } = ZodAdapter.validate(paginationSchema, { page, limit });
 
     return errors ? { errors } : { validatedData };
   }

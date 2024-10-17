@@ -10,24 +10,18 @@ export interface GenresWithMovies {
   genre: GenreEntity;
 }
 
+export type GetGenresUseCaseResp = Promise<PaginationResult & { genres: GenreEntity[] }>;
 export type GetGenreByIdUseCaseResp = Promise<GenreEntity>;
-
-export type GetGenresUseCaseResp = Promise<
-  PaginationResult & {
-    genres: GenreEntity[];
-  }
->;
-
 export type GetMoviesByGenreUseCaseResp = Promise<
   Omit<GenreEntity, 'movies'> & { movies: PaginationResult & { totalMovies: number; data: PartialMovieEntity[] } }
 >;
 
-export interface GetGenreByIdUseCase {
-  execute(genreIdDto: GenreIdDto): GetGenreByIdUseCaseResp;
-}
-
 export interface GetGenresUseCase {
   execute(paginationDto: PaginationDto): GetGenresUseCaseResp;
+}
+
+export interface GetGenreByIdUseCase {
+  execute(genreIdDto: GenreIdDto): GetGenreByIdUseCaseResp;
 }
 
 export interface GetMoviesByGenreUseCase {

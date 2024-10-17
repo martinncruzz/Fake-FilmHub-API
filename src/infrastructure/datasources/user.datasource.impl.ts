@@ -30,9 +30,7 @@ export class UserDatasourceImpl implements UserDatasource {
   }
 
   async getUserById(userIdDto: UserIdDto): Promise<UserEntity> {
-    const user = await prisma.userModel.findFirst({
-      where: { user_id: userIdDto.user_id },
-    });
+    const user = await prisma.userModel.findUnique({ where: { user_id: userIdDto.user_id } });
 
     if (!user) throw CustomError.notFound('User not found');
 
@@ -70,17 +68,11 @@ export class UserDatasourceImpl implements UserDatasource {
     const userFromDB = await this.getUserById({ user_id });
 
     if (updateUserDto.email && updateUserDto.email.toLowerCase() !== userFromDB.email.toLowerCase()) {
-      const isEmailTaken = await prisma.userModel.findFirst({
-        where: { email: updateUserDto.email },
-      });
-
+      const isEmailTaken = await prisma.userModel.findFirst({ where: { email: updateUserDto.email } });
       if (isEmailTaken) throw CustomError.badRequest('This email is already registered');
     }
 
-    const updatedUser = await prisma.userModel.update({
-      where: { user_id },
-      data: updateUserDtoData,
-    });
+    const updatedUser = await prisma.userModel.update({ where: { user_id }, data: updateUserDtoData });
 
     return UserMapper.userEntityFromObject(updatedUser);
   }

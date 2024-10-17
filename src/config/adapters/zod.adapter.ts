@@ -9,15 +9,11 @@ export class ZodAdapter {
       return { validatedData };
     } catch (error) {
       if (error instanceof ZodError) {
-        const errors = error.errors.map((e) => ({
-          field: e.path.join('.'),
-          message: e.message,
-        }));
+        const errors = error.errors.map((e) => ({ field: e.path.join('.'), message: e.message }));
         return { errors };
       }
-      return {
-        errors: [{ field: 'unknown', message: 'Unknown validation error' }],
-      };
+
+      return { errors: [{ field: 'unknown', message: 'Unknown validation error' }] };
     }
   }
 }

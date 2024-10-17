@@ -50,7 +50,7 @@ export class MovieDatasourceImpl implements MovieDatasource {
   }
 
   async getMovieById(movieIdDto: MovieIdDto): Promise<MovieEntity> {
-    const movie = await prisma.movieModel.findFirst({
+    const movie = await prisma.movieModel.findUnique({
       where: { movie_id: movieIdDto.movie_id },
       include: { genres: { include: { genre: true } } },
     });

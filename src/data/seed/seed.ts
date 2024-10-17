@@ -16,9 +16,7 @@ async function seedDatabase(): Promise<void> {
         await clearDatabase(tx);
         await initializeDatabaseWithSeedData(tx);
       },
-      {
-        timeout: 300000,
-      },
+      { timeout: 300000 },
     );
 
     console.log('Database seeding completed successfully.');
@@ -48,29 +46,15 @@ async function clearDatabase(tx: Prisma.TransactionClient): Promise<void> {
 
 async function initializeDatabaseWithSeedData(tx: Prisma.TransactionClient): Promise<void> {
   await Promise.all([
-    tx.userModel.createMany({
-      data: seedData.users.map((user) => ({
-        ...user,
-        role: UserRole.USER,
-      })),
-    }),
-    tx.genreModel.createMany({
-      data: seedData.genres,
-    }),
+    tx.userModel.createMany({ data: seedData.users.map((user) => ({ ...user, role: UserRole.USER })) }),
+    tx.genreModel.createMany({ data: seedData.genres }),
   ]);
 
   const moviesCreation = seedData.movies.map(async (movie) => {
     const { genre_ids, ...movieData } = movie;
 
     return tx.movieModel.create({
-      data: {
-        ...movieData,
-        genres: {
-          createMany: {
-            data: genre_ids.map((genre_id) => ({ genre_id })),
-          },
-        },
-      },
+      data: { ...movieData, genres: { createMany: { data: genre_ids.map((genre_id) => ({ genre_id })) } } },
     });
   });
 

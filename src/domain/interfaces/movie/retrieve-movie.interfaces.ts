@@ -10,20 +10,18 @@ export interface MovieWithReviews {
   movie: MovieEntity;
 }
 
-export type GetMovieByIdUseCaseResp = Promise<MovieEntity>;
-
 export type GetMoviesUseCaseResp = Promise<PaginationResult & { movies: MovieEntity[] }>;
-
+export type GetMovieByIdUseCaseResp = Promise<MovieEntity>;
 export type GetReviewsByMovieUseCaseResp = Promise<
   Omit<MovieEntity, 'reviews'> & { reviews: PaginationResult & { totalReviews: number; data: PartialReviewEntity[] } }
 >;
 
-export interface GetMovieByIdUseCase {
-  execute(movieIdDto: MovieIdDto): GetMovieByIdUseCaseResp;
-}
-
 export interface GetMoviesUseCase {
   execute(paginationDto: PaginationDto, movieFiltersDto: MovieFiltersDto): GetMoviesUseCaseResp;
+}
+
+export interface GetMovieByIdUseCase {
+  execute(movieIdDto: MovieIdDto): GetMovieByIdUseCaseResp;
 }
 
 export interface GetReviewsByMovieUseCase {

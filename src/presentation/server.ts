@@ -20,11 +20,7 @@ export class Server {
   }
 
   public start() {
-    this.app.use(
-      cors({
-        origin: ['*'],
-      }),
-    );
+    this.app.use(cors({ origin: ['*'] }));
     this.app.use(morgan('dev'));
     this.app.use(express.json());
 

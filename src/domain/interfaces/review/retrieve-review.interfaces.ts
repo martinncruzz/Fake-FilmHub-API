@@ -5,18 +5,13 @@ export interface ReviewsData {
   reviews: ReviewEntity[];
 }
 
+export type GetReviewsUseCaseResp = Promise<PaginationResult & { reviews: ReviewEntity[] }>;
 export type GetReviewByIdUseCaseResp = Promise<ReviewEntity>;
-
-export type GetReviewsUseCaseResp = Promise<
-  PaginationResult & {
-    reviews: ReviewEntity[];
-  }
->;
-
-export interface GetReviewByIdUseCase {
-  execute(reviewIdDto: ReviewIdDto): GetReviewByIdUseCaseResp;
-}
 
 export interface GetReviewsUseCase {
   execute(paginationDto: PaginationDto): GetReviewsUseCaseResp;
+}
+
+export interface GetReviewByIdUseCase {
+  execute(reviewIdDto: ReviewIdDto): GetReviewByIdUseCaseResp;
 }

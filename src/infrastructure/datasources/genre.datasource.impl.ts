@@ -31,9 +31,7 @@ export class GenreDatasourceImpl implements GenreDatasource {
   }
 
   async getGenreById(genreIdDto: GenreIdDto): Promise<GenreEntity> {
-    const genre = await prisma.genreModel.findFirst({
-      where: { genre_id: genreIdDto.genre_id },
-    });
+    const genre = await prisma.genreModel.findUnique({ where: { genre_id: genreIdDto.genre_id } });
 
     if (!genre) throw CustomError.notFound('Genre not found');
 
@@ -65,16 +63,12 @@ export class GenreDatasourceImpl implements GenreDatasource {
 
   async createGenre(createGenreDto: CreateGenreDto): Promise<GenreEntity> {
     const genreNameRegistered = await prisma.genreModel.findFirst({
-      where: {
-        name: { equals: createGenreDto.name, mode: 'insensitive' },
-      },
+      where: { name: { equals: createGenreDto.name, mode: 'insensitive' } },
     });
 
     if (genreNameRegistered) throw CustomError.badRequest('This genre name already exists');
 
-    const newGenre = await prisma.genreModel.create({
-      data: createGenreDto,
-    });
+    const newGenre = await prisma.genreModel.create({ data: createGenreDto });
 
     return GenreMapper.genreEntityFromObject(newGenre);
   }
@@ -86,18 +80,12 @@ export class GenreDatasourceImpl implements GenreDatasource {
 
     if (updateGenreDto.name && updateGenreDto.name.toLowerCase() !== genreFromDB.name.toLowerCase()) {
       const genreNameRegistered = await prisma.genreModel.findFirst({
-        where: {
-          name: { equals: updateGenreDto.name, mode: 'insensitive' },
-        },
+        where: { name: { equals: updateGenreDto.name, mode: 'insensitive' } },
       });
-
       if (genreNameRegistered) throw CustomError.badRequest('This genre name already exists');
     }
 
-    const updatedGenre = await prisma.genreModel.update({
-      where: { genre_id },
-      data: updateGenreDtoData,
-    });
+    const updatedGenre = await prisma.genreModel.update({ where: { genre_id }, data: updateGenreDtoData });
 
     return GenreMapper.genreEntityFromObject(updatedGenre);
   }
