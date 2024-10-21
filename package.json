@@ -4,7 +4,7 @@
   "author": "Martinchx",
   "license": "MIT",
   "scripts": {
-    "postinstall": "npx prisma generate",
+    "postinstall": "pnpx prisma generate",
     "dev": "tsnd --respawn --clear src/app.ts",
     "build": "rimraf ./dist && tsc",
     "start": "node dist/app.js",

@@ -48,7 +48,7 @@ Welcome to Fake FilmHub API, a versatile and efficient solution for managing mov
 2. **Install dependencies**
 
    ```bash
-   npm install
+   pnpm install
    ```
 
 3. **Rename `.env.template` to `.env` and configure environment variables**
@@ -72,16 +72,16 @@ Welcome to Fake FilmHub API, a versatile and efficient solution for managing mov
 5. **Run Prisma migrations**
 
    ```bash
-   npx prisma migrate dev
+   pnpx prisma migrate dev
    ```
 
 6. **Seed the database**
 
    ```bash
-   npm run seed
+   pnpm run seed
    ```
 
 7. **Start the server in development mode**
    ```bash
-   npm run dev
+   pnpm run dev
    ```
