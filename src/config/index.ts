@@ -1,6 +1,7 @@
 export * from './adapters/envs.adapter';
 export * from './adapters/jwt.adapter';
 export * from './adapters/zod.adapter';
+export * from './schemas/auth/auth-dtos.schemas';
 export * from './schemas/genre/genre-dtos.schemas';
 export * from './schemas/genre/genre.schema';
 export * from './schemas/movie/movie-dtos.schemas';
