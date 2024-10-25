@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { GenreRepository } from '../../domain';
+import { ErrorHandler, GenreRepository } from '../../domain';
 import {
   CreateGenreDto,
   CreateGenreUseCaseImpl,
@@ -13,7 +13,6 @@ import {
   UpdateGenreDto,
   UpdateGenreUseCaseImpl,
 } from '../../application';
-import { ErrorHandlerService } from '..';
 
 export class GenreController {
   constructor(private readonly genreRepository: GenreRepository) {}
@@ -27,7 +26,10 @@ export class GenreController {
     new GetGenresUseCaseImpl(this.genreRepository)
       .execute(paginationDto!)
       .then((data) => res.json(data))
-      .catch((error) => ErrorHandlerService.handleError(error, res));
+      .catch((error) => {
+        const { statusCode, message } = ErrorHandler.handleError(error);
+        res.status(statusCode).json({ error: message });
+      });
   };
 
   getGenreById = async (req: Request, res: Response) => {
@@ -39,7 +41,10 @@ export class GenreController {
     new GetGenreByIdUseCaseImpl(this.genreRepository)
       .execute(validatedData!)
       .then((data) => res.json(data))
-      .catch((error) => ErrorHandlerService.handleError(error, res));
+      .catch((error) => {
+        const { statusCode, message } = ErrorHandler.handleError(error);
+        res.status(statusCode).json({ error: message });
+      });
   };
 
   getMoviesByGenre = async (req: Request, res: Response) => {
@@ -55,7 +60,10 @@ export class GenreController {
     new GetMoviesByGenreUseCaseImpl(this.genreRepository)
       .execute(validatedData!, paginationDto!)
       .then((data) => res.json(data))
-      .catch((error) => ErrorHandlerService.handleError(error, res));
+      .catch((error) => {
+        const { statusCode, message } = ErrorHandler.handleError(error);
+        res.status(statusCode).json({ error: message });
+      });
   };
 
   createGenre = async (req: Request, res: Response) => {
@@ -65,7 +73,10 @@ export class GenreController {
     new CreateGenreUseCaseImpl(this.genreRepository)
       .execute(validatedData!)
       .then((data) => res.json(data))
-      .catch((error) => ErrorHandlerService.handleError(error, res));
+      .catch((error) => {
+        const { statusCode, message } = ErrorHandler.handleError(error);
+        res.status(statusCode).json({ error: message });
+      });
   };
 
   updateGenre = async (req: Request, res: Response) => {
@@ -77,7 +88,10 @@ export class GenreController {
     new UpdateGenreUseCaseImpl(this.genreRepository)
       .execute(validatedData!)
       .then((data) => res.json(data))
-      .catch((error) => ErrorHandlerService.handleError(error, res));
+      .catch((error) => {
+        const { statusCode, message } = ErrorHandler.handleError(error);
+        res.status(statusCode).json({ error: message });
+      });
   };
 
   deleteGenre = async (req: Request, res: Response) => {
@@ -89,6 +103,9 @@ export class GenreController {
     new DeleteGenreUseCaseImpl(this.genreRepository)
       .execute(validatedData!)
       .then((data) => res.json(data))
-      .catch((error) => ErrorHandlerService.handleError(error, res));
+      .catch((error) => {
+        const { statusCode, message } = ErrorHandler.handleError(error);
+        res.status(statusCode).json({ error: message });
+      });
   };
 }

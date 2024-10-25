@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { UserRepository } from '../../domain';
+import { ErrorHandler, UserRepository } from '../../domain';
 import {
   GetReviewsByUserUseCaseImpl,
   GetUserByIdUseCaseImpl,
@@ -10,7 +10,6 @@ import {
   UpdateUserUseCaseImpl,
   UserIdDto,
 } from '../../application';
-import { ErrorHandlerService } from '..';
 
 export class UserController {
   constructor(private readonly userRepository: UserRepository) {}
@@ -24,7 +23,10 @@ export class UserController {
     new GetUsersUseCaseImpl(this.userRepository)
       .execute(paginationDto!)
       .then((data) => res.json(data))
-      .catch((error) => ErrorHandlerService.handleError(error, res));
+      .catch((error) => {
+        const { statusCode, message } = ErrorHandler.handleError(error);
+        res.status(statusCode).json({ error: message });
+      });
   };
 
   getUserById = async (req: Request, res: Response) => {
@@ -36,7 +38,10 @@ export class UserController {
     new GetUserByIdUseCaseImpl(this.userRepository)
       .execute(validatedData!)
       .then((data) => res.json(data))
-      .catch((error) => ErrorHandlerService.handleError(error, res));
+      .catch((error) => {
+        const { statusCode, message } = ErrorHandler.handleError(error);
+        res.status(statusCode).json({ error: message });
+      });
   };
 
   getReviewsByUser = async (req: Request, res: Response) => {
@@ -52,7 +57,10 @@ export class UserController {
     new GetReviewsByUserUseCaseImpl(this.userRepository)
       .execute(validatedData!, paginationDto!)
       .then((data) => res.json(data))
-      .catch((error) => ErrorHandlerService.handleError(error, res));
+      .catch((error) => {
+        const { statusCode, message } = ErrorHandler.handleError(error);
+        res.status(statusCode).json({ error: message });
+      });
   };
 
   updateUser = async (req: Request, res: Response) => {
@@ -64,6 +72,9 @@ export class UserController {
     new UpdateUserUseCaseImpl(this.userRepository)
       .execute(validatedData!)
       .then((data) => res.json(data))
-      .catch((error) => ErrorHandlerService.handleError(error, res));
+      .catch((error) => {
+        const { statusCode, message } = ErrorHandler.handleError(error);
+        res.status(statusCode).json({ error: message });
+      });
   };
 }
