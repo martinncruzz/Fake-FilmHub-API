@@ -1,4 +1,5 @@
-import { ReviewEntity, UpdateReviewDto, UserEntity } from '../..';
+import { UpdateReviewDto } from '../../../application';
+import { ReviewEntity, UserEntity } from '../..';
 
 export type UpdateReviewUseCaseResp = Promise<ReviewEntity>;
 

@@ -1,4 +1,5 @@
-import { CheckUserEmailDto, LoginUserDto, RegisterUserDto, UserEntity } from '..';
+import { CheckUserEmailDto, LoginUserDto, RegisterUserDto } from '../../application';
+import { UserEntity } from '..';
 
 export abstract class AuthDatasource {
   abstract registerUser(registerUserDto: RegisterUserDto): Promise<UserEntity>;

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { CreateMovieDto, MovieIdDto, UpdateMovieDto } from '../../../domain';
+import { CreateMovieDto, MovieIdDto, UpdateMovieDto } from '../../../application';
 import { idSchema } from '../..';
 
 const baseMovieDtoSchema = z.object({

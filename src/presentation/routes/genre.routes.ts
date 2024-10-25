@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
-import { GenreController } from '..';
 import { GenreDatasourceImpl, GenreRepositoryImpl } from '../../infrastructure';
+import { GenreController } from '..';
 
 export class GenreRoutes {
   static get routes(): Router {

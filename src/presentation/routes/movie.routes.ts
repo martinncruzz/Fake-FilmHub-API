@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
-import { MovieController } from '..';
 import { MovieDatasourceImpl, MovieRepositoryImpl } from '../../infrastructure';
+import { MovieController } from '..';
 
 export class MovieRoutes {
   static get routes(): Router {

@@ -1,4 +1,5 @@
-import { PaginationDto, PaginationResult, PartialReviewEntity, UserEntity, UserIdDto } from '../..';
+import { PaginationDto, UserIdDto } from '../../../application';
+import { PaginationResult, PartialReviewEntity, UserEntity } from '../..';
 
 export interface UsersData {
   total: number;

@@ -1,2 +1,2 @@
+export * from './postgres/postgres-database';
 export * from './seed/data';
-export * from './seed/seed';

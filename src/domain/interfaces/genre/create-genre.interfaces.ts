@@ -1,4 +1,5 @@
-import { CreateGenreDto, GenreEntity } from '../..';
+import { CreateGenreDto } from '../../../application';
+import { GenreEntity } from '../..';
 
 export type CreateGenreUseCaseResp = Promise<GenreEntity>;
 

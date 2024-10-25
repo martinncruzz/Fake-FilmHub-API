@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { ErrorHandlerService } from '..';
+import { ReviewRepository } from '../../domain';
 import {
   CreateReviewDto,
   CreateReviewUseCaseImpl,
@@ -9,10 +9,10 @@ import {
   GetReviewsUseCaseImpl,
   PaginationDto,
   ReviewIdDto,
-  ReviewRepository,
   UpdateReviewDto,
   UpdateReviewUseCaseImpl,
-} from '../../domain';
+} from '../../application';
+import { ErrorHandlerService } from '..';
 
 export class ReviewController {
   constructor(private readonly reviewRepository: ReviewRepository) {}

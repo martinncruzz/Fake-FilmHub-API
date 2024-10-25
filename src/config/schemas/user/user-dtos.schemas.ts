@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { UpdateUserDto, UserIdDto } from '../../../domain';
+import { UpdateUserDto, UserIdDto } from '../../../application';
 import { idSchema } from '../..';
 
 export const userIdSchema: z.ZodType<UserIdDto> = z.object({ user_id: z.lazy(() => idSchema) });

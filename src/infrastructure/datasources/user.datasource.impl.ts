@@ -1,17 +1,9 @@
+import { prisma } from '../../data';
+import { CustomError, UserEntity, UserRepository, UsersData, UserWithReviews } from '../../domain';
+import { PaginationDto, UpdateUserDto, UserIdDto } from '../../application';
 import { UserMapper } from '..';
-import { prisma } from '../../data/postgres';
-import {
-  CustomError,
-  PaginationDto,
-  UpdateUserDto,
-  UserEntity,
-  UserIdDto,
-  UserDatasource,
-  UsersData,
-  UserWithReviews,
-} from '../../domain';
 
-export class UserDatasourceImpl implements UserDatasource {
+export class UserDatasourceImpl implements UserRepository {
   async getUsers(paginationDto: PaginationDto): Promise<UsersData> {
     const { page, limit } = paginationDto;
 

@@ -1,4 +1,5 @@
-import { GenreEntity, GenreIdDto, PaginationDto, PaginationResult, PartialMovieEntity } from '../..';
+import { GenreIdDto, PaginationDto } from '../../../application';
+import { GenreEntity, PaginationResult, PartialMovieEntity } from '../..';
 
 export interface GenresData {
   total: number;

@@ -1,13 +1,5 @@
-import {
-  PaginationDto,
-  UpdateUserDto,
-  UserDatasource,
-  UserEntity,
-  UserIdDto,
-  UserRepository,
-  UsersData,
-  UserWithReviews,
-} from '../../domain';
+import { UserRepository, UserEntity, UsersData, UserWithReviews, UserDatasource } from '../../domain';
+import { PaginationDto, UpdateUserDto, UserIdDto } from '../../application';
 
 export class UserRepositoryImpl implements UserRepository {
   constructor(private readonly userDatasource: UserDatasource) {}

@@ -1,14 +1,5 @@
-import {
-  CreateReviewDto,
-  PaginationDto,
-  ReviewRepository,
-  ReviewEntity,
-  ReviewIdDto,
-  ReviewsData,
-  UpdateReviewDto,
-  ReviewDatasource,
-  UserEntity,
-} from '../../domain';
+import { ReviewEntity, ReviewsData, ReviewRepository, UserEntity, ReviewDatasource } from '../../domain';
+import { CreateReviewDto, PaginationDto, ReviewIdDto, UpdateReviewDto } from '../../application';
 
 export class ReviewRepositoryImpl implements ReviewRepository {
   constructor(private readonly reviewDatasource: ReviewDatasource) {}

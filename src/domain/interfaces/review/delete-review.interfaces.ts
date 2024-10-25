@@ -1,4 +1,5 @@
-import { ReviewIdDto, UserEntity } from '../..';
+import { ReviewIdDto } from '../../../application';
+import { UserEntity } from '../..';
 
 export type DeleteReviewUseCaseResp = Promise<boolean>;
 

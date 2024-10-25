@@ -1,4 +1,5 @@
-import { MovieEntity, MovieFiltersDto, MovieIdDto, PaginationDto, PaginationResult, PartialReviewEntity } from '../..';
+import { MovieFiltersDto, MovieIdDto, PaginationDto } from '../../../application';
+import { MovieEntity, PaginationResult, PartialReviewEntity } from '../..';
 
 export interface MoviesData {
   total: number;

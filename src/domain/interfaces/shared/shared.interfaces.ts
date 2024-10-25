@@ -1,4 +1,5 @@
-import { GenreEntity, MovieEntity, PaginationDto, ReviewEntity, UserEntity } from '../..';
+import { PaginationDto } from '../../../application';
+import { GenreEntity, MovieEntity, ReviewEntity, UserEntity } from '../..';
 
 export enum UserRole {
   ADMIN = 'ADMIN',

@@ -1,8 +1,7 @@
 import { Prisma } from '@prisma/client';
 
-import { prisma } from '../postgres';
-import { seedData } from '..';
-import { UserRole } from '../../domain/interfaces/shared/shared.interfaces';
+import { UserRole } from '../../domain';
+import { prisma, seedData } from '..';
 
 (async () => {
   await seedDatabase();

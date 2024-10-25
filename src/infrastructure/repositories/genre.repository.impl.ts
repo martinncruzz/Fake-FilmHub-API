@@ -1,14 +1,5 @@
-import {
-  CreateGenreDto,
-  GenreDatasource,
-  GenreEntity,
-  GenreIdDto,
-  GenreRepository,
-  GenresData,
-  GenresWithMovies,
-  PaginationDto,
-  UpdateGenreDto,
-} from '../../domain';
+import { GenreDatasource, GenreEntity, GenreRepository, GenresData, GenresWithMovies } from '../../domain';
+import { CreateGenreDto, GenreIdDto, PaginationDto, UpdateGenreDto } from '../../application';
 
 export class GenreRepositoryImpl implements GenreRepository {
   constructor(private readonly genreDatasource: GenreDatasource) {}

@@ -1,4 +1,5 @@
-import { ReviewEntity, PaginationDto, PaginationResult, ReviewIdDto } from '../..';
+import { PaginationDto, ReviewIdDto } from '../../../application';
+import { ReviewEntity, PaginationResult } from '../..';
 
 export interface ReviewsData {
   total: number;

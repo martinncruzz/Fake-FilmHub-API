@@ -1,4 +1,5 @@
-import { PaginationDto, UpdateUserDto, UserEntity, UserIdDto, UsersData, UserWithReviews } from '..';
+import { PaginationDto, UpdateUserDto, UserIdDto } from '../../application';
+import { UserEntity, UsersData, UserWithReviews } from '..';
 
 export abstract class UserRepository {
   abstract getUsers(paginationDto: PaginationDto): Promise<UsersData>;

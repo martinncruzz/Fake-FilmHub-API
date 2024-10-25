@@ -1,20 +1,20 @@
 import { Request, Response } from 'express';
 
-import { ErrorHandlerService } from '..';
+import { MovieRepository } from '../../domain';
 import {
   CreateMovieDto,
-  MovieIdDto,
-  UpdateMovieDto,
-  PaginationDto,
-  MovieFiltersDto,
-  MovieRepository,
-  GetMoviesUseCaseImpl,
-  GetMovieByIdUseCaseImpl,
   CreateMovieUseCaseImpl,
-  UpdateMovieUseCaseImpl,
   DeleteMovieUseCaseImpl,
+  GetMovieByIdUseCaseImpl,
+  GetMoviesUseCaseImpl,
   GetReviewsByMovieUseCaseImpl,
-} from '../../domain';
+  MovieFiltersDto,
+  MovieIdDto,
+  PaginationDto,
+  UpdateMovieDto,
+  UpdateMovieUseCaseImpl,
+} from '../../application';
+import { ErrorHandlerService } from '..';
 
 export class MovieController {
   constructor(private readonly movieRepository: MovieRepository) {}

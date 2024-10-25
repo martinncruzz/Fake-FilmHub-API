@@ -1,12 +1,5 @@
-import {
-  CreateReviewDto,
-  PaginationDto,
-  ReviewEntity,
-  ReviewIdDto,
-  ReviewsData,
-  UpdateReviewDto,
-  UserEntity,
-} from '..';
+import { CreateReviewDto, PaginationDto, ReviewIdDto, UpdateReviewDto } from '../../application';
+import { ReviewEntity, ReviewsData, UserEntity } from '..';
 
 export abstract class ReviewDatasource {
   abstract getReviews(paginationDto: PaginationDto): Promise<ReviewsData>;

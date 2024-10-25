@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
-import { AuthMiddleware, ReviewController } from '..';
 import { ReviewDatasourceImpl, ReviewRepositoryImpl } from '../../infrastructure';
+import { AuthMiddleware, ReviewController } from '..';
 
 export class ReviewRoutes {
   static get routes(): Router {

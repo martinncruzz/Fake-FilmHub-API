@@ -1,15 +1,5 @@
-import {
-  CreateMovieDto,
-  MovieRepository,
-  MovieEntity,
-  MovieFiltersDto,
-  MovieIdDto,
-  MoviesData,
-  PaginationDto,
-  UpdateMovieDto,
-  MovieDatasource,
-  MovieWithReviews,
-} from '../../domain';
+import { MovieEntity, MoviesData, MovieRepository, MovieWithReviews, MovieDatasource } from '../../domain';
+import { CreateMovieDto, MovieFiltersDto, MovieIdDto, PaginationDto, UpdateMovieDto } from '../../application';
 
 export class MovieRepositoryImpl implements MovieRepository {
   constructor(private readonly movieDatasource: MovieDatasource) {}

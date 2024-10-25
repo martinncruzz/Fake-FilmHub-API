@@ -1,18 +1,9 @@
+import { prisma } from '../../data';
+import { CustomError, GenreRepository, GenreEntity, GenresData, GenresWithMovies } from '../../domain';
+import { CreateGenreDto, GenreIdDto, PaginationDto, UpdateGenreDto } from '../../application';
 import { GenreMapper } from '..';
-import { prisma } from '../../data/postgres';
-import {
-  CreateGenreDto,
-  CustomError,
-  GenreDatasource,
-  GenreEntity,
-  GenreIdDto,
-  GenresData,
-  GenresWithMovies,
-  PaginationDto,
-  UpdateGenreDto,
-} from '../../domain';
 
-export class GenreDatasourceImpl implements GenreDatasource {
+export class GenreDatasourceImpl implements GenreRepository {
   async getGenres(paginationDto: PaginationDto): Promise<GenresData> {
     const { page, limit } = paginationDto;
 

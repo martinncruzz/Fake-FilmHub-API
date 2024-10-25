@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { ErrorHandlerService } from '..';
+import { UserRepository } from '../../domain';
 import {
   GetReviewsByUserUseCaseImpl,
   GetUserByIdUseCaseImpl,
@@ -9,8 +9,8 @@ import {
   UpdateUserDto,
   UpdateUserUseCaseImpl,
   UserIdDto,
-  UserRepository,
-} from '../../domain';
+} from '../../application';
+import { ErrorHandlerService } from '..';
 
 export class UserController {
   constructor(private readonly userRepository: UserRepository) {}

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { CreateReviewDto, ReviewIdDto, UpdateReviewDto } from '../../../domain';
+import { CreateReviewDto, ReviewIdDto, UpdateReviewDto } from '../../../application';
 import { idSchema } from '../..';
 
 const baseReviewDtoSchema = z.object({

@@ -1,17 +1,7 @@
+import { prisma } from '../../data';
+import { CustomError, ReviewRepository, ReviewEntity, ReviewsData, UserEntity, UserRole } from '../../domain';
+import { CreateReviewDto, PaginationDto, ReviewIdDto, UpdateReviewDto } from '../../application';
 import { ReviewMapper } from '..';
-import { prisma } from '../../data/postgres';
-import {
-  CreateReviewDto,
-  CustomError,
-  PaginationDto,
-  ReviewRepository,
-  ReviewEntity,
-  ReviewIdDto,
-  ReviewsData,
-  UpdateReviewDto,
-  UserEntity,
-  UserRole,
-} from '../../domain';
 
 export class ReviewDatasourceImpl implements ReviewRepository {
   async getReviews(paginationDto: PaginationDto): Promise<ReviewsData> {

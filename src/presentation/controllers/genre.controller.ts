@@ -1,19 +1,19 @@
 import { Request, Response } from 'express';
 
-import { ErrorHandlerService } from '..';
+import { GenreRepository } from '../../domain';
 import {
   CreateGenreDto,
-  GenreIdDto,
-  UpdateGenreDto,
-  PaginationDto,
-  GenreRepository,
-  GetGenresUseCaseImpl,
   CreateGenreUseCaseImpl,
   DeleteGenreUseCaseImpl,
+  GenreIdDto,
   GetGenreByIdUseCaseImpl,
+  GetGenresUseCaseImpl,
   GetMoviesByGenreUseCaseImpl,
+  PaginationDto,
+  UpdateGenreDto,
   UpdateGenreUseCaseImpl,
-} from '../../domain';
+} from '../../application';
+import { ErrorHandlerService } from '..';
 
 export class GenreController {
   constructor(private readonly genreRepository: GenreRepository) {}

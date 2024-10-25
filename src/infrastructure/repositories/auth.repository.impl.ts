@@ -1,11 +1,5 @@
-import {
-  AuthDatasource,
-  AuthRepository,
-  CheckUserEmailDto,
-  LoginUserDto,
-  RegisterUserDto,
-  UserEntity,
-} from '../../domain';
+import { AuthDatasource, AuthRepository, UserEntity } from '../../domain';
+import { CheckUserEmailDto, LoginUserDto, RegisterUserDto } from '../../application';
 
 export class AuthRepositoryImpl implements AuthRepository {
   constructor(private readonly authDatasource: AuthDatasource) {}

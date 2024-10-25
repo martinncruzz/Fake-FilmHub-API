@@ -1,4 +1,5 @@
-import { RegisterUserDto, UserEntity } from '../..';
+import { RegisterUserDto } from '../../../application';
+import { UserEntity } from '../..';
 
 export type RegisterUserUseCaseResp = Promise<UserEntity>;
 

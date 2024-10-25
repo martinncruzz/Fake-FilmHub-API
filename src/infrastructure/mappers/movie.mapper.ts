@@ -1,5 +1,5 @@
-import { movieSchema, ZodAdapter } from '../../config';
 import { CustomError, MovieEntity } from '../../domain';
+import { movieSchema, ZodAdapter } from '../../config';
 
 export class MovieMapper {
   static movieEntityFromObject(object: Record<string, any>): MovieEntity {

@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
-import { idSchema, partialMovieSchema, partialUserSchema } from '../..';
 import { PartialReviewEntity, ReviewEntity } from '../../../domain';
+import { idSchema, partialMovieSchema, partialUserSchema } from '../..';
 
 const baseReviewSchema = z.object({
   review_id: z.lazy(() => idSchema),

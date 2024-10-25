@@ -1,13 +1,5 @@
-import {
-  CreateMovieDto,
-  MovieEntity,
-  MovieFiltersDto,
-  MovieIdDto,
-  MoviesData,
-  MovieWithReviews,
-  PaginationDto,
-  UpdateMovieDto,
-} from '..';
+import { CreateMovieDto, MovieFiltersDto, MovieIdDto, PaginationDto, UpdateMovieDto } from '../../application';
+import { MovieEntity, MoviesData, MovieWithReviews } from '..';
 
 export abstract class MovieDatasource {
   abstract getMovies(paginationDto: PaginationDto, movieFiltersDto: MovieFiltersDto): Promise<MoviesData>;

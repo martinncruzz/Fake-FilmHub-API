@@ -1,21 +1,11 @@
 import { Prisma } from '@prisma/client';
 
+import { prisma } from '../../data';
+import { CustomError, MovieRepository, MovieEntity, MoviesData, MovieWithReviews } from '../../domain';
+import { CreateMovieDto, MovieFiltersDto, MovieIdDto, PaginationDto, UpdateMovieDto } from '../../application';
 import { MovieMapper } from '..';
-import { prisma } from '../../data/postgres';
-import {
-  CreateMovieDto,
-  CustomError,
-  MovieDatasource,
-  MovieEntity,
-  MovieFiltersDto,
-  MovieIdDto,
-  MoviesData,
-  MovieWithReviews,
-  PaginationDto,
-  UpdateMovieDto,
-} from '../../domain';
 
-export class MovieDatasourceImpl implements MovieDatasource {
+export class MovieDatasourceImpl implements MovieRepository {
   async getMovies(paginationDto: PaginationDto, movieFiltersDto: MovieFiltersDto): Promise<MoviesData> {
     const { page, limit } = paginationDto;
     const { title, release_year, min_release_year, max_release_year, genre_id } = movieFiltersDto;
