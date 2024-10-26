@@ -11,4 +11,3 @@ export * from './routes/movie.routes';
 export * from './routes/review.routes';
 export * from './routes/user.routes';
 export * from './server';
-export * from './services/error-handler.service';
