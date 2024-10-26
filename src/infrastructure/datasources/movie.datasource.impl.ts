@@ -71,7 +71,7 @@ export class MovieDatasourceImpl implements MovieRepository {
       }),
     ]);
 
-    if (!movieWithReviews) throw CustomError.notFound('User not found');
+    if (!movieWithReviews) throw CustomError.notFound('Movie not found');
 
     return {
       totalReviews,
