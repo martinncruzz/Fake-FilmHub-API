@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
-import { CreateReviewDto, ReviewIdDto, UpdateReviewDto } from '../../../application';
-import { idSchema } from '../..';
+import { CreateReviewDto, ReviewIdDto, UpdateReviewDto } from '../../../../application';
+import { idSchema } from '../../..';
 
 const baseReviewDtoSchema = z.object({
   rating: z.number().min(1).max(5).int().nullable().optional(),

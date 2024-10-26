@@ -1,5 +1,5 @@
 import { AuthRepository, CustomError, LoginUserUseCase, LoginUserUseCaseResp, SignToken } from '../../../domain';
-import { JWTAdapter } from '../../../config';
+import { JWTAdapter } from '../../../infrastructure';
 import { LoginUserDto } from '../..';
 
 export class LoginUserUseCaseImpl implements LoginUserUseCase {

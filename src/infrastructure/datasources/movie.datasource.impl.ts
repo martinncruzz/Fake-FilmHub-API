@@ -1,9 +1,8 @@
 import { Prisma } from '@prisma/client';
 
-import { prisma } from '../../data';
 import { CustomError, MovieRepository, MovieEntity, MoviesData, MovieWithReviews } from '../../domain';
 import { CreateMovieDto, MovieFiltersDto, MovieIdDto, PaginationDto, UpdateMovieDto } from '../../application';
-import { MovieMapper } from '..';
+import { prisma, MovieMapper } from '..';
 
 export class MovieDatasourceImpl implements MovieRepository {
   async getMovies(paginationDto: PaginationDto, movieFiltersDto: MovieFiltersDto): Promise<MoviesData> {

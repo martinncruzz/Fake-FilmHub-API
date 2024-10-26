@@ -1,5 +1,5 @@
 import { ValidationResult } from '../../../domain';
-import { loginUserSchema, ZodAdapter } from '../../../config';
+import { loginUserSchema, ZodAdapter } from '../../../infrastructure';
 
 export class LoginUserDto {
   private constructor(

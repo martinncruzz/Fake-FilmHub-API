@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
-import { CreateGenreDto, GenreIdDto, UpdateGenreDto } from '../../../application';
-import { idSchema } from '../..';
+import { CreateGenreDto, GenreIdDto, UpdateGenreDto } from '../../../../application';
+import { idSchema } from '../../..';
 
 const baseGenreDtoSchema = z.object({
   name: z.string().min(2),

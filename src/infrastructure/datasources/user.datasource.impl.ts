@@ -1,7 +1,6 @@
-import { prisma } from '../../data';
 import { CustomError, UserEntity, UserRepository, UsersData, UserWithReviews } from '../../domain';
 import { PaginationDto, UpdateUserDto, UserIdDto } from '../../application';
-import { UserMapper } from '..';
+import { prisma, UserMapper } from '..';
 
 export class UserDatasourceImpl implements UserRepository {
   async getUsers(paginationDto: PaginationDto): Promise<UsersData> {

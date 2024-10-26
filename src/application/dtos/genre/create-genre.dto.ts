@@ -1,5 +1,5 @@
 import { ValidationResult } from '../../../domain';
-import { createGenreSchema, ZodAdapter } from '../../../config';
+import { createGenreSchema, ZodAdapter } from '../../../infrastructure';
 
 export class CreateGenreDto {
   private constructor(

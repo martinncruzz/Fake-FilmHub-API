@@ -1,13 +1,13 @@
 import { z } from 'zod';
 
-import { OAuthProvider } from '../../../domain';
+import { OAuthProvider } from '../../../../domain';
 import {
   CheckUserEmailDto,
   LoginUserDto,
   OAuthCallbackDto,
   OAuthProviderDto,
   RegisterUserDto,
-} from '../../../application';
+} from '../../../../application';
 
 export const registerUserSchema: z.ZodType<RegisterUserDto> = z.object({
   fullname: z.string().min(5),

@@ -1,5 +1,5 @@
 import { ValidationResult } from '../../../domain';
-import { checkUserEmailSchema, ZodAdapter } from '../../../config';
+import { checkUserEmailSchema, ZodAdapter } from '../../../infrastructure';
 
 export class CheckUserEmailDto {
   private constructor(public readonly email: string) {}

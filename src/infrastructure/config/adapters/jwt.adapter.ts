@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-import { envs } from '..';
+import { envs } from '../..';
 
 export class JWTAdapter {
   static async generateToken(payload: Record<string, any>, duration: string = '20d'): Promise<string | null> {

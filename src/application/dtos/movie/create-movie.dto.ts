@@ -1,5 +1,5 @@
 import { ValidationResult } from '../../../domain';
-import { createMovieSchema, ZodAdapter } from '../../../config';
+import { createMovieSchema, ZodAdapter } from '../../../infrastructure';
 
 export class CreateMovieDto {
   private constructor(

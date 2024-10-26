@@ -1,5 +1,5 @@
 import { ValidationResult } from '../../../domain';
-import { callbackSchema, ZodAdapter } from '../../../config';
+import { callbackSchema, ZodAdapter } from '../../../infrastructure';
 
 export class OAuthCallbackDto {
   constructor(

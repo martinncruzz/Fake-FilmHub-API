@@ -1,5 +1,5 @@
 import { ValidationResult } from '../../../domain';
-import { paginationSchema, ZodAdapter } from '../../../config';
+import { paginationSchema, ZodAdapter } from '../../../infrastructure';
 
 export class PaginationDto {
   private constructor(

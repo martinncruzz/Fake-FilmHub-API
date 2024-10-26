@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
-import { PartialUserEntity, UserEntity, UserRole } from '../../../domain';
-import { idSchema, partialReviewSchema } from '../..';
+import { PartialUserEntity, UserEntity, UserRole } from '../../../../domain';
+import { idSchema, partialReviewSchema } from '../../..';
 
 const baseUserSchema = z.object({
   user_id: z.lazy(() => idSchema),

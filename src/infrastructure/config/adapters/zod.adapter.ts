@@ -1,6 +1,6 @@
 import { z, ZodError } from 'zod';
 
-import { ValidationResult } from '../../domain';
+import { ValidationResult } from '../../../domain';
 
 export class ZodAdapter {
   static validate<T>(schema: z.ZodSchema<T>, data: Record<string, any>): ValidationResult<T> {

@@ -1,7 +1,6 @@
-import { prisma } from '../../data';
 import { CustomError, GenreRepository, GenreEntity, GenresData, GenresWithMovies } from '../../domain';
 import { CreateGenreDto, GenreIdDto, PaginationDto, UpdateGenreDto } from '../../application';
-import { GenreMapper } from '..';
+import { prisma, GenreMapper } from '..';
 
 export class GenreDatasourceImpl implements GenreRepository {
   async getGenres(paginationDto: PaginationDto): Promise<GenresData> {

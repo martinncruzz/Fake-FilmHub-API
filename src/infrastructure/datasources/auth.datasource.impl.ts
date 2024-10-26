@@ -1,7 +1,6 @@
-import { prisma } from '../../data';
 import { AuthRepository, CustomError, UserEntity, UserRole } from '../../domain';
 import { CheckUserEmailDto, LoginUserDto, RegisterUserDto } from '../../application';
-import { UserMapper } from '..';
+import { prisma, UserMapper } from '..';
 
 export class AuthDatasourceImpl implements AuthRepository {
   async registerUser(registerUserDto: RegisterUserDto): Promise<UserEntity> {

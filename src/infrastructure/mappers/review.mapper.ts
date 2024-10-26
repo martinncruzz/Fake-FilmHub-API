@@ -1,5 +1,5 @@
 import { CustomError, ReviewEntity } from '../../domain';
-import { reviewSchema, ZodAdapter } from '../../config';
+import { reviewSchema, ZodAdapter } from '..';
 
 export class ReviewMapper {
   static reviewEntityFromObject(object: Record<string, any>): ReviewEntity {

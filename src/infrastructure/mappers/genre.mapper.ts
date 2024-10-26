@@ -1,5 +1,5 @@
 import { CustomError, GenreEntity } from '../../domain';
-import { genreSchema, ZodAdapter } from '../../config';
+import { genreSchema, ZodAdapter } from '..';
 
 export class GenreMapper {
   static genreEntityFromObject(object: Record<string, any>): GenreEntity {

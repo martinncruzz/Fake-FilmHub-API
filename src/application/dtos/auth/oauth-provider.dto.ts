@@ -1,5 +1,5 @@
 import { OAuthProvider, ValidationResult } from '../../../domain';
-import { providerSchema, ZodAdapter } from '../../../config';
+import { providerSchema, ZodAdapter } from '../../../infrastructure';
 
 export class OAuthProviderDto {
   private constructor(public readonly provider: OAuthProvider) {}

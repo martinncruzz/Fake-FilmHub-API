@@ -1,5 +1,5 @@
 import { ValidationResult } from '../../../domain';
-import { userIdSchema, ZodAdapter } from '../../../config';
+import { userIdSchema, ZodAdapter } from '../../../infrastructure';
 
 export class UserIdDto {
   private constructor(public readonly user_id: number) {}

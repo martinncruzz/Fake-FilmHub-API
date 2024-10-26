@@ -1,5 +1,5 @@
 import { ValidationResult } from '../../../domain';
-import { updateUserSchema, ZodAdapter } from '../../../config';
+import { updateUserSchema, ZodAdapter } from '../../../infrastructure';
 
 export class UpdateUserDto {
   private constructor(

@@ -1,5 +1,5 @@
 import { ResourceType } from '../../domain';
-import { envs } from '../../config';
+import { envs } from '../../infrastructure';
 
 export class BaseUrlBuilder {
   static build(resourceType: ResourceType, additionalPath: string = ''): string {

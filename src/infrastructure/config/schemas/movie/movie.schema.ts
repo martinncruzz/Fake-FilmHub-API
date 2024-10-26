@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
-import { MovieEntity, PartialMovieEntity } from '../../../domain';
-import { idSchema, partialGenreSchema, partialReviewSchema } from '../..';
+import { MovieEntity, PartialMovieEntity } from '../../../../domain';
+import { idSchema, partialGenreSchema, partialReviewSchema } from '../../..';
 
 const baseMovieSchema = z.object({
   movie_id: z.lazy(() => idSchema),
