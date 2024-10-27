@@ -8,7 +8,7 @@
     "dev": "tsnd --respawn --clear src/app.ts",
     "build": "rimraf ./dist && tsc",
     "start": "node dist/app.js",
-    "seed": "tsnd --clear ./src/data/seed/seed.ts"
+    "seed": "tsnd --clear ./src/infrastructure/data/seed/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "5.21.1",
