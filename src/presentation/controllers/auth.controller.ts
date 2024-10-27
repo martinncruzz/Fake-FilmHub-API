@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { AuthRepository, ErrorHandler } from '../../domain';
+import { AuthRepository } from '../../domain';
 import {
   CheckUserEmailDto,
   GetCurrentSessionUseCaseImpl,
@@ -12,6 +12,7 @@ import {
   RegisterUserDto,
   RegisterUserUseCaseImpl,
 } from '../../application';
+import { ErrorHandler } from '..';
 
 export class AuthController {
   constructor(private readonly authRepository: AuthRepository) {}
@@ -23,10 +24,7 @@ export class AuthController {
     new RegisterUserUseCaseImpl(this.authRepository)
       .execute(validatedData!)
       .then((data) => res.json(data))
-      .catch((error) => {
-        const { statusCode, message } = ErrorHandler.handleError(error);
-        res.status(statusCode).json({ error: message });
-      });
+      .catch((error) => ErrorHandler.handleError(error, res));
   };
 
   loginUser = async (req: Request, res: Response) => {
@@ -36,10 +34,7 @@ export class AuthController {
     new LoginUserUseCaseImpl(this.authRepository)
       .execute(validatedData!)
       .then((data) => res.json(data))
-      .catch((error) => {
-        const { statusCode, message } = ErrorHandler.handleError(error);
-        res.status(statusCode).json({ error: message });
-      });
+      .catch((error) => ErrorHandler.handleError(error, res));
   };
 
   isEmailAvailable = async (req: Request, res: Response) => {
@@ -49,10 +44,7 @@ export class AuthController {
     new IsEmailAvailableUseCaseImpl(this.authRepository)
       .execute(validatedData!)
       .then((data) => res.json(data))
-      .catch((error) => {
-        const { statusCode, message } = ErrorHandler.handleError(error);
-        res.status(statusCode).json({ error: message });
-      });
+      .catch((error) => ErrorHandler.handleError(error, res));
   };
 
   getCurrentSession = async (req: Request, res: Response) => {
