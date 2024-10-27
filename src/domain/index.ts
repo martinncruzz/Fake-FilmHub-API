@@ -24,6 +24,7 @@ export * from './repositories/movie.repository';
 export * from './repositories/review.repository';
 export * from './repositories/user.repository';
 export * from './use-cases/auth/get-current-session.use-case';
+export * from './use-cases/auth/get-oauth-url.use-case';
 export * from './use-cases/auth/is-email-available.use-case';
 export * from './use-cases/auth/login-user.use-case';
 export * from './use-cases/auth/register-user.use-case';

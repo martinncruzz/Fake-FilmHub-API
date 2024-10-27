@@ -16,6 +16,7 @@ export class AuthRoutes {
     router.post('/login', authController.loginUser);
     router.post('/is-available', authController.isEmailAvailable);
     router.get('/profile', [AuthMiddleware.validateJWT], authController.getCurrentSession);
+    router.get('/oauth/:provider/url', authController.getOAuthUrl);
 
     return router;
   }

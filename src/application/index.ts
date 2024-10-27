@@ -1,5 +1,6 @@
 export * from './builders/base-url.builder';
 export * from './builders/filters-query.builder';
+export * from './builders/oauth-url.builder';
 export * from './builders/pagination.builder';
 export * from './dtos/auth/check-user-email.dto';
 export * from './dtos/auth/login-user.dto';
@@ -20,6 +21,7 @@ export * from './dtos/shared/pagination.dto';
 export * from './dtos/user/update-user.dto';
 export * from './dtos/user/user-id.dto';
 export * from './use-cases/auth/get-current-session.use-case.impl';
+export * from './use-cases/auth/get-oauth-url.use-case.impl';
 export * from './use-cases/auth/is-email-available.use-case.impl';
 export * from './use-cases/auth/login-user.use-case.impl';
 export * from './use-cases/auth/register-user.use-case.impl';

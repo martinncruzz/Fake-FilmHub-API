@@ -1,5 +1,5 @@
 import { PaginationDto } from '../../../application';
-import { PaginationResult, ResourceType } from '../..';
+import { OAuthProvider, PaginationResult, ResourceType } from '../..';
 
 export type BuildFiltersQuery<T> = (filters?: T) => string;
 
@@ -13,3 +13,5 @@ export type BuildPagination = (
 ) => PaginationResult;
 
 export type SignToken = (payload: Record<string, any>, duration?: string) => Promise<string | null>;
+
+export type BuildOAuthUrl = (provider: OAuthProvider) => string;

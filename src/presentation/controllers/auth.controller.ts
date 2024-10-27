@@ -4,9 +4,11 @@ import { AuthRepository, ErrorHandler } from '../../domain';
 import {
   CheckUserEmailDto,
   GetCurrentSessionUseCaseImpl,
+  GetOAuthUrlUseCaseImpl,
   IsEmailAvailableUseCaseImpl,
   LoginUserDto,
   LoginUserUseCaseImpl,
+  OAuthProviderDto,
   RegisterUserDto,
   RegisterUserUseCaseImpl,
 } from '../../application';
@@ -55,6 +57,14 @@ export class AuthController {
 
   getCurrentSession = async (req: Request, res: Response) => {
     const user = new GetCurrentSessionUseCaseImpl().execute(req.body.user);
-    return res.json(user);
+    res.json(user);
+  };
+
+  getOAuthUrl = async (req: Request, res: Response) => {
+    const { errors, validatedData } = OAuthProviderDto.create(req.params);
+    if (errors) return res.status(400).json({ errors });
+
+    const url = new GetOAuthUrlUseCaseImpl().execute(validatedData!);
+    res.json(url);
   };
 }
