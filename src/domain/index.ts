@@ -8,7 +8,6 @@ export * from './entities/movie.entity';
 export * from './entities/review.entity';
 export * from './entities/user.entity';
 export * from './errors/custom-error';
-export * from './errors/error-handler';
 export * from './interfaces/core/enums';
 export * from './interfaces/core/pagination.interfaces';
 export * from './interfaces/core/types';
