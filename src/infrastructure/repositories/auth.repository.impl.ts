@@ -12,7 +12,7 @@ export class AuthRepositoryImpl implements AuthRepository {
     return this.authDatasource.loginUser(loginUserDto);
   }
 
-  isEmailAvailable(checkUserEmailDto: CheckUserEmailDto): Promise<boolean> {
+  isEmailAvailable(checkUserEmailDto: CheckUserEmailDto): Promise<UserEntity | null> {
     return this.authDatasource.isEmailAvailable(checkUserEmailDto);
   }
 }

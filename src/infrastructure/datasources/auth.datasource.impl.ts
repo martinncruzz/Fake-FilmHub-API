@@ -4,9 +4,9 @@ import { prisma, UserMapper } from '..';
 
 export class AuthDatasourceImpl implements AuthRepository {
   async registerUser(registerUserDto: RegisterUserDto): Promise<UserEntity> {
-    const isEmailAvailable = await this.isEmailAvailable({ email: registerUserDto.email });
+    const userRegistered = await this.isEmailAvailable({ email: registerUserDto.email });
 
-    if (!isEmailAvailable) throw CustomError.badRequest('This email is already registered');
+    if (userRegistered) throw CustomError.badRequest('This email is already registered');
 
     const newUser = await prisma.userModel.create({ data: { ...registerUserDto, role: UserRole.USER } });
 
@@ -23,11 +23,11 @@ export class AuthDatasourceImpl implements AuthRepository {
     return UserMapper.userEntityFromObject(user);
   }
 
-  async isEmailAvailable(checkUserEmailDto: CheckUserEmailDto): Promise<boolean> {
-    const userRegistered = await prisma.userModel.findFirst({
+  async isEmailAvailable(checkUserEmailDto: CheckUserEmailDto): Promise<UserEntity | null> {
+    const user = await prisma.userModel.findFirst({
       where: { email: { equals: checkUserEmailDto.email, mode: 'insensitive' } },
     });
 
-    return !userRegistered;
+    return user ? UserMapper.userEntityFromObject(user) : null;
   }
 }
