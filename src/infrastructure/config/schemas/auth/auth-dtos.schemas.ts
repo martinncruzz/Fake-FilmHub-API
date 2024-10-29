@@ -25,7 +25,4 @@ export const checkUserEmailSchema: z.ZodType<CheckUserEmailDto> = z.object({ ema
 
 export const providerSchema: z.ZodType<OAuthProviderDto> = z.object({ provider: z.enum([OAuthProvider.GOOGLE]) });
 
-export const callbackSchema: z.ZodType<OAuthCallbackDto> = z.object({
-  code: z.string().min(1).optional(),
-  error: z.string().min(1).optional(),
-});
+export const callbackSchema: z.ZodType<OAuthCallbackDto> = z.object({ code: z.string().min(1) });
