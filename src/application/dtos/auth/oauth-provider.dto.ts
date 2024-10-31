@@ -7,6 +7,10 @@ export class OAuthProviderDto {
   static create(props: Record<string, any>): ValidationResult<OAuthProviderDto> {
     const { errors, validatedData } = ZodAdapter.validate(providerSchema, props);
 
+    if (errors) {
+      return { errors: [{ field: 'oauth', message: 'Unhandled provider' }] };
+    }
+
     return errors ? { errors } : { validatedData };
   }
 }
