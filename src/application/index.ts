@@ -22,6 +22,7 @@ export * from './dtos/user/update-user.dto';
 export * from './dtos/user/user-id.dto';
 export * from './use-cases/auth/get-current-session.use-case.impl';
 export * from './use-cases/auth/get-oauth-url.use-case.impl';
+export * from './use-cases/auth/handle-oauth-callback.use-case.impl';
 export * from './use-cases/auth/is-email-available.use-case.impl';
 export * from './use-cases/auth/login-user.use-case.impl';
 export * from './use-cases/auth/register-user.use-case.impl';

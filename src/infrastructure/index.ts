@@ -1,3 +1,4 @@
+export * from './config/adapters/axios.adapter';
 export * from './config/adapters/envs.adapter';
 export * from './config/adapters/jwt.adapter';
 export * from './config/adapters/zod.adapter';
@@ -28,3 +29,4 @@ export * from './repositories/genre.repository.impl';
 export * from './repositories/movie.repository.impl';
 export * from './repositories/review.repository.impl';
 export * from './repositories/user.repository.impl';
+export * from './services/auth.service.impl';
