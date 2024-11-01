@@ -1,13 +1,15 @@
 import { Request, Response } from 'express';
 
-import { AuthRepository } from '../../domain';
+import { AuthRepository, AuthService } from '../../domain';
 import {
   CheckUserEmailDto,
   GetCurrentSessionUseCaseImpl,
   GetOAuthUrlUseCaseImpl,
+  HandleOAuthCallbackUseCaseImpl,
   IsEmailAvailableUseCaseImpl,
   LoginUserDto,
   LoginUserUseCaseImpl,
+  OAuthCallbackDto,
   OAuthProviderDto,
   RegisterUserDto,
   RegisterUserUseCaseImpl,
@@ -15,7 +17,10 @@ import {
 import { ErrorHandler } from '..';
 
 export class AuthController {
-  constructor(private readonly authRepository: AuthRepository) {}
+  constructor(
+    private readonly authRepository: AuthRepository,
+    private readonly authService: AuthService,
+  ) {}
 
   registerUser = async (req: Request, res: Response) => {
     const { errors, validatedData } = RegisterUserDto.create(req.body);
@@ -58,5 +63,18 @@ export class AuthController {
 
     const url = new GetOAuthUrlUseCaseImpl().execute(validatedData!);
     res.json(url);
+  };
+
+  handleOAuthCallback = async (req: Request, res: Response) => {
+    const { errors: providerErrors, validatedData: oauthProviderDto } = OAuthProviderDto.create(req.params);
+    if (providerErrors) return res.status(400).json({ errors: providerErrors });
+
+    const { errors: callbackErrors, validatedData: oauthCallbackDto } = OAuthCallbackDto.create(req.query);
+    if (callbackErrors) return res.status(400).json({ errors: callbackErrors });
+
+    new HandleOAuthCallbackUseCaseImpl(this.authService)
+      .execute(oauthProviderDto!, oauthCallbackDto!)
+      .then((data) => res.json(data))
+      .catch((error) => ErrorHandler.handleError(error, res));
   };
 }
