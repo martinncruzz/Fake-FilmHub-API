@@ -7,7 +7,7 @@ CREATE TABLE "UserModel" (
     "fullname" VARCHAR(100) NOT NULL,
     "email" VARCHAR(255) NOT NULL,
     "password" VARCHAR(255) NOT NULL,
-    "avatar" VARCHAR(255) NOT NULL,
+    "avatar" TEXT NOT NULL,
     "role" "UserRole" NOT NULL,
 
     CONSTRAINT "UserModel_pkey" PRIMARY KEY ("user_id")

@@ -17,7 +17,7 @@ model UserModel {
   fullname String        @db.VarChar(100)
   email    String        @unique @db.VarChar(255)
   password String        @db.VarChar(255)
-  avatar   String        @db.VarChar(255)
+  avatar   String        @db.Text
   role     UserRole
   reviews  ReviewModel[]
 }
