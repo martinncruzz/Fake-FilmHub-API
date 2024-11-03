@@ -1,14 +1,13 @@
 import { Router } from 'express';
 
-import { ReviewDatasourceImpl, ReviewRepositoryImpl } from '../../infrastructure';
+import { ReviewRepositoryImpl } from '../../infrastructure';
 import { AuthMiddleware, ReviewController } from '..';
 
 export class ReviewRoutes {
   static get routes(): Router {
     const router = Router();
 
-    const reviewDatasource = new ReviewDatasourceImpl();
-    const reviewRepository = new ReviewRepositoryImpl(reviewDatasource);
+    const reviewRepository = ReviewRepositoryImpl.instance;
 
     const reviewController = new ReviewController(reviewRepository);
 

@@ -1,8 +1,18 @@
-import { AuthRepository, CustomError, UserEntity, UserRole } from '../../domain';
+import { AuthDatasource, CustomError, UserEntity, UserRole } from '../../domain';
 import { CheckUserEmailDto, LoginUserDto, RegisterUserDto } from '../../application';
 import { prisma, UserMapper } from '..';
 
-export class AuthDatasourceImpl implements AuthRepository {
+export class AuthDatasourceImpl implements AuthDatasource {
+  private static _instance: AuthDatasourceImpl;
+
+  private constructor() {}
+
+  static get instance(): AuthDatasourceImpl {
+    if (!this._instance) this._instance = new AuthDatasourceImpl();
+
+    return this._instance;
+  }
+
   async registerUser(registerUserDto: RegisterUserDto): Promise<UserEntity> {
     const userRegistered = await this.isEmailAvailable({ email: registerUserDto.email });
 

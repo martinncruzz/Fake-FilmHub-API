@@ -6,10 +6,21 @@ import {
   GoogleUserFromToken,
   UserEntity,
 } from '../../domain';
-import { AxiosAdapter, envs, JWTAdapter } from '..';
+import { AuthRepositoryImpl, AxiosAdapter, envs, JWTAdapter } from '..';
 
 export class AuthServiceImpl implements AuthService {
-  constructor(private readonly authRepository: AuthRepository) {}
+  private static _instance: AuthServiceImpl;
+
+  private constructor(private readonly authRepository: AuthRepository) {}
+
+  static get instance(): AuthServiceImpl {
+    if (!this._instance) {
+      const authRepository = AuthRepositoryImpl.instance;
+      this._instance = new AuthServiceImpl(authRepository);
+    }
+
+    return this._instance;
+  }
 
   async authenticateWithGoogle(code: string): Promise<UserEntity> {
     const { data, error } = await AxiosAdapter.post<GoogleOAuthResponse>('https://oauth2.googleapis.com/token', {

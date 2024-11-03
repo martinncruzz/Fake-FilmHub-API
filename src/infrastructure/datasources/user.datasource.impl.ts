@@ -1,8 +1,18 @@
-import { CustomError, UserEntity, UserRepository, UsersData, UserWithReviews } from '../../domain';
+import { CustomError, UserEntity, UserDatasource, UsersData, UserWithReviews } from '../../domain';
 import { PaginationDto, UpdateUserDto, UserIdDto } from '../../application';
 import { prisma, UserMapper } from '..';
 
-export class UserDatasourceImpl implements UserRepository {
+export class UserDatasourceImpl implements UserDatasource {
+  private static _instance: UserDatasourceImpl;
+
+  private constructor() {}
+
+  static get instance(): UserDatasourceImpl {
+    if (!this._instance) this._instance = new UserDatasourceImpl();
+
+    return this._instance;
+  }
+
   async getUsers(paginationDto: PaginationDto): Promise<UsersData> {
     const { page, limit } = paginationDto;
 

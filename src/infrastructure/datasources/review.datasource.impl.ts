@@ -1,8 +1,18 @@
-import { CustomError, ReviewRepository, ReviewEntity, ReviewsData, UserEntity, UserRole } from '../../domain';
+import { CustomError, ReviewDatasource, ReviewEntity, ReviewsData, UserEntity, UserRole } from '../../domain';
 import { CreateReviewDto, PaginationDto, ReviewIdDto, UpdateReviewDto } from '../../application';
 import { prisma, ReviewMapper } from '..';
 
-export class ReviewDatasourceImpl implements ReviewRepository {
+export class ReviewDatasourceImpl implements ReviewDatasource {
+  private static _instance: ReviewDatasourceImpl;
+
+  private constructor() {}
+
+  static get instance(): ReviewDatasourceImpl {
+    if (!this._instance) this._instance = new ReviewDatasourceImpl();
+
+    return this._instance;
+  }
+
   async getReviews(paginationDto: PaginationDto): Promise<ReviewsData> {
     const { page, limit } = paginationDto;
 
