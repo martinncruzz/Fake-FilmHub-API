@@ -1,5 +1,5 @@
 import { AuthDatasource, AuthRepository, UserEntity } from '../../domain';
-import { CheckUserEmailDto, LoginUserDto, RegisterUserDto } from '../../application';
+import { LoginUserDto, RegisterUserDto } from '../../application';
 import { AuthDatasourceImpl } from '..';
 
 export class AuthRepositoryImpl implements AuthRepository {
@@ -22,9 +22,5 @@ export class AuthRepositoryImpl implements AuthRepository {
 
   loginUser(loginUserDto: LoginUserDto): Promise<UserEntity> {
     return this.authDatasource.loginUser(loginUserDto);
-  }
-
-  isEmailAvailable(checkUserEmailDto: CheckUserEmailDto): Promise<UserEntity | null> {
-    return this.authDatasource.isEmailAvailable(checkUserEmailDto);
   }
 }

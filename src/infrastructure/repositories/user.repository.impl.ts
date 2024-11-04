@@ -1,5 +1,5 @@
 import { UserRepository, UserEntity, UsersData, UserWithReviews, UserDatasource } from '../../domain';
-import { PaginationDto, UpdateUserDto, UserIdDto } from '../../application';
+import { CheckUserEmailDto, PaginationDto, UpdateUserDto, UserIdDto } from '../../application';
 import { UserDatasourceImpl } from '..';
 
 export class UserRepositoryImpl implements UserRepository {
@@ -22,6 +22,10 @@ export class UserRepositoryImpl implements UserRepository {
 
   getUserById(userIdDto: UserIdDto): Promise<UserEntity> {
     return this.userDatasource.getUserById(userIdDto);
+  }
+
+  getUserByEmail(checkUserEmailDto: CheckUserEmailDto): Promise<UserEntity | null> {
+    return this.userDatasource.getUserByEmail(checkUserEmailDto);
   }
 
   getReviewsByUser(userIdDto: UserIdDto, paginationDto: PaginationDto): Promise<UserWithReviews> {

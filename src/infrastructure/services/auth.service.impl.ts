@@ -5,18 +5,24 @@ import {
   GoogleOAuthResponse,
   GoogleUserFromToken,
   UserEntity,
+  UserRepository,
 } from '../../domain';
-import { AuthRepositoryImpl, AxiosAdapter, envs, JWTAdapter } from '..';
+import { AuthRepositoryImpl, AxiosAdapter, envs, JWTAdapter, UserRepositoryImpl } from '..';
 
 export class AuthServiceImpl implements AuthService {
   private static _instance: AuthServiceImpl;
 
-  private constructor(private readonly authRepository: AuthRepository) {}
+  private constructor(
+    private readonly userRepository: UserRepository,
+    private readonly authRepository: AuthRepository,
+  ) {}
 
   static get instance(): AuthServiceImpl {
     if (!this._instance) {
+      const userRepository = UserRepositoryImpl.instance;
       const authRepository = AuthRepositoryImpl.instance;
-      this._instance = new AuthServiceImpl(authRepository);
+
+      this._instance = new AuthServiceImpl(userRepository, authRepository);
     }
 
     return this._instance;
@@ -36,7 +42,7 @@ export class AuthServiceImpl implements AuthService {
     const payload = await JWTAdapter.decodeToken<GoogleUserFromToken>(data!.id_token);
     if (!payload) throw CustomError.unAuthorized('Invalid google token');
 
-    let user = await this.authRepository.isEmailAvailable({ email: payload.email });
+    let user = await this.userRepository.getUserByEmail({ email: payload.email });
 
     if (!user) {
       user = await this.authRepository.registerUser({

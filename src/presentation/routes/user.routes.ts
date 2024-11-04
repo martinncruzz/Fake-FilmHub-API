@@ -13,6 +13,7 @@ export class UserRoutes {
 
     router.get('/', userController.getUsers);
     router.get('/:id', userController.getUserById);
+    router.post('/check-email', userController.getUserByEmail);
     router.get('/:id/reviews', userController.getReviewsByUser);
     router.put('/:id', userController.updateUser);
 

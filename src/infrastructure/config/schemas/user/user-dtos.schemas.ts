@@ -1,9 +1,11 @@
 import { z } from 'zod';
 
-import { UpdateUserDto, UserIdDto } from '../../../../application';
+import { CheckUserEmailDto, UpdateUserDto, UserIdDto } from '../../../../application';
 import { idSchema } from '../../..';
 
 export const userIdSchema: z.ZodType<UserIdDto> = z.object({ user_id: z.lazy(() => idSchema) });
+
+export const checkUserEmailSchema: z.ZodType<CheckUserEmailDto> = z.object({ email: z.string().email() });
 
 export const updateUserSchema: z.ZodType<UpdateUserDto> = z.object({
   user_id: z.lazy(() => idSchema),

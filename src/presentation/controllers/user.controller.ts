@@ -2,7 +2,9 @@ import { Request, Response } from 'express';
 
 import { UserRepository } from '../../domain';
 import {
+  CheckUserEmailDto,
   GetReviewsByUserUseCaseImpl,
+  GetUserByEmailUseCaseImpl,
   GetUserByIdUseCaseImpl,
   GetUsersUseCaseImpl,
   PaginationDto,
@@ -34,6 +36,16 @@ export class UserController {
     if (errors) return res.status(400).json({ errors });
 
     new GetUserByIdUseCaseImpl(this.userRepository)
+      .execute(validatedData!)
+      .then((data) => res.json(data))
+      .catch((error) => ErrorHandler.handleError(error, res));
+  };
+
+  getUserByEmail = async (req: Request, res: Response) => {
+    const { errors, validatedData } = CheckUserEmailDto.create(req.body);
+    if (errors) return res.status(400).json({ errors });
+
+    new GetUserByEmailUseCaseImpl(this.userRepository)
       .execute(validatedData!)
       .then((data) => res.json(data))
       .catch((error) => ErrorHandler.handleError(error, res));

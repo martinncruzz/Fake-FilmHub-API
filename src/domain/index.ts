@@ -28,7 +28,7 @@ export * from './services/auth.service';
 export * from './use-cases/auth/get-current-session.use-case';
 export * from './use-cases/auth/get-oauth-url.use-case';
 export * from './use-cases/auth/handle-oauth-callback.use-case';
-export * from './use-cases/auth/is-email-available.use-case';
+export * from './use-cases/user/get-user-by-email.use-case';
 export * from './use-cases/auth/login-user.use-case';
 export * from './use-cases/auth/register-user.use-case';
 export * from './use-cases/genre/create-genre.use-case';

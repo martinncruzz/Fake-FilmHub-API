@@ -2,11 +2,9 @@ import { Request, Response } from 'express';
 
 import { AuthRepository, AuthService } from '../../domain';
 import {
-  CheckUserEmailDto,
   GetCurrentSessionUseCaseImpl,
   GetOAuthUrlUseCaseImpl,
   HandleOAuthCallbackUseCaseImpl,
-  IsEmailAvailableUseCaseImpl,
   LoginUserDto,
   LoginUserUseCaseImpl,
   OAuthCallbackDto,
@@ -37,16 +35,6 @@ export class AuthController {
     if (errors) return res.status(400).json({ errors });
 
     new LoginUserUseCaseImpl(this.authRepository)
-      .execute(validatedData!)
-      .then((data) => res.json(data))
-      .catch((error) => ErrorHandler.handleError(error, res));
-  };
-
-  isEmailAvailable = async (req: Request, res: Response) => {
-    const { errors, validatedData } = CheckUserEmailDto.create(req.body);
-    if (errors) return res.status(400).json({ errors });
-
-    new IsEmailAvailableUseCaseImpl(this.authRepository)
       .execute(validatedData!)
       .then((data) => res.json(data))
       .catch((error) => ErrorHandler.handleError(error, res));

@@ -1,13 +1,7 @@
 import { z } from 'zod';
 
 import { OAuthProvider } from '../../../../domain';
-import {
-  CheckUserEmailDto,
-  LoginUserDto,
-  OAuthCallbackDto,
-  OAuthProviderDto,
-  RegisterUserDto,
-} from '../../../../application';
+import { LoginUserDto, OAuthCallbackDto, OAuthProviderDto, RegisterUserDto } from '../../../../application';
 
 export const registerUserSchema: z.ZodType<RegisterUserDto> = z.object({
   fullname: z.string().min(5),
@@ -20,8 +14,6 @@ export const loginUserSchema: z.ZodType<LoginUserDto> = z.object({
   email: z.string().email(),
   password: z.string().min(5),
 });
-
-export const checkUserEmailSchema: z.ZodType<CheckUserEmailDto> = z.object({ email: z.string().email() });
 
 export const providerSchema: z.ZodType<OAuthProviderDto> = z.object({ provider: z.enum([OAuthProvider.GOOGLE]) });
 

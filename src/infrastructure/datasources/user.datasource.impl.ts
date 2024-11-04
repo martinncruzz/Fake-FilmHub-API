@@ -1,5 +1,5 @@
 import { CustomError, UserEntity, UserDatasource, UsersData, UserWithReviews } from '../../domain';
-import { PaginationDto, UpdateUserDto, UserIdDto } from '../../application';
+import { CheckUserEmailDto, PaginationDto, UpdateUserDto, UserIdDto } from '../../application';
 import { prisma, UserMapper } from '..';
 
 export class UserDatasourceImpl implements UserDatasource {
@@ -36,6 +36,14 @@ export class UserDatasourceImpl implements UserDatasource {
     if (!user) throw CustomError.notFound('User not found');
 
     return UserMapper.userEntityFromObject(user);
+  }
+
+  async getUserByEmail(checkUserEmailDto: CheckUserEmailDto): Promise<UserEntity | null> {
+    const user = await prisma.userModel.findFirst({
+      where: { email: { equals: checkUserEmailDto.email, mode: 'insensitive' } },
+    });
+
+    return user ? UserMapper.userEntityFromObject(user) : null;
   }
 
   async getReviewsByUser(userIdDto: UserIdDto, paginationDto: PaginationDto): Promise<UserWithReviews> {
