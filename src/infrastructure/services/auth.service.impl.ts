@@ -49,7 +49,13 @@ export class AuthServiceImpl implements AuthService {
         fullname: payload.name,
         email: payload.email,
         avatar: payload.picture,
-        password: 'oauth_google',
+        password: 'oauth',
+      });
+    } else {
+      user = await this.userRepository.updateUser({
+        user_id: user.user_id,
+        fullname: payload.name,
+        avatar: payload.picture,
       });
     }
 
