@@ -7,7 +7,7 @@ const baseUserSchema = z.object({
   user_id: z.lazy(() => idSchema),
   fullname: z.string().min(1),
   email: z.string().email(),
-  password: z.string().min(6),
+  password: z.string().min(5),
   avatar: z.string().url(),
   role: z.enum([UserRole.ADMIN, UserRole.USER]),
   reviews: z.array(z.lazy(() => partialReviewSchema)).optional(),
