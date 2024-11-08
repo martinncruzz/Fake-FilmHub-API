@@ -12,4 +12,5 @@ export enum ResourceType {
 
 export enum OAuthProvider {
   GOOGLE = 'google',
+  FACEBOOK = 'facebook',
 }

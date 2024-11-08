@@ -15,3 +15,9 @@ export interface GoogleUserFromToken {
   given_name: string;
   family_name: string;
 }
+
+export interface FacebookUserFromToken {
+  name: string;
+  email: string;
+  picture: { data: { url: string } };
+}
