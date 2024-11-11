@@ -12,6 +12,8 @@ export class OAuthUrlBuilder {
     switch (provider) {
       case OAuthProvider.GOOGLE:
         return OAuthUrlBuilder.getGoogleOptions();
+      case OAuthProvider.FACEBOOK:
+        return OAuthUrlBuilder.getFacebookOptions();
       default:
         throw CustomError.badRequest('Unhandled provider');
     }
@@ -30,6 +32,17 @@ export class OAuthUrlBuilder {
           'https://www.googleapis.com/auth/userinfo.profile',
           'https://www.googleapis.com/auth/userinfo.email',
         ].join(' '),
+      },
+    };
+  }
+
+  private static getFacebookOptions(): { rootUrl: string; options: Record<string, any> } {
+    return {
+      rootUrl: 'https://www.facebook.com/v21.0/dialog/oauth',
+      options: {
+        client_id: envs.FACEBOOK_CLIENT_ID,
+        redirect_uri: envs.FACEBOOK_CALLBACK_URL,
+        response_type: 'code',
       },
     };
   }
