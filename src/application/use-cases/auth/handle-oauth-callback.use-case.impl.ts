@@ -28,6 +28,9 @@ export class HandleOAuthCallbackUseCaseImpl implements HandleOAuthCallbackUseCas
       case OAuthProvider.GOOGLE:
         user = await this.authService.authenticateWithGoogle(code);
         break;
+      case OAuthProvider.FACEBOOK:
+        user = await this.authService.authenticateWithFacebook(code);
+        break;
       default:
         throw CustomError.badRequest('Unhandled provider');
     }

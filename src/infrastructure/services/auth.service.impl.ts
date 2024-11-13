@@ -2,6 +2,7 @@ import {
   AuthRepository,
   AuthService,
   CustomError,
+  FacebookUserFromToken,
   GoogleOAuthResponse,
   GoogleUserFromToken,
   UserEntity,
@@ -56,6 +57,45 @@ export class AuthServiceImpl implements AuthService {
         user_id: user.user_id,
         fullname: payload.name,
         avatar: payload.picture,
+      });
+    }
+
+    return user;
+  }
+
+  async authenticateWithFacebook(code: string): Promise<UserEntity> {
+    const { data, error } = await AxiosAdapter.post<{ access_token: string }>(
+      'https://graph.facebook.com/v10.0/oauth/access_token',
+      {
+        client_id: envs.FACEBOOK_CLIENT_ID,
+        client_secret: envs.FACEBOOK_CLIENT_SECRET,
+        redirect_uri: envs.FACEBOOK_CALLBACK_URL,
+        code,
+      },
+    );
+
+    if (error) throw CustomError.internalServer('Error getting Facebook token');
+
+    const { data: userData, error: userError } = await AxiosAdapter.get<FacebookUserFromToken>(
+      `https://graph.facebook.com/me?fields=name,email,picture&access_token=${data!.access_token}`,
+    );
+
+    if (userError) throw CustomError.internalServer('Error getting Facebook user data');
+
+    let user = await this.userRepository.getUserByEmail({ email: userData!.email });
+
+    if (!user) {
+      user = await this.authRepository.registerUser({
+        fullname: userData!.name,
+        email: userData!.email,
+        avatar: userData!.picture.data.url,
+        password: 'oauth',
+      });
+    } else {
+      user = await this.userRepository.updateUser({
+        user_id: user.user_id,
+        fullname: userData!.name,
+        avatar: userData!.picture.data.url,
       });
     }
 
