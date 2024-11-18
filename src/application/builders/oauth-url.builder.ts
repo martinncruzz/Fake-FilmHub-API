@@ -25,9 +25,7 @@ export class OAuthUrlBuilder {
       options: {
         redirect_uri: envs.GOOGLE_CALLBACK_URL,
         client_id: envs.GOOGLE_CLIENT_ID,
-        access_type: 'offline',
         response_type: 'code',
-        prompt: 'consent',
         scope: [
           'https://www.googleapis.com/auth/userinfo.profile',
           'https://www.googleapis.com/auth/userinfo.email',
