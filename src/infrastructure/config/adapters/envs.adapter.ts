@@ -13,5 +13,5 @@ export const envs = {
 
   FACEBOOK_CLIENT_ID: get('FACEBOOK_CLIENT_ID').required().asInt(),
   FACEBOOK_CLIENT_SECRET: get('FACEBOOK_CLIENT_SECRET').required().asString(),
-  FACEBOOK_CALLBACK_URL: get('FACEBOOK_CALLBACK_URL').required().asUrlObject(),
+  FACEBOOK_CALLBACK_URL: get('FACEBOOK_CALLBACK_URL').required().asUrlString(),
 };
