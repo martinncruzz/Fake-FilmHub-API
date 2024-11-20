@@ -23,8 +23,8 @@ export class OAuthUrlBuilder {
     return {
       rootUrl: 'https://accounts.google.com/o/oauth2/v2/auth',
       options: {
-        redirect_uri: envs.GOOGLE_CALLBACK_URL,
         client_id: envs.GOOGLE_CLIENT_ID,
+        redirect_uri: envs.GOOGLE_CALLBACK_URL,
         response_type: 'code',
         scope: [
           'https://www.googleapis.com/auth/userinfo.profile',

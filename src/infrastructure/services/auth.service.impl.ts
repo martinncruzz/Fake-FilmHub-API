@@ -3,7 +3,6 @@ import {
   AuthService,
   CustomError,
   FacebookUserFromToken,
-  GoogleOAuthResponse,
   GoogleUserFromToken,
   UserEntity,
   UserRepository,
@@ -30,7 +29,7 @@ export class AuthServiceImpl implements AuthService {
   }
 
   async authenticateWithGoogle(code: string): Promise<UserEntity> {
-    const { data, error } = await AxiosAdapter.post<GoogleOAuthResponse>('https://oauth2.googleapis.com/token', {
+    const { data, error } = await AxiosAdapter.post<{ id_token: string }>('https://oauth2.googleapis.com/token', {
       code,
       client_id: envs.GOOGLE_CLIENT_ID,
       client_secret: envs.GOOGLE_CLIENT_SECRET,
@@ -38,10 +37,10 @@ export class AuthServiceImpl implements AuthService {
       grant_type: 'authorization_code',
     });
 
-    if (error) throw CustomError.internalServer('Error getting google token');
+    if (error) throw CustomError.internalServer('Error getting Google token');
 
     const payload = await JWTAdapter.decodeToken<GoogleUserFromToken>(data!.id_token);
-    if (!payload) throw CustomError.unAuthorized('Invalid google token');
+    if (!payload) throw CustomError.unAuthorized('Invalid Google token');
 
     let user = await this.userRepository.getUserByEmail({ email: payload.email });
 
@@ -67,10 +66,10 @@ export class AuthServiceImpl implements AuthService {
     const { data, error } = await AxiosAdapter.post<{ access_token: string }>(
       'https://graph.facebook.com/v10.0/oauth/access_token',
       {
+        code,
         client_id: envs.FACEBOOK_CLIENT_ID,
         client_secret: envs.FACEBOOK_CLIENT_SECRET,
         redirect_uri: envs.FACEBOOK_CALLBACK_URL,
-        code,
       },
     );
 
