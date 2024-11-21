@@ -45,12 +45,12 @@ export class AuthController {
     res.json(user);
   };
 
-  getOAuthUrl = async (req: Request, res: Response) => {
+  handleOAuthRedirect = async (req: Request, res: Response) => {
     const { errors, validatedData } = OAuthProviderDto.create(req.params);
     if (errors) return res.status(400).json({ errors });
 
     const url = new GetOAuthUrlUseCaseImpl().execute(validatedData!);
-    res.json(url);
+    res.redirect(url);
   };
 
   handleOAuthCallback = async (req: Request, res: Response) => {

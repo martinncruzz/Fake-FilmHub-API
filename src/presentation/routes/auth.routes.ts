@@ -15,7 +15,7 @@ export class AuthRoutes {
     router.post('/register', authController.registerUser);
     router.post('/login', authController.loginUser);
     router.get('/profile', [AuthMiddleware.validateJWT], authController.getCurrentSession);
-    router.get('/:provider/url', authController.getOAuthUrl);
+    router.get('/:provider/redirect', authController.handleOAuthRedirect);
     router.get('/:provider/callback', authController.handleOAuthCallback);
 
     return router;

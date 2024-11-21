@@ -1,6 +1,6 @@
 import { OAuthProviderDto } from '../../../application';
 
-export type GetOAuthUrlUseCaseResp = { url: string };
+export type GetOAuthUrlUseCaseResp = string;
 
 export interface GetOAuthUrlUseCase {
   execute(oauthProviderDto: OAuthProviderDto): GetOAuthUrlUseCaseResp;

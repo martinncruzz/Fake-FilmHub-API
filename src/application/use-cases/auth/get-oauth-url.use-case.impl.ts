@@ -6,6 +6,6 @@ export class GetOAuthUrlUseCaseImpl implements GetOAuthUrlUseCase {
 
   execute(oauthProviderDto: OAuthProviderDto): GetOAuthUrlUseCaseResp {
     const url = this.buildOAuthUrl(oauthProviderDto.provider);
-    return { url };
+    return url;
   }
 }
