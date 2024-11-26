@@ -1,10 +1,8 @@
-import { MovieRepository, UpdateMovieDto, UpdateMovieUseCase, UpdateMovieUseCaseResp } from '../..';
+import { UpdateMovieDto } from '../../../application';
+import { MovieEntity } from '../..';
 
-export class UpdateMovieUseCaseImpl implements UpdateMovieUseCase {
-  constructor(private readonly movieRepository: MovieRepository) {}
+export type UpdateMovieUseCaseResp = Promise<MovieEntity>;
 
-  async execute(updateMovieDto: UpdateMovieDto): UpdateMovieUseCaseResp {
-    const movie = await this.movieRepository.updateMovie(updateMovieDto);
-    return movie;
-  }
+export interface UpdateMovieUseCase {
+  execute(updateMovieDto: UpdateMovieDto): UpdateMovieUseCaseResp;
 }

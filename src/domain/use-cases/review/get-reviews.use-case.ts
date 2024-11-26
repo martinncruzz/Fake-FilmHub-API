@@ -1,32 +1,8 @@
-import {
-  BaseUrlBuilder,
-  BuildBaseUrl,
-  BuildPagination,
-  GetReviewsUseCase,
-  GetReviewsUseCaseResp,
-  PaginationBuilder,
-  PaginationDto,
-  ResourceType,
-  ReviewRepository,
-} from '../..';
+import { PaginationDto } from '../../../application';
+import { PaginationResult, ReviewEntity } from '../..';
 
-export class GetReviewsUseCaseImpl implements GetReviewsUseCase {
-  constructor(
-    private readonly reviewRepository: ReviewRepository,
-    private readonly buildBaseUrl: BuildBaseUrl = BaseUrlBuilder.build,
-    private readonly buildPagination: BuildPagination = PaginationBuilder.build,
-  ) {}
+export type GetReviewsUseCaseResp = Promise<PaginationResult & { reviews: ReviewEntity[] }>;
 
-  async execute(paginationDto: PaginationDto): GetReviewsUseCaseResp {
-    const { total, reviews } = await this.reviewRepository.getReviews(paginationDto);
-
-    const baseUrl = this.buildBaseUrl(ResourceType.REVIEWS);
-    const { prev, next } = this.buildPagination(paginationDto, total, baseUrl, '');
-
-    return {
-      prev,
-      next,
-      reviews,
-    };
-  }
+export interface GetReviewsUseCase {
+  execute(paginationDto: PaginationDto): GetReviewsUseCaseResp;
 }

@@ -1,10 +1,8 @@
-import { GenreRepository, UpdateGenreDto, UpdateGenreUseCase, UpdateGenreUseCaseResp } from '../..';
+import { UpdateGenreDto } from '../../../application';
+import { GenreEntity } from '../..';
 
-export class UpdateGenreUseCaseImpl implements UpdateGenreUseCase {
-  constructor(private readonly genreRepository: GenreRepository) {}
+export type UpdateGenreUseCaseResp = Promise<GenreEntity>;
 
-  async execute(updateGenreDto: UpdateGenreDto): UpdateGenreUseCaseResp {
-    const genre = await this.genreRepository.updateGenre(updateGenreDto);
-    return genre;
-  }
+export interface UpdateGenreUseCase {
+  execute(updateGenreDto: UpdateGenreDto): UpdateGenreUseCaseResp;
 }

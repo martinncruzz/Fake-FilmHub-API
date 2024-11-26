@@ -1,12 +1,5 @@
-import {
-  CreateGenreDto,
-  GenreEntity,
-  GenreIdDto,
-  GenresData,
-  GenresWithMovies,
-  PaginationDto,
-  UpdateGenreDto,
-} from '..';
+import { CreateGenreDto, GenreIdDto, PaginationDto, UpdateGenreDto } from '../../application';
+import { GenreEntity, GenresData, GenresWithMovies } from '..';
 
 export abstract class GenreRepository {
   abstract getGenres(paginationDto: PaginationDto): Promise<GenresData>;

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { ErrorHandlerService } from '..';
+import { ReviewRepository } from '../../domain';
 import {
   CreateReviewDto,
   CreateReviewUseCaseImpl,
@@ -9,10 +9,10 @@ import {
   GetReviewsUseCaseImpl,
   PaginationDto,
   ReviewIdDto,
-  ReviewRepository,
   UpdateReviewDto,
   UpdateReviewUseCaseImpl,
-} from '../../domain';
+} from '../../application';
+import { ErrorHandler } from '..';
 
 export class ReviewController {
   constructor(private readonly reviewRepository: ReviewRepository) {}
@@ -26,7 +26,7 @@ export class ReviewController {
     new GetReviewsUseCaseImpl(this.reviewRepository)
       .execute(paginationDto!)
       .then((data) => res.json(data))
-      .catch((error) => ErrorHandlerService.handleError(error, res));
+      .catch((error) => ErrorHandler.handleError(error, res));
   };
 
   getReviewById = async (req: Request, res: Response) => {
@@ -38,7 +38,7 @@ export class ReviewController {
     new GetReviewByIdUseCaseImpl(this.reviewRepository)
       .execute(validatedData!)
       .then((data) => res.json(data))
-      .catch((error) => ErrorHandlerService.handleError(error, res));
+      .catch((error) => ErrorHandler.handleError(error, res));
   };
 
   createReview = async (req: Request, res: Response) => {
@@ -48,7 +48,7 @@ export class ReviewController {
     new CreateReviewUseCaseImpl(this.reviewRepository)
       .execute(validatedData!, req.body.user)
       .then((data) => res.json(data))
-      .catch((error) => ErrorHandlerService.handleError(error, res));
+      .catch((error) => ErrorHandler.handleError(error, res));
   };
 
   updateReview = async (req: Request, res: Response) => {
@@ -60,7 +60,7 @@ export class ReviewController {
     new UpdateReviewUseCaseImpl(this.reviewRepository)
       .execute(validatedData!, req.body.user)
       .then((data) => res.json(data))
-      .catch((error) => ErrorHandlerService.handleError(error, res));
+      .catch((error) => ErrorHandler.handleError(error, res));
   };
 
   deleteReview = async (req: Request, res: Response) => {
@@ -72,6 +72,6 @@ export class ReviewController {
     new DeleteReviewUseCaseImpl(this.reviewRepository)
       .execute(validatedData!, req.body.user)
       .then((data) => res.json(data))
-      .catch((error) => ErrorHandlerService.handleError(error, res));
+      .catch((error) => ErrorHandler.handleError(error, res));
   };
 }

@@ -1,32 +1,8 @@
-import {
-  BaseUrlBuilder,
-  BuildBaseUrl,
-  BuildPagination,
-  GetUsersUseCase,
-  GetUsersUseCaseResp,
-  PaginationBuilder,
-  PaginationDto,
-  ResourceType,
-  UserRepository,
-} from '../..';
+import { PaginationDto } from '../../../application';
+import { PaginationResult, UserEntity } from '../..';
 
-export class GetUsersUseCaseImpl implements GetUsersUseCase {
-  constructor(
-    private readonly userRepository: UserRepository,
-    private readonly buildBaseUrl: BuildBaseUrl = BaseUrlBuilder.build,
-    private readonly buildPagination: BuildPagination = PaginationBuilder.build,
-  ) {}
+export type GetUsersUseCaseResp = Promise<PaginationResult & { users: UserEntity[] }>;
 
-  async execute(paginationDto: PaginationDto): GetUsersUseCaseResp {
-    const { total, users } = await this.userRepository.getUsers(paginationDto);
-
-    const baseUrl = this.buildBaseUrl(ResourceType.USERS);
-    const { prev, next } = this.buildPagination(paginationDto, total, baseUrl, '');
-
-    return {
-      prev,
-      next,
-      users,
-    };
-  }
+export interface GetUsersUseCase {
+  execute(paginationDto: PaginationDto): GetUsersUseCaseResp;
 }

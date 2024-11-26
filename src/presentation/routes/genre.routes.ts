@@ -1,14 +1,13 @@
 import { Router } from 'express';
 
+import { GenreRepositoryImpl } from '../../infrastructure';
 import { GenreController } from '..';
-import { GenreDatasourceImpl, GenreRepositoryImpl } from '../../infrastructure';
 
 export class GenreRoutes {
   static get routes(): Router {
     const router = Router();
 
-    const genreDatasource = new GenreDatasourceImpl();
-    const genreRepository = new GenreRepositoryImpl(genreDatasource);
+    const genreRepository = GenreRepositoryImpl.instance;
 
     const genreController = new GenreController(genreRepository);
 

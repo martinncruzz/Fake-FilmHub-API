@@ -1,14 +1,20 @@
-import {
-  AuthDatasource,
-  AuthRepository,
-  CheckUserEmailDto,
-  LoginUserDto,
-  RegisterUserDto,
-  UserEntity,
-} from '../../domain';
+import { AuthDatasource, AuthRepository, UserEntity } from '../../domain';
+import { LoginUserDto, RegisterUserDto } from '../../application';
+import { AuthDatasourceImpl } from '..';
 
 export class AuthRepositoryImpl implements AuthRepository {
-  constructor(private readonly authDatasource: AuthDatasource) {}
+  private static _instance: AuthRepositoryImpl;
+
+  private constructor(private readonly authDatasource: AuthDatasource) {}
+
+  static get instance(): AuthRepositoryImpl {
+    if (!this._instance) {
+      const authDatasource = AuthDatasourceImpl.instance;
+      this._instance = new AuthRepositoryImpl(authDatasource);
+    }
+
+    return this._instance;
+  }
 
   registerUser(registerUserDto: RegisterUserDto): Promise<UserEntity> {
     return this.authDatasource.registerUser(registerUserDto);
@@ -16,9 +22,5 @@ export class AuthRepositoryImpl implements AuthRepository {
 
   loginUser(loginUserDto: LoginUserDto): Promise<UserEntity> {
     return this.authDatasource.loginUser(loginUserDto);
-  }
-
-  isEmailAvailable(checkUserEmailDto: CheckUserEmailDto): Promise<boolean> {
-    return this.authDatasource.isEmailAvailable(checkUserEmailDto);
   }
 }

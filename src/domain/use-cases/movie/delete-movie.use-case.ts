@@ -1,10 +1,7 @@
-import { DeleteMovieUseCase, DeleteMovieUseCaseResp, MovieIdDto, MovieRepository } from '../..';
+import { MovieIdDto } from '../../../application';
 
-export class DeleteMovieUseCaseImpl implements DeleteMovieUseCase {
-  constructor(private readonly movieRepository: MovieRepository) {}
+export type DeleteMovieUseCaseResp = Promise<boolean>;
 
-  async execute(movieIdDto: MovieIdDto): DeleteMovieUseCaseResp {
-    const movieDeleted = await this.movieRepository.deleteMovie(movieIdDto);
-    return movieDeleted;
-  }
+export interface DeleteMovieUseCase {
+  execute(movieIdDto: MovieIdDto): DeleteMovieUseCaseResp;
 }

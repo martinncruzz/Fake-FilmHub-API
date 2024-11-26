@@ -1,37 +1,8 @@
-import {
-  MovieFiltersDto,
-  MovieRepository,
-  PaginationBuilder,
-  PaginationDto,
-  FiltersQueryBuilder,
-  ResourceType,
-  BuildFiltersQuery,
-  BuildPagination,
-  GetMoviesUseCase,
-  GetMoviesUseCaseResp,
-  BuildBaseUrl,
-  BaseUrlBuilder,
-} from '../..';
+import { MovieFiltersDto, PaginationDto } from '../../../application';
+import { MovieEntity, PaginationResult } from '../..';
 
-export class GetMoviesUseCaseImpl implements GetMoviesUseCase {
-  constructor(
-    private readonly movieRepository: MovieRepository,
-    private readonly buildFiltersQuery: BuildFiltersQuery<MovieFiltersDto> = FiltersQueryBuilder.build,
-    private readonly buildBaseUrl: BuildBaseUrl = BaseUrlBuilder.build,
-    private readonly buildPagination: BuildPagination = PaginationBuilder.build,
-  ) {}
+export type GetMoviesUseCaseResp = Promise<PaginationResult & { movies: MovieEntity[] }>;
 
-  async execute(paginationDto: PaginationDto, movieFiltersDto: MovieFiltersDto): GetMoviesUseCaseResp {
-    const { total, movies } = await this.movieRepository.getMovies(paginationDto, movieFiltersDto);
-
-    const filtersQuery = this.buildFiltersQuery(movieFiltersDto);
-    const baseUrl = this.buildBaseUrl(ResourceType.MOVIES);
-    const { prev, next } = this.buildPagination(paginationDto, total, baseUrl, filtersQuery);
-
-    return {
-      prev,
-      next,
-      movies,
-    };
-  }
+export interface GetMoviesUseCase {
+  execute(paginationDto: PaginationDto, movieFiltersDto: MovieFiltersDto): GetMoviesUseCaseResp;
 }

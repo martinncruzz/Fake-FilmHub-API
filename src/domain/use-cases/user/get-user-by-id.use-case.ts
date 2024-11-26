@@ -1,10 +1,8 @@
-import { GetUserByIdUseCase, GetUserByIdUseCaseResp, UserIdDto, UserRepository } from '../..';
+import { UserIdDto } from '../../../application';
+import { UserEntity } from '../..';
 
-export class GetUserByIdUseCaseImpl implements GetUserByIdUseCase {
-  constructor(private readonly userRepository: UserRepository) {}
+export type GetUserByIdUseCaseResp = Promise<UserEntity>;
 
-  async execute(userIdDto: UserIdDto): GetUserByIdUseCaseResp {
-    const user = await this.userRepository.getUserById(userIdDto);
-    return user;
-  }
+export interface GetUserByIdUseCase {
+  execute(userIdDto: UserIdDto): GetUserByIdUseCaseResp;
 }

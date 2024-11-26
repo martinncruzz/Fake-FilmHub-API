@@ -1,18 +1,20 @@
-import {
-  CreateMovieDto,
-  MovieRepository,
-  MovieEntity,
-  MovieFiltersDto,
-  MovieIdDto,
-  MoviesData,
-  PaginationDto,
-  UpdateMovieDto,
-  MovieDatasource,
-  MovieWithReviews,
-} from '../../domain';
+import { MovieEntity, MoviesData, MovieRepository, MovieWithReviews, MovieDatasource } from '../../domain';
+import { CreateMovieDto, MovieFiltersDto, MovieIdDto, PaginationDto, UpdateMovieDto } from '../../application';
+import { MovieDatasourceImpl } from '..';
 
 export class MovieRepositoryImpl implements MovieRepository {
-  constructor(private readonly movieDatasource: MovieDatasource) {}
+  private static _instance: MovieRepositoryImpl;
+
+  private constructor(private readonly movieDatasource: MovieDatasource) {}
+
+  static get instance(): MovieRepositoryImpl {
+    if (!this._instance) {
+      const movieDatasource = MovieDatasourceImpl.instance;
+      this._instance = new MovieRepositoryImpl(movieDatasource);
+    }
+
+    return this._instance;
+  }
 
   getMovies(paginationDto: PaginationDto, movieFiltersDto: MovieFiltersDto): Promise<MoviesData> {
     return this.movieDatasource.getMovies(paginationDto, movieFiltersDto);

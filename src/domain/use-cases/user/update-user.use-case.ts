@@ -1,10 +1,8 @@
-import { UpdateUserDto, UpdateUserUseCase, UpdateUserUseCaseResp, UserRepository } from '../..';
+import { UpdateUserDto } from '../../../application';
+import { UserEntity } from '../..';
 
-export class UpdateUserUseCaseImpl implements UpdateUserUseCase {
-  constructor(private readonly userRepository: UserRepository) {}
+export type UpdateUserUseCaseResp = Promise<UserEntity>;
 
-  async execute(updateUserDto: UpdateUserDto): UpdateUserUseCaseResp {
-    const user = await this.userRepository.updateUser(updateUserDto);
-    return user;
-  }
+export interface UpdateUserUseCase {
+  execute(updateUserDto: UpdateUserDto): UpdateUserUseCaseResp;
 }

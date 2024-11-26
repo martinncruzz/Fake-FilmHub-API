@@ -1,21 +1,20 @@
 import { Prisma } from '@prisma/client';
 
-import { MovieMapper } from '..';
-import { prisma } from '../../data/postgres';
-import {
-  CreateMovieDto,
-  CustomError,
-  MovieDatasource,
-  MovieEntity,
-  MovieFiltersDto,
-  MovieIdDto,
-  MoviesData,
-  MovieWithReviews,
-  PaginationDto,
-  UpdateMovieDto,
-} from '../../domain';
+import { CustomError, MovieDatasource, MovieEntity, MoviesData, MovieWithReviews } from '../../domain';
+import { CreateMovieDto, MovieFiltersDto, MovieIdDto, PaginationDto, UpdateMovieDto } from '../../application';
+import { prisma, MovieMapper } from '..';
 
 export class MovieDatasourceImpl implements MovieDatasource {
+  private static _instance: MovieDatasourceImpl;
+
+  private constructor() {}
+
+  static get instance(): MovieDatasourceImpl {
+    if (!this._instance) this._instance = new MovieDatasourceImpl();
+
+    return this._instance;
+  }
+
   async getMovies(paginationDto: PaginationDto, movieFiltersDto: MovieFiltersDto): Promise<MoviesData> {
     const { page, limit } = paginationDto;
     const { title, release_year, min_release_year, max_release_year, genre_id } = movieFiltersDto;
@@ -81,7 +80,7 @@ export class MovieDatasourceImpl implements MovieDatasource {
       }),
     ]);
 
-    if (!movieWithReviews) throw CustomError.notFound('User not found');
+    if (!movieWithReviews) throw CustomError.notFound('Movie not found');
 
     return {
       totalReviews,

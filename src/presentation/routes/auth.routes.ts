@@ -1,21 +1,22 @@
 import { Router } from 'express';
 
+import { AuthRepositoryImpl, AuthServiceImpl } from '../../infrastructure';
 import { AuthController, AuthMiddleware } from '..';
-import { AuthDatasourceImpl, AuthRepositoryImpl } from '../../infrastructure';
 
 export class AuthRoutes {
   static get routes(): Router {
     const router = Router();
 
-    const authDatasource = new AuthDatasourceImpl();
-    const authRepository = new AuthRepositoryImpl(authDatasource);
+    const authRepository = AuthRepositoryImpl.instance;
+    const authService = AuthServiceImpl.instance;
 
-    const authController = new AuthController(authRepository);
+    const authController = new AuthController(authRepository, authService);
 
     router.post('/register', authController.registerUser);
     router.post('/login', authController.loginUser);
-    router.post('/is-available', authController.isEmailAvailable);
     router.get('/profile', [AuthMiddleware.validateJWT], authController.getCurrentSession);
+    router.get('/:provider/redirect', authController.handleOAuthRedirect);
+    router.get('/:provider/callback', authController.handleOAuthCallback);
 
     return router;
   }

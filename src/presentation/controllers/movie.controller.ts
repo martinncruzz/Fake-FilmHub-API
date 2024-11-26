@@ -1,20 +1,20 @@
 import { Request, Response } from 'express';
 
-import { ErrorHandlerService } from '..';
+import { MovieRepository } from '../../domain';
 import {
   CreateMovieDto,
-  MovieIdDto,
-  UpdateMovieDto,
-  PaginationDto,
-  MovieFiltersDto,
-  MovieRepository,
-  GetMoviesUseCaseImpl,
-  GetMovieByIdUseCaseImpl,
   CreateMovieUseCaseImpl,
-  UpdateMovieUseCaseImpl,
   DeleteMovieUseCaseImpl,
+  GetMovieByIdUseCaseImpl,
+  GetMoviesUseCaseImpl,
   GetReviewsByMovieUseCaseImpl,
-} from '../../domain';
+  MovieFiltersDto,
+  MovieIdDto,
+  PaginationDto,
+  UpdateMovieDto,
+  UpdateMovieUseCaseImpl,
+} from '../../application';
+import { ErrorHandler } from '..';
 
 export class MovieController {
   constructor(private readonly movieRepository: MovieRepository) {}
@@ -31,7 +31,7 @@ export class MovieController {
     new GetMoviesUseCaseImpl(this.movieRepository)
       .execute(paginationDto!, movieFiltersDto!)
       .then((data) => res.json(data))
-      .catch((error) => ErrorHandlerService.handleError(error, res));
+      .catch((error) => ErrorHandler.handleError(error, res));
   };
 
   getMovieById = async (req: Request, res: Response) => {
@@ -43,7 +43,7 @@ export class MovieController {
     new GetMovieByIdUseCaseImpl(this.movieRepository)
       .execute(validatedData!)
       .then((data) => res.json(data))
-      .catch((error) => ErrorHandlerService.handleError(error, res));
+      .catch((error) => ErrorHandler.handleError(error, res));
   };
 
   getReviewsByMovie = async (req: Request, res: Response) => {
@@ -58,8 +58,8 @@ export class MovieController {
 
     new GetReviewsByMovieUseCaseImpl(this.movieRepository)
       .execute(validatedData!, paginationDto!)
-      .then((data: any) => res.json(data))
-      .catch((error: unknown) => ErrorHandlerService.handleError(error, res));
+      .then((data) => res.json(data))
+      .catch((error) => ErrorHandler.handleError(error, res));
   };
 
   createMovie = async (req: Request, res: Response) => {
@@ -69,7 +69,7 @@ export class MovieController {
     new CreateMovieUseCaseImpl(this.movieRepository)
       .execute(validatedData!)
       .then((data) => res.json(data))
-      .catch((error) => ErrorHandlerService.handleError(error, res));
+      .catch((error) => ErrorHandler.handleError(error, res));
   };
 
   updateMovie = async (req: Request, res: Response) => {
@@ -81,7 +81,7 @@ export class MovieController {
     new UpdateMovieUseCaseImpl(this.movieRepository)
       .execute(validatedData!)
       .then((data) => res.json(data))
-      .catch((error) => ErrorHandlerService.handleError(error, res));
+      .catch((error) => ErrorHandler.handleError(error, res));
   };
 
   deleteMovie = async (req: Request, res: Response) => {
@@ -93,6 +93,6 @@ export class MovieController {
     new DeleteMovieUseCaseImpl(this.movieRepository)
       .execute(validatedData!)
       .then((data) => res.json(data))
-      .catch((error) => ErrorHandlerService.handleError(error, res));
+      .catch((error) => ErrorHandler.handleError(error, res));
   };
 }

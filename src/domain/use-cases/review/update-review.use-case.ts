@@ -1,10 +1,8 @@
-import { ReviewRepository, UpdateReviewDto, UpdateReviewUseCase, UpdateReviewUseCaseResp, UserEntity } from '../..';
+import { UpdateReviewDto } from '../../../application';
+import { ReviewEntity, UserEntity } from '../..';
 
-export class UpdateReviewUseCaseImpl implements UpdateReviewUseCase {
-  constructor(private readonly reviewRepository: ReviewRepository) {}
+export type UpdateReviewUseCaseResp = Promise<ReviewEntity>;
 
-  async execute(updateReviewDto: UpdateReviewDto, user: UserEntity): UpdateReviewUseCaseResp {
-    const review = await this.reviewRepository.updateReview(updateReviewDto, user);
-    return review;
-  }
+export interface UpdateReviewUseCase {
+  execute(updateReviewDto: UpdateReviewDto, user: UserEntity): UpdateReviewUseCaseResp;
 }

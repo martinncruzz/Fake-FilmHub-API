@@ -1,37 +1,10 @@
-import {
-  BaseUrlBuilder,
-  BuildBaseUrl,
-  BuildPagination,
-  GetReviewsByMovieUseCase,
-  GetReviewsByMovieUseCaseResp,
-  MovieIdDto,
-  MovieRepository,
-  PaginationBuilder,
-  PaginationDto,
-  ResourceType,
-} from '../..';
+import { MovieIdDto, PaginationDto } from '../../../application';
+import { MovieEntity, PaginationResult, PartialReviewEntity } from '../..';
 
-export class GetReviewsByMovieUseCaseImpl implements GetReviewsByMovieUseCase {
-  constructor(
-    private readonly movieRepository: MovieRepository,
-    private readonly buildBaseUrl: BuildBaseUrl = BaseUrlBuilder.build,
-    private readonly buildPagination: BuildPagination = PaginationBuilder.build,
-  ) {}
+export type GetReviewsByMovieUseCaseResp = Promise<
+  Omit<MovieEntity, 'reviews'> & { reviews: PaginationResult & { totalReviews: number; data: PartialReviewEntity[] } }
+>;
 
-  async execute(movieIdDto: MovieIdDto, paginationDto: PaginationDto): GetReviewsByMovieUseCaseResp {
-    const { totalReviews, movie } = await this.movieRepository.getReviewsByMovie(movieIdDto, paginationDto);
-
-    const baseUrl = this.buildBaseUrl(ResourceType.MOVIES, `/${movieIdDto.movie_id}/reviews`);
-    const { prev, next } = this.buildPagination(paginationDto, totalReviews, baseUrl, '');
-
-    return {
-      ...movie,
-      reviews: {
-        totalReviews,
-        prev,
-        next,
-        data: movie.reviews || [],
-      },
-    };
-  }
+export interface GetReviewsByMovieUseCase {
+  execute(movieIdDto: MovieIdDto, paginationDto: PaginationDto): GetReviewsByMovieUseCaseResp;
 }

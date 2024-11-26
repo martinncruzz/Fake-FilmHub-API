@@ -1,17 +1,18 @@
-import { UserMapper } from '..';
-import { prisma } from '../../data/postgres';
-import {
-  CustomError,
-  PaginationDto,
-  UpdateUserDto,
-  UserEntity,
-  UserIdDto,
-  UserDatasource,
-  UsersData,
-  UserWithReviews,
-} from '../../domain';
+import { CustomError, UserEntity, UserDatasource, UsersData, UserWithReviews } from '../../domain';
+import { CheckUserEmailDto, PaginationDto, UpdateUserDto, UserIdDto } from '../../application';
+import { prisma, UserMapper } from '..';
 
 export class UserDatasourceImpl implements UserDatasource {
+  private static _instance: UserDatasourceImpl;
+
+  private constructor() {}
+
+  static get instance(): UserDatasourceImpl {
+    if (!this._instance) this._instance = new UserDatasourceImpl();
+
+    return this._instance;
+  }
+
   async getUsers(paginationDto: PaginationDto): Promise<UsersData> {
     const { page, limit } = paginationDto;
 
@@ -35,6 +36,14 @@ export class UserDatasourceImpl implements UserDatasource {
     if (!user) throw CustomError.notFound('User not found');
 
     return UserMapper.userEntityFromObject(user);
+  }
+
+  async getUserByEmail(checkUserEmailDto: CheckUserEmailDto): Promise<UserEntity | null> {
+    const user = await prisma.userModel.findFirst({
+      where: { email: { equals: checkUserEmailDto.email, mode: 'insensitive' } },
+    });
+
+    return user ? UserMapper.userEntityFromObject(user) : null;
   }
 
   async getReviewsByUser(userIdDto: UserIdDto, paginationDto: PaginationDto): Promise<UserWithReviews> {

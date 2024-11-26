@@ -1,23 +1,23 @@
-import { UserMapper } from '..';
-import { prisma } from '../../data/postgres';
-import {
-  AuthDatasource,
-  CheckUserEmailDto,
-  CustomError,
-  LoginUserDto,
-  RegisterUserDto,
-  UserEntity,
-  UserRole,
-} from '../../domain';
+import { AuthDatasource, CustomError, UserEntity, UserRole } from '../../domain';
+import { LoginUserDto, RegisterUserDto } from '../../application';
+import { prisma, UserMapper } from '..';
 
 export class AuthDatasourceImpl implements AuthDatasource {
-  async registerUser(registerUserDto: RegisterUserDto): Promise<UserEntity> {
-    const isEmailAvailable = await this.isEmailAvailable({ email: registerUserDto.email });
+  private static _instance: AuthDatasourceImpl;
 
-    if (!isEmailAvailable) throw CustomError.badRequest('This email is already registered');
+  private constructor() {}
+
+  static get instance(): AuthDatasourceImpl {
+    if (!this._instance) this._instance = new AuthDatasourceImpl();
+
+    return this._instance;
+  }
+
+  async registerUser(registerUserDto: RegisterUserDto): Promise<UserEntity> {
+    const isEmailTaken = await prisma.userModel.findFirst({ where: { email: registerUserDto.email } });
+    if (isEmailTaken) throw CustomError.badRequest('This email is already registered');
 
     const newUser = await prisma.userModel.create({ data: { ...registerUserDto, role: UserRole.USER } });
-
     return UserMapper.userEntityFromObject(newUser);
   }
 
@@ -25,17 +25,8 @@ export class AuthDatasourceImpl implements AuthDatasource {
     const { email, password } = loginUserDto;
 
     const user = await prisma.userModel.findFirst({ where: { email } });
-
     if (!user || user.password !== password) throw CustomError.badRequest('Invalid credentials');
 
     return UserMapper.userEntityFromObject(user);
-  }
-
-  async isEmailAvailable(checkUserEmailDto: CheckUserEmailDto): Promise<boolean> {
-    const userRegistered = await prisma.userModel.findFirst({
-      where: { email: { equals: checkUserEmailDto.email, mode: 'insensitive' } },
-    });
-
-    return !userRegistered;
   }
 }

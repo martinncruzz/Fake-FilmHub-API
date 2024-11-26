@@ -1,17 +1,20 @@
-import {
-  CreateGenreDto,
-  GenreDatasource,
-  GenreEntity,
-  GenreIdDto,
-  GenreRepository,
-  GenresData,
-  GenresWithMovies,
-  PaginationDto,
-  UpdateGenreDto,
-} from '../../domain';
+import { GenreDatasource, GenreEntity, GenreRepository, GenresData, GenresWithMovies } from '../../domain';
+import { CreateGenreDto, GenreIdDto, PaginationDto, UpdateGenreDto } from '../../application';
+import { GenreDatasourceImpl } from '..';
 
 export class GenreRepositoryImpl implements GenreRepository {
-  constructor(private readonly genreDatasource: GenreDatasource) {}
+  private static _instance: GenreRepositoryImpl;
+
+  private constructor(private readonly genreDatasource: GenreDatasource) {}
+
+  static get instance(): GenreRepositoryImpl {
+    if (!this._instance) {
+      const genreDatasource = GenreDatasourceImpl.instance;
+      this._instance = new GenreRepositoryImpl(genreDatasource);
+    }
+
+    return this._instance;
+  }
 
   getGenres(paginationDto: PaginationDto): Promise<GenresData> {
     return this.genreDatasource.getGenres(paginationDto);

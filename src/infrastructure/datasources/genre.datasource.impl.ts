@@ -1,18 +1,18 @@
-import { GenreMapper } from '..';
-import { prisma } from '../../data/postgres';
-import {
-  CreateGenreDto,
-  CustomError,
-  GenreDatasource,
-  GenreEntity,
-  GenreIdDto,
-  GenresData,
-  GenresWithMovies,
-  PaginationDto,
-  UpdateGenreDto,
-} from '../../domain';
+import { CustomError, GenreDatasource, GenreEntity, GenresData, GenresWithMovies } from '../../domain';
+import { CreateGenreDto, GenreIdDto, PaginationDto, UpdateGenreDto } from '../../application';
+import { prisma, GenreMapper } from '..';
 
 export class GenreDatasourceImpl implements GenreDatasource {
+  private static _instance: GenreDatasourceImpl;
+
+  private constructor() {}
+
+  static get instance(): GenreDatasourceImpl {
+    if (!this._instance) this._instance = new GenreDatasourceImpl();
+
+    return this._instance;
+  }
+
   async getGenres(paginationDto: PaginationDto): Promise<GenresData> {
     const { page, limit } = paginationDto;
 

@@ -1,5 +1,5 @@
-import { userSchema, ZodAdapter } from '../../config';
 import { CustomError, UserEntity } from '../../domain';
+import { userSchema, ZodAdapter } from '..';
 
 export class UserMapper {
   static userEntityFromObject(object: Record<string, any>): UserEntity {

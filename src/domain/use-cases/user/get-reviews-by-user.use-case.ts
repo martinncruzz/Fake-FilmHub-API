@@ -1,37 +1,10 @@
-import {
-  BaseUrlBuilder,
-  BuildBaseUrl,
-  BuildPagination,
-  GetReviewsByUserUseCase,
-  GetReviewsByUserUseCaseResp,
-  PaginationBuilder,
-  PaginationDto,
-  ResourceType,
-  UserIdDto,
-  UserRepository,
-} from '../..';
+import { PaginationDto, UserIdDto } from '../../../application';
+import { PaginationResult, PartialReviewEntity, UserEntity } from '../..';
 
-export class GetReviewsByUserUseCaseImpl implements GetReviewsByUserUseCase {
-  constructor(
-    private readonly userRepository: UserRepository,
-    private readonly buildBaseUrl: BuildBaseUrl = BaseUrlBuilder.build,
-    private readonly buildPagination: BuildPagination = PaginationBuilder.build,
-  ) {}
+export type GetReviewsByUserUseCaseResp = Promise<
+  Omit<UserEntity, 'reviews'> & { reviews: PaginationResult & { totalReviews: number; data: PartialReviewEntity[] } }
+>;
 
-  async execute(userIdDto: UserIdDto, paginationDto: PaginationDto): GetReviewsByUserUseCaseResp {
-    const { totalReviews, user } = await this.userRepository.getReviewsByUser(userIdDto, paginationDto);
-
-    const baseUrl = this.buildBaseUrl(ResourceType.USERS, `/${userIdDto.user_id}/reviews`);
-    const { prev, next } = this.buildPagination(paginationDto, totalReviews, baseUrl, '');
-
-    return {
-      ...user,
-      reviews: {
-        totalReviews,
-        prev,
-        next,
-        data: user.reviews || [],
-      },
-    };
-  }
+export interface GetReviewsByUserUseCase {
+  execute(userIdDto: UserIdDto, paginationDto: PaginationDto): GetReviewsByUserUseCaseResp;
 }

@@ -1,7 +1,7 @@
-import { GetCurrentSessionUseCase, GetCurrentSessionUseCaseResp, UserEntity } from '../..';
+import { UserEntity } from '../..';
 
-export class GetCurrentSessionUseCaseImpl implements GetCurrentSessionUseCase {
-  execute(user: UserEntity): GetCurrentSessionUseCaseResp {
-    return user;
-  }
+export type GetCurrentSessionUseCaseResp = UserEntity;
+
+export interface GetCurrentSessionUseCase {
+  execute(user: UserEntity): GetCurrentSessionUseCaseResp;
 }

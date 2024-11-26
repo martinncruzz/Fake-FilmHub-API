@@ -1,10 +1,8 @@
-import { CreateMovieDto, CreateMovieUseCase, CreateMovieUseCaseResp, MovieRepository } from '../..';
+import { CreateMovieDto } from '../../../application';
+import { MovieEntity } from '../..';
 
-export class CreateMovieUseCaseImpl implements CreateMovieUseCase {
-  constructor(private readonly movieRepository: MovieRepository) {}
+export type CreateMovieUseCaseResp = Promise<MovieEntity>;
 
-  async execute(createMovieDto: CreateMovieDto): CreateMovieUseCaseResp {
-    const movie = await this.movieRepository.createMovie(createMovieDto);
-    return movie;
-  }
+export interface CreateMovieUseCase {
+  execute(createMovieDto: CreateMovieDto): CreateMovieUseCaseResp;
 }

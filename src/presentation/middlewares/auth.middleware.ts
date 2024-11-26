@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { JWTAdapter } from '../../config';
-import { prisma } from '../../data/postgres';
+import { JWTAdapter, prisma } from '../../infrastructure';
 
 export class AuthMiddleware {
   static validateJWT = async (req: Request, res: Response, next: NextFunction) => {

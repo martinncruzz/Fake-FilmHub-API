@@ -1,10 +1,8 @@
-import { GetMovieByIdUseCase, GetMovieByIdUseCaseResp, MovieIdDto, MovieRepository } from '../..';
+import { MovieIdDto } from '../../../application';
+import { MovieEntity } from '../..';
 
-export class GetMovieByIdUseCaseImpl implements GetMovieByIdUseCase {
-  constructor(private readonly movieRepository: MovieRepository) {}
+export type GetMovieByIdUseCaseResp = Promise<MovieEntity>;
 
-  async execute(movieIdDto: MovieIdDto): GetMovieByIdUseCaseResp {
-    const movie = await this.movieRepository.getMovieById(movieIdDto);
-    return movie;
-  }
+export interface GetMovieByIdUseCase {
+  execute(movieIdDto: MovieIdDto): GetMovieByIdUseCaseResp;
 }

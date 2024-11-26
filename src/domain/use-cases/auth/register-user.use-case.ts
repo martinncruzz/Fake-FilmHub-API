@@ -1,10 +1,8 @@
-import { AuthRepository, RegisterUserDto, RegisterUserUseCase, RegisterUserUseCaseResp } from '../..';
+import { RegisterUserDto } from '../../../application';
+import { UserEntity } from '../..';
 
-export class RegisterUserUseCaseImpl implements RegisterUserUseCase {
-  constructor(private readonly authRepository: AuthRepository) {}
+export type RegisterUserUseCaseResp = Promise<UserEntity>;
 
-  async execute(registerUserDto: RegisterUserDto): RegisterUserUseCaseResp {
-    const user = await this.authRepository.registerUser(registerUserDto);
-    return user;
-  }
+export interface RegisterUserUseCase {
+  execute(registerUserDto: RegisterUserDto): RegisterUserUseCaseResp;
 }

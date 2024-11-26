@@ -1,14 +1,12 @@
+# DB Container
+/postgres
+
+# Compiled Output
+/dist
+/node_modules
+
 # Envs
 .env
-
-# Node
-node_modules/
-
-# DB Container
-postgres/
-
-# Dist
-dist
 
 # Configs
 .vscode

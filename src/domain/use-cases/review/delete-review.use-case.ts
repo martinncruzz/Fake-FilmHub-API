@@ -1,10 +1,8 @@
-import { DeleteReviewUseCase, DeleteReviewUseCaseResp, ReviewIdDto, ReviewRepository, UserEntity } from '../..';
+import { ReviewIdDto } from '../../../application';
+import { UserEntity } from '../..';
 
-export class DeleteReviewUseCaseImpl implements DeleteReviewUseCase {
-  constructor(private readonly reviewRepository: ReviewRepository) {}
+export type DeleteReviewUseCaseResp = Promise<boolean>;
 
-  async execute(reviewIdDto: ReviewIdDto, user: UserEntity): DeleteReviewUseCaseResp {
-    const reviewDeleted = await this.reviewRepository.deleteReview(reviewIdDto, user);
-    return reviewDeleted;
-  }
+export interface DeleteReviewUseCase {
+  execute(reviewIdDto: ReviewIdDto, user: UserEntity): DeleteReviewUseCaseResp;
 }

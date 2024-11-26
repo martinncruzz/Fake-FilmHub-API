@@ -1,10 +1,7 @@
-import { DeleteGenreUseCase, DeleteGenreUseCaseResp, GenreIdDto, GenreRepository } from '../..';
+import { GenreIdDto } from '../../../application';
 
-export class DeleteGenreUseCaseImpl implements DeleteGenreUseCase {
-  constructor(private readonly genreRepository: GenreRepository) {}
+export type DeleteGenreUseCaseResp = Promise<boolean>;
 
-  async execute(genreIdDto: GenreIdDto): DeleteGenreUseCaseResp {
-    const genreDeleted = await this.genreRepository.deleteGenre(genreIdDto);
-    return genreDeleted;
-  }
+export interface DeleteGenreUseCase {
+  execute(genreIdDto: GenreIdDto): DeleteGenreUseCaseResp;
 }
