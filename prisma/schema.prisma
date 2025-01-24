@@ -8,60 +8,83 @@ datasource db {
 }
 
 enum UserRole {
-  ADMIN
-  USER
+  USER  @map("user")
+  ADMIN @map("admin")
+
+  @@map("user_role")
 }
 
-model UserModel {
-  user_id  Int           @id @default(autoincrement())
-  fullname String        @db.VarChar(100)
-  email    String        @unique @db.VarChar(255)
-  password String        @db.VarChar(255)
-  avatar   String        @db.Text
-  role     UserRole
-  reviews  ReviewModel[]
+model User {
+  id        String   @id @default(uuid())
+  fullname  String
+  email     String   @unique
+  password  String
+  avatarUrl String   @map("avatar_url")
+  role      UserRole
+  reviews   Review[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
 }
 
-model MovieModel {
-  movie_id         Int               @id @default(autoincrement())
-  title            String            @db.VarChar(255)
-  description      String            @db.Text
-  release_year     Int
-  director         String            @db.VarChar(100)
-  duration_minutes Int
-  trailer_link     String            @db.VarChar(255)
-  poster_image_url String            @db.VarChar(255)
-  genres           MovieGenreModel[]
-  reviews          ReviewModel[]
+model Movie {
+  id              String       @id @default(uuid())
+  title           String       @unique
+  description     String
+  releaseYear     Int          @map("release_year")
+  director        String
+  durationMinutes Int          @map("duration_minutes")
+  trailerLink     String       @map("trailer_link")
+  posterImageUrl  String       @map("poster_image_url")
+  genres          MovieGenre[]
+  reviews         Review[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("movies")
 }
 
-model GenreModel {
-  genre_id Int               @id @default(autoincrement())
-  name     String            @unique @db.VarChar(50)
-  image    String            @db.VarChar(255)
-  movies   MovieGenreModel[]
+model Genre {
+  id       String       @id @default(uuid())
+  name     String       @unique
+  imageUrl String       @map("image_url")
+  movies   MovieGenre[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("genres")
 }
 
-model MovieGenreModel {
-  movie_id Int
-  movie    MovieModel @relation(fields: [movie_id], references: [movie_id])
+model MovieGenre {
+  id      String @id @default(uuid())
+  movieId String @map("movie_id")
+  genreId String @map("genre_id")
+  movie   Movie  @relation(fields: [movieId], references: [id])
+  genre   Genre  @relation(fields: [genreId], references: [id])
 
-  genre_id Int
-  genre    GenreModel @relation(fields: [genre_id], references: [genre_id])
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
-  @@id([movie_id, genre_id])
+  @@unique([movieId, genreId])
+  @@map("movie_genres")
 }
 
-model ReviewModel {
-  review_id Int     @id @default(autoincrement())
-  rating    Int?
-  comment   String? @db.VarChar(255)
+model Review {
+  id      String  @id @default(uuid())
+  rating  Int?
+  comment String?
+  userId  String  @map("user_id")
+  movieId String  @map("movie_id")
+  user    User    @relation(fields: [userId], references: [id])
+  movie   Movie   @relation(fields: [movieId], references: [id])
 
-  user_id Int
-  user    UserModel @relation(fields: [user_id], references: [user_id])
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
-  movie_id Int
-  movie    MovieModel @relation(fields: [movie_id], references: [movie_id])
-
-  @@unique([user_id, movie_id])
+  @@unique([userId, movieId])
+  @@map("reviews")
 }
