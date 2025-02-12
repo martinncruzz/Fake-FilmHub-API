@@ -1,4 +1,10 @@
-import 'tsconfig-paths/register';
+import { register } from 'tsconfig-paths';
+import * as pathsConfig from '../paths.config.json';
+
+register({
+  baseUrl: pathsConfig.compilerOptions.baseUrl,
+  paths: pathsConfig.compilerOptions.paths,
+});
 
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
