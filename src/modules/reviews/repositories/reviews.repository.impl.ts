@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 
-import { CreateReviewDto } from '@modules/reviews/dtos/create-review.dto';
-import { PaginationDto } from '@modules/shared/dtos/pagination.dto';
-import { PostgresDatabase } from '@database/postgres/postgres-database';
-import { Review } from '@modules/reviews/entities/review.entity';
-import { ReviewsRepository } from '@modules/reviews/repositories/reviews.repository';
-import { UpdateReviewDto } from '@modules/reviews/dtos/update-review.dto';
+import { CreateReviewDto } from '../../../modules/reviews/dtos/create-review.dto';
+import { PaginationDto } from '../../../modules/shared/dtos/pagination.dto';
+import { PostgresDatabase } from '../../../database/postgres/postgres-database';
+import { Review } from '../../../modules/reviews/entities/review.entity';
+import { ReviewsRepository } from '../../../modules/reviews/repositories/reviews.repository';
+import { UpdateReviewDto } from '../../../modules/reviews/dtos/update-review.dto';
 
 @Injectable()
 export class ReviewsRepositoryImpl implements ReviewsRepository {

@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
-import { User } from '@modules/users/entities/user.entity';
-import { UserRole } from '@modules/shared/interfaces/enums';
-import { PartialReviewSchema } from '@config/schemas/review.schema';
+import { PartialReviewSchema } from '../../config/schemas/review.schema';
+import { User } from '../../modules/users/entities/user.entity';
+import { UserRole } from '../../modules/shared/interfaces/enums';
 
 export const UserRoleSchema = z.nativeEnum(UserRole);
 

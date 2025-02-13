@@ -1,10 +1,10 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe, Query } from '@nestjs/common';
 
-import { CreateGenreDto } from '@modules/genres/dtos/create-genre.dto';
-import { GenresService } from '@modules/genres/genres.service';
-import { MoviesService } from '@modules/movies/movies.service';
-import { PaginationDto } from '@modules/shared/dtos/pagination.dto';
-import { UpdateGenreDto } from '@modules/genres/dtos/update-genre.dto';
+import { CreateGenreDto } from '../../modules/genres/dtos/create-genre.dto';
+import { GenresService } from '../../modules/genres/genres.service';
+import { MoviesService } from '../../modules/movies/movies.service';
+import { PaginationDto } from '../../modules/shared/dtos/pagination.dto';
+import { UpdateGenreDto } from '../../modules/genres/dtos/update-genre.dto';
 
 @Controller('genres')
 export class GenresController {

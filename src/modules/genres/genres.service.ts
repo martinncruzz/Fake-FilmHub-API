@@ -1,15 +1,15 @@
 import { BadRequestException, forwardRef, Inject, Injectable, NotFoundException } from '@nestjs/common';
 
-import { buildBaseUrl } from '@modules/shared/utils/base-url.builder';
-import { buildPagination } from '@modules/shared/utils/pagination.builder';
-import { CreateGenreDto } from '@modules/genres/dtos/create-genre.dto';
-import { Genre } from '@modules/genres/entities/genre.entity';
-import { GenresRepository } from '@modules/genres/repositories/genres.repository';
-import { MovieGenresRepository } from '@modules/movies/repositories/movie-genres.repository';
-import { MoviesService } from '@modules/movies/movies.service';
-import { PaginationDto } from '@modules/shared/dtos/pagination.dto';
-import { ResourceType } from '@modules/shared/interfaces/enums';
-import { UpdateGenreDto } from '@modules/genres/dtos/update-genre.dto';
+import { buildBaseUrl } from '../../modules/shared/utils/base-url.builder';
+import { buildPagination } from '../../modules/shared/utils/pagination.builder';
+import { CreateGenreDto } from '../../modules/genres/dtos/create-genre.dto';
+import { Genre } from '../../modules/genres/entities/genre.entity';
+import { GenresRepository } from '../../modules/genres/repositories/genres.repository';
+import { MovieGenresRepository } from '../../modules/movies/repositories/movie-genres.repository';
+import { MoviesService } from '../../modules/movies/movies.service';
+import { PaginationDto } from '../../modules/shared/dtos/pagination.dto';
+import { ResourceType } from '../../modules/shared/interfaces/enums';
+import { UpdateGenreDto } from '../../modules/genres/dtos/update-genre.dto';
 
 @Injectable()
 export class GenresService {

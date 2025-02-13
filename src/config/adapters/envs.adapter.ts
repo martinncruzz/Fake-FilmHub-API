@@ -1,6 +1,6 @@
-import { envsSchema } from '@config/schemas/envs.schema';
+import 'dotenv/config';
 
-process.loadEnvFile();
+import { envsSchema } from '../../config/schemas/envs.schema';
 
 const { success, error, data } = envsSchema.safeParse(process.env);
 

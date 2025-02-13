@@ -1,10 +1,10 @@
 import { Controller, Get, Body, Patch, Param, ParseUUIDPipe, Query, Post } from '@nestjs/common';
 
-import { CheckEmailDto } from '@modules/users/dtos/check-email.dto';
-import { PaginationDto } from '@modules/shared/dtos/pagination.dto';
-import { ReviewsService } from '@modules/reviews/reviews.service';
-import { UpdateUserDto } from '@modules/users/dtos/update-user.dto';
-import { UsersService } from '@modules/users/users.service';
+import { CheckEmailDto } from '../../modules/users/dtos/check-email.dto';
+import { PaginationDto } from '../../modules/shared/dtos/pagination.dto';
+import { ReviewsService } from '../../modules/reviews/reviews.service';
+import { UpdateUserDto } from '../../modules/users/dtos/update-user.dto';
+import { UsersService } from '../../modules/users/users.service';
 
 @Controller('users')
 export class UsersController {

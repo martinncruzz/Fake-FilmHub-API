@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-google-oauth20';
 
-import { AuthService } from '@modules/auth/auth.service';
-import { envs } from '@config/adapters/envs.adapter';
-import { User } from '@modules/users/entities/user.entity';
-import { UsersRepository } from '@modules/users/repositories/users.repository';
+import { AuthService } from '../../../modules/auth/auth.service';
+import { envs } from '../../../config/adapters/envs.adapter';
+import { User } from '../../../modules/users/entities/user.entity';
+import { UsersRepository } from '../../../modules/users/repositories/users.repository';
 
 interface GoogleProfile {
   _json: {

@@ -1,8 +1,8 @@
 import { InternalServerErrorException } from '@nestjs/common';
 
-import { GenreSchema } from '@config/schemas/genre.schema';
-import { MovieGenre } from '@modules/movies/entities/movie-genre.entity';
-import { ValidatorAdapter } from '@config/adapters/validator.adapter';
+import { GenreSchema } from '../../../config/schemas/genre.schema';
+import { MovieGenre } from '../../../modules/movies/entities/movie-genre.entity';
+import { ValidatorAdapter } from '../../../config/adapters/validator.adapter';
 
 export class Genre {
   constructor(

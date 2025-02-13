@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 
-import { CreateMovieDto } from '@modules/movies/dtos/create-movie.dto';
-import { Movie } from '@modules/movies/entities/movie.entity';
-import { MovieFiltersDto } from '@modules/movies/dtos/movie-filters.dto';
-import { MoviesRepository } from '@modules/movies/repositories/movies.repository';
-import { PaginationDto } from '@modules/shared/dtos/pagination.dto';
-import { PostgresDatabase } from '@database/postgres/postgres-database';
-import { UpdateMovieDto } from '@modules/movies/dtos/update-movie.dto';
+import { CreateMovieDto } from '../../../modules/movies/dtos/create-movie.dto';
+import { Movie } from '../../../modules/movies/entities/movie.entity';
+import { MovieFiltersDto } from '../../../modules/movies/dtos/movie-filters.dto';
+import { MoviesRepository } from '../../../modules/movies/repositories/movies.repository';
+import { PaginationDto } from '../../../modules/shared/dtos/pagination.dto';
+import { PostgresDatabase } from '../../../database/postgres/postgres-database';
+import { UpdateMovieDto } from '../../../modules/movies/dtos/update-movie.dto';
 
 @Injectable()
 export class MoviesRepositoryImpl implements MoviesRepository {

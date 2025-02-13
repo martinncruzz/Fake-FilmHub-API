@@ -7,18 +7,18 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 
-import { buildBaseUrl } from '@modules/shared/utils/base-url.builder';
-import { buildPagination } from '@modules/shared/utils/pagination.builder';
-import { CreateMovieDto } from '@modules/movies/dtos/create-movie.dto';
-import { GenresService } from '@modules/genres/genres.service';
-import { Movie } from '@modules/movies/entities/movie.entity';
-import { MovieFiltersDto } from '@modules/movies/dtos/movie-filters.dto';
-import { MovieGenresRepository } from '@modules/movies/repositories/movie-genres.repository';
-import { MoviesRepository } from '@modules/movies/repositories/movies.repository';
-import { PaginationDto } from '@modules/shared/dtos/pagination.dto';
-import { ResourceType } from '@modules/shared/interfaces/enums';
-import { ReviewsService } from '@modules/reviews/reviews.service';
-import { UpdateMovieDto } from '@modules/movies/dtos/update-movie.dto';
+import { buildBaseUrl } from '../../modules/shared/utils/base-url.builder';
+import { buildPagination } from '../../modules/shared/utils/pagination.builder';
+import { CreateMovieDto } from '../../modules/movies/dtos/create-movie.dto';
+import { GenresService } from '../../modules/genres/genres.service';
+import { Movie } from '../../modules/movies/entities/movie.entity';
+import { MovieFiltersDto } from '../../modules/movies/dtos/movie-filters.dto';
+import { MovieGenresRepository } from '../../modules/movies/repositories/movie-genres.repository';
+import { MoviesRepository } from '../../modules/movies/repositories/movies.repository';
+import { PaginationDto } from '../../modules/shared/dtos/pagination.dto';
+import { ResourceType } from '../../modules/shared/interfaces/enums';
+import { ReviewsService } from '../../modules/reviews/reviews.service';
+import { UpdateMovieDto } from '../../modules/movies/dtos/update-movie.dto';
 
 @Injectable()
 export class MoviesService {

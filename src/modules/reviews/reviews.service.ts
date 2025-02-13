@@ -8,16 +8,16 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 
-import { buildBaseUrl } from '@modules/shared/utils/base-url.builder';
-import { buildPagination } from '@modules/shared/utils/pagination.builder';
-import { CreateReviewDto } from '@modules/reviews/dtos/create-review.dto';
-import { MoviesService } from '@modules/movies/movies.service';
-import { PaginationDto } from '@modules/shared/dtos/pagination.dto';
-import { ResourceType, UserRole } from '@modules/shared/interfaces/enums';
-import { Review } from '@modules/reviews/entities/review.entity';
-import { ReviewsRepository } from '@modules/reviews/repositories/reviews.repository';
-import { UpdateReviewDto } from '@modules/reviews/dtos/update-review.dto';
-import { User } from '@modules/users/entities/user.entity';
+import { buildBaseUrl } from '../../modules/shared/utils/base-url.builder';
+import { buildPagination } from '../../modules/shared/utils/pagination.builder';
+import { CreateReviewDto } from '../../modules/reviews/dtos/create-review.dto';
+import { MoviesService } from '../../modules/movies/movies.service';
+import { PaginationDto } from '../../modules/shared/dtos/pagination.dto';
+import { ResourceType, UserRole } from '../../modules/shared/interfaces/enums';
+import { Review } from '../../modules/reviews/entities/review.entity';
+import { ReviewsRepository } from '../../modules/reviews/repositories/reviews.repository';
+import { UpdateReviewDto } from '../../modules/reviews/dtos/update-review.dto';
+import { User } from '../../modules/users/entities/user.entity';
 
 @Injectable()
 export class ReviewsService {

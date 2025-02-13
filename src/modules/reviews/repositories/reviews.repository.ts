@@ -1,7 +1,7 @@
-import { CreateReviewDto } from '@modules/reviews/dtos/create-review.dto';
-import { PaginationDto } from '@modules/shared/dtos/pagination.dto';
-import { Review } from '@modules/reviews/entities/review.entity';
-import { UpdateReviewDto } from '@modules/reviews/dtos/update-review.dto';
+import { CreateReviewDto } from '../../../modules/reviews/dtos/create-review.dto';
+import { PaginationDto } from '../../../modules/shared/dtos/pagination.dto';
+import { Review } from '../../../modules/reviews/entities/review.entity';
+import { UpdateReviewDto } from '../../../modules/reviews/dtos/update-review.dto';
 
 export abstract class ReviewsRepository {
   abstract findAll(paginationDto: PaginationDto): Promise<{ total: number; reviews: Review[] }>;

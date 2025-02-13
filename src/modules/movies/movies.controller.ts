@@ -1,11 +1,11 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe, Query } from '@nestjs/common';
 
-import { CreateMovieDto } from '@modules/movies/dtos/create-movie.dto';
-import { MovieFiltersDto } from '@modules/movies/dtos/movie-filters.dto';
-import { MoviesService } from '@modules/movies/movies.service';
-import { PaginationDto } from '@modules/shared/dtos/pagination.dto';
-import { ReviewsService } from '@modules/reviews/reviews.service';
-import { UpdateMovieDto } from '@modules/movies/dtos/update-movie.dto';
+import { CreateMovieDto } from '../../modules/movies/dtos/create-movie.dto';
+import { MovieFiltersDto } from '../../modules/movies/dtos/movie-filters.dto';
+import { MoviesService } from '../../modules/movies/movies.service';
+import { PaginationDto } from '../../modules/shared/dtos/pagination.dto';
+import { ReviewsService } from '../../modules/reviews/reviews.service';
+import { UpdateMovieDto } from '../../modules/movies/dtos/update-movie.dto';
 
 @Controller('movies')
 export class MoviesController {

@@ -1,7 +1,7 @@
-import { CreateGenreDto } from '@modules/genres/dtos/create-genre.dto';
-import { Genre } from '@modules/genres/entities/genre.entity';
-import { PaginationDto } from '@modules/shared/dtos/pagination.dto';
-import { UpdateGenreDto } from '@modules/genres/dtos/update-genre.dto';
+import { CreateGenreDto } from '../../../modules/genres/dtos/create-genre.dto';
+import { Genre } from '../../../modules/genres/entities/genre.entity';
+import { PaginationDto } from '../../../modules/shared/dtos/pagination.dto';
+import { UpdateGenreDto } from '../../../modules/genres/dtos/update-genre.dto';
 
 export abstract class GenresRepository {
   abstract findAll(paginationDto: PaginationDto): Promise<{ total: number; genres: Genre[] }>;

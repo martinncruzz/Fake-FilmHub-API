@@ -1,6 +1,6 @@
 import { ExecutionContext, InternalServerErrorException, createParamDecorator } from '@nestjs/common';
 
-import { User } from '@modules/users/entities/user.entity';
+import { User } from '../../../modules/users/entities/user.entity';
 
 export const GetUser = createParamDecorator((_data: unknown, context: ExecutionContext) => {
   const req = context.switchToHttp().getRequest();

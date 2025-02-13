@@ -1,9 +1,9 @@
 import { InternalServerErrorException } from '@nestjs/common';
 
-import { MovieGenre } from '@modules/movies/entities/movie-genre.entity';
-import { MovieSchema } from '@config/schemas/movie.schema';
-import { Review } from '@modules/reviews/entities/review.entity';
-import { ValidatorAdapter } from '@config/adapters/validator.adapter';
+import { MovieGenre } from '../../../modules/movies/entities/movie-genre.entity';
+import { MovieSchema } from '../../../config/schemas/movie.schema';
+import { Review } from '../../../modules/reviews/entities/review.entity';
+import { ValidatorAdapter } from '../../../config/adapters/validator.adapter';
 
 export class Movie {
   constructor(

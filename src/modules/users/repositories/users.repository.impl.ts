@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 
-import { PaginationDto } from '@modules/shared/dtos/pagination.dto';
-import { PostgresDatabase } from '@database/postgres/postgres-database';
-import { RegisterUserDto } from '@modules/auth/dtos/register-user.dto';
-import { UpdateUserDto } from '@modules/users/dtos/update-user.dto';
-import { User } from '@modules/users/entities/user.entity';
-import { UserRole } from '@modules/shared/interfaces/enums';
-import { UsersRepository } from '@modules/users/repositories/users.repository';
+import { PaginationDto } from '../../../modules/shared/dtos/pagination.dto';
+import { PostgresDatabase } from '../../../database/postgres/postgres-database';
+import { RegisterUserDto } from '../../../modules/auth/dtos/register-user.dto';
+import { UpdateUserDto } from '../../../modules/users/dtos/update-user.dto';
+import { User } from '../../../modules/users/entities/user.entity';
+import { UserRole } from '../../../modules/shared/interfaces/enums';
+import { UsersRepository } from '../../../modules/users/repositories/users.repository';
 
 @Injectable()
 export class UsersRepositoryImpl implements UsersRepository {
