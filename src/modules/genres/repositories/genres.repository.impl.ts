@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 
-import { CreateGenreDto } from '@modules/genres/dtos/create-genre.dto';
-import { Genre } from '@modules/genres/entities/genre.entity';
-import { GenresRepository } from '@modules/genres/repositories/genres.repository';
-import { PaginationDto } from '@modules/shared/dtos/pagination.dto';
-import { PostgresDatabase } from '@database/postgres/postgres-database';
-import { UpdateGenreDto } from '@modules/genres/dtos/update-genre.dto';
+import { CreateGenreDto } from '../../../modules/genres/dtos/create-genre.dto';
+import { Genre } from '../../../modules/genres/entities/genre.entity';
+import { GenresRepository } from '../../../modules/genres/repositories/genres.repository';
+import { PaginationDto } from '../../../modules/shared/dtos/pagination.dto';
+import { PostgresDatabase } from '../../../database/postgres/postgres-database';
+import { UpdateGenreDto } from '../../../modules/genres/dtos/update-genre.dto';
 
 @Injectable()
 export class GenresRepositoryImpl implements GenresRepository {

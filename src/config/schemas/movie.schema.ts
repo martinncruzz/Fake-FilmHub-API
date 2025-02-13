@@ -1,9 +1,9 @@
 import { z } from 'zod';
 
-import { Movie } from '@modules/movies/entities/movie.entity';
-import { MovieGenre } from '@modules/movies/entities/movie-genre.entity';
-import { PartialGenreSchema } from '@config/schemas/genre.schema';
-import { PartialReviewSchema } from '@config/schemas/review.schema';
+import { Movie } from '../../modules/movies/entities/movie.entity';
+import { MovieGenre } from '../../modules/movies/entities/movie-genre.entity';
+import { PartialGenreSchema } from '../../config/schemas/genre.schema';
+import { PartialReviewSchema } from '../../config/schemas/review.schema';
 
 const BaseMovieGenreSchema = z.object({
   id: z.string().uuid(),

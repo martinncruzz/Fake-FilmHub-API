@@ -1,6 +1,6 @@
 import { IsString, Min, Max, IsInt, MinLength, IsOptional, Validate } from 'class-validator';
 
-import { RatingOrCommentConstraint } from '@config/constraints/rating-or-comment.constraint';
+import { RatingOrCommentConstraint } from '../../../config/constraints/rating-or-comment.constraint';
 
 export class UpdateReviewDto {
   @IsOptional()

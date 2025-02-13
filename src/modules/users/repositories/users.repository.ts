@@ -1,7 +1,7 @@
-import { PaginationDto } from '@modules/shared/dtos/pagination.dto';
-import { RegisterUserDto } from '@modules/auth/dtos/register-user.dto';
-import { UpdateUserDto } from '@modules/users/dtos/update-user.dto';
-import { User } from '@modules/users/entities/user.entity';
+import { PaginationDto } from '../../../modules/shared/dtos/pagination.dto';
+import { RegisterUserDto } from '../../../modules/auth/dtos/register-user.dto';
+import { UpdateUserDto } from '../../../modules/users/dtos/update-user.dto';
+import { User } from '../../../modules/users/entities/user.entity';
 
 export abstract class UsersRepository {
   abstract findAll(paginationDto: PaginationDto): Promise<{ total: number; users: User[] }>;

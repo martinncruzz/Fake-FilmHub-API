@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
-import { MovieGenresRepository } from '@modules/movies/repositories/movie-genres.repository';
-import { PostgresDatabase } from '@database/postgres/postgres-database';
+import { MovieGenresRepository } from '../../../modules/movies/repositories/movie-genres.repository';
+import { PostgresDatabase } from '../../../database/postgres/postgres-database';
 
 @Injectable()
 export class MovieGenresRepositoryImpl implements MovieGenresRepository {

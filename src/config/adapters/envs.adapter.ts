@@ -1,4 +1,4 @@
-import { envsSchema } from '@config/schemas/envs.schema';
+import { envsSchema } from '../../config/schemas/envs.schema';
 
 process.loadEnvFile();
 

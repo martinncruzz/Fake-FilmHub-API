@@ -1,13 +1,13 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 
-import { buildBaseUrl } from '@modules/shared/utils/base-url.builder';
-import { buildPagination } from '@modules/shared/utils/pagination.builder';
-import { CheckEmailDto } from '@modules/users/dtos/check-email.dto';
-import { PaginationDto } from '@modules/shared/dtos/pagination.dto';
-import { ResourceType } from '@modules/shared/interfaces/enums';
-import { UpdateUserDto } from '@modules/users/dtos/update-user.dto';
-import { User } from '@modules/users/entities/user.entity';
-import { UsersRepository } from '@modules/users/repositories/users.repository';
+import { buildBaseUrl } from '../../modules/shared/utils/base-url.builder';
+import { buildPagination } from '../../modules/shared/utils/pagination.builder';
+import { CheckEmailDto } from '../../modules/users/dtos/check-email.dto';
+import { PaginationDto } from '../../modules/shared/dtos/pagination.dto';
+import { ResourceType } from '../../modules/shared/interfaces/enums';
+import { UpdateUserDto } from '../../modules/users/dtos/update-user.dto';
+import { User } from '../../modules/users/entities/user.entity';
+import { UsersRepository } from '../../modules/users/repositories/users.repository';
 
 @Injectable()
 export class UsersService {

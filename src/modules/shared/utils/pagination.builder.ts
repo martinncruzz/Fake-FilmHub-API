@@ -1,4 +1,4 @@
-import { PaginationDto } from '@modules/shared/dtos/pagination.dto';
+import { PaginationDto } from '../../../modules/shared/dtos/pagination.dto';
 
 export function buildPagination(
   paginationDto: PaginationDto,

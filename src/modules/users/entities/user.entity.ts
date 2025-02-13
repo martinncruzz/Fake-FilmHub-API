@@ -1,9 +1,9 @@
 import { InternalServerErrorException } from '@nestjs/common';
 
-import { Review } from '@modules/reviews/entities/review.entity';
-import { UserRole } from '@modules/shared/interfaces/enums';
-import { UserSchema } from '@config/schemas/user.schema';
-import { ValidatorAdapter } from '@config/adapters/validator.adapter';
+import { Review } from '../../../modules/reviews/entities/review.entity';
+import { UserRole } from '../../../modules/shared/interfaces/enums';
+import { UserSchema } from '../../../config/schemas/user.schema';
+import { ValidatorAdapter } from '../../../config/adapters/validator.adapter';
 
 export class User {
   constructor(

@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
-import { Genre } from '@modules/genres/entities/genre.entity';
-import { PartialMovieGenreSchema } from '@config/schemas/movie.schema';
+import { Genre } from '../../modules/genres/entities/genre.entity';
+import { PartialMovieGenreSchema } from '../../config/schemas/movie.schema';
 
 export const BaseGenreSchema = z.object({
   id: z.string().uuid(),

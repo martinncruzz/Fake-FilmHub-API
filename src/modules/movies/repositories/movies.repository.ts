@@ -1,8 +1,8 @@
-import { CreateMovieDto } from '@modules/movies/dtos/create-movie.dto';
-import { Movie } from '@modules/movies/entities/movie.entity';
-import { MovieFiltersDto } from '@modules/movies/dtos/movie-filters.dto';
-import { PaginationDto } from '@modules/shared/dtos/pagination.dto';
-import { UpdateMovieDto } from '@modules/movies/dtos/update-movie.dto';
+import { CreateMovieDto } from '../../../modules/movies/dtos/create-movie.dto';
+import { Movie } from '../../../modules/movies/entities/movie.entity';
+import { MovieFiltersDto } from '../../../modules/movies/dtos/movie-filters.dto';
+import { PaginationDto } from '../../../modules/shared/dtos/pagination.dto';
+import { UpdateMovieDto } from '../../../modules/movies/dtos/update-movie.dto';
 
 export abstract class MoviesRepository {
   abstract findAll(movieFiltersDto: MovieFiltersDto): Promise<{ total: number; movies: Movie[] }>;

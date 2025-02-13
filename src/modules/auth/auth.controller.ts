@@ -1,11 +1,11 @@
 import { Controller, Get, Post, Body } from '@nestjs/common';
 
-import { Auth } from '@modules/auth/decorators/auth.decorator';
-import { AuthService } from '@modules/auth/auth.service';
-import { GetUser } from '@modules/auth/decorators/get-user.decorator';
-import { LoginUserDto } from '@modules/auth/dtos/login-user.dto';
-import { RegisterUserDto } from '@modules/auth/dtos/register-user.dto';
-import { User } from '@modules/users/entities/user.entity';
+import { Auth } from '../../modules/auth/decorators/auth.decorator';
+import { AuthService } from '../../modules/auth/auth.service';
+import { GetUser } from '../../modules/auth/decorators/get-user.decorator';
+import { LoginUserDto } from '../../modules/auth/dtos/login-user.dto';
+import { RegisterUserDto } from '../../modules/auth/dtos/register-user.dto';
+import { User } from '../../modules/users/entities/user.entity';
 
 @Controller('auth')
 export class AuthController {

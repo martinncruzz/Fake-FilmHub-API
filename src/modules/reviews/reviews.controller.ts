@@ -1,12 +1,12 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ParseUUIDPipe } from '@nestjs/common';
 
-import { Auth } from '@modules/auth/decorators/auth.decorator';
-import { CreateReviewDto } from '@modules/reviews/dtos/create-review.dto';
-import { GetUser } from '@modules/auth/decorators/get-user.decorator';
-import { PaginationDto } from '@modules/shared/dtos/pagination.dto';
-import { ReviewsService } from '@modules/reviews/reviews.service';
-import { UpdateReviewDto } from '@modules/reviews/dtos/update-review.dto';
-import { User } from '@modules/users/entities/user.entity';
+import { Auth } from '../../modules/auth/decorators/auth.decorator';
+import { CreateReviewDto } from '../../modules/reviews/dtos/create-review.dto';
+import { GetUser } from '../../modules/auth/decorators/get-user.decorator';
+import { PaginationDto } from '../../modules/shared/dtos/pagination.dto';
+import { ReviewsService } from '../../modules/reviews/reviews.service';
+import { UpdateReviewDto } from '../../modules/reviews/dtos/update-review.dto';
+import { User } from '../../modules/users/entities/user.entity';
 
 @Controller('reviews')
 export class ReviewsController {
