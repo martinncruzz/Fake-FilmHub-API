@@ -1,6 +1,7 @@
 # 🎬 Fake FilmHub API
 
-![image](https://github.com/user-attachments/assets/dd44d585-3a59-44a4-b55f-7497a9f6e9fe)
+![image](https://github.com/user-attachments/assets/c98cebc5-255d-42b6-94d3-339fe71248e4)
+
 
 > [!NOTE]
 > For detailed instructions on how to use the API, please refer to the documentation available. It covers everything from endpoints usage, ensuring a smooth experience for developers.
