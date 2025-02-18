@@ -2,7 +2,6 @@
 
 ![image](https://github.com/user-attachments/assets/c98cebc5-255d-42b6-94d3-339fe71248e4)
 
-
 > [!NOTE]
 > For detailed instructions on how to use the API, please refer to the documentation available. It covers everything from endpoints usage, ensuring a smooth experience for developers.
 >
@@ -52,5 +51,5 @@
 4. **Start the server in development mode**
 
    ```bash
-   pnpm run dev
+   pnpm dev
    ```
